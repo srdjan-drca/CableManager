@@ -1,0 +1,93 @@
+﻿<Page x:Class="CableManager.UI.Views.Pages.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=SettingsPageViewModel}"
+      ShowsNavigationUI="False"
+      mc:Ignorable="d"
+      d:DesignHeight="470" d:DesignWidth="710"
+      Title="SettingsPage">
+
+   <StackPanel>
+      <!--About section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_About]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         VerticalAlignment="Center"
+         Margin="13,0,0,5" />
+      <Grid
+         HorizontalAlignment="Left"
+         Margin="13,0,0,20"
+         Width="500">
+         <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+         </Grid.RowDefinitions>
+
+         <Image
+            Source="..\..\Resources\Images\CableManagerLogo.ico"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Width="100" Height="100" />
+
+         <TextBlock
+            Text="Cable manager, V1.0"
+            VerticalAlignment="Center"
+            FontWeight="Bold"
+            Grid.Row="1" />
+
+         <TextBlock
+            Text="{Binding Path=LabelProvider[UI_ApplicationAbout]}"
+            VerticalAlignment="Center"
+            FontWeight="Bold"
+            Grid.Row="2" />
+      </Grid>
+
+      <!--Settings section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_Settings]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         VerticalAlignment="Center"
+         Margin="13,0,0,5" />
+      <Grid HorizontalAlignment="Left" Margin="13,0,0,20">
+         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="130" />
+         </Grid.ColumnDefinitions>
+
+         <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+         </Grid.RowDefinitions>
+
+         <TextBlock
+            Text="{Binding Path=LabelProvider[UI_SelectLanguage]}"
+            Grid.Row="0" Grid.Column="0"
+            VerticalAlignment="Center"
+            FontWeight="Bold" />
+         <ComboBox
+            ItemsSource="{Binding Path=LanguageDropDown, Mode=OneWay}"
+            DisplayMemberPath="Value"
+            SelectedValuePath="Key"
+            SelectedValue="{Binding Path=SelectedLanguage, Mode=TwoWay}"
+            Grid.Row="0" Grid.Column="1"
+            BorderBrush="#41B1E1" />
+      </Grid>
+
+   </StackPanel>
+</Page>

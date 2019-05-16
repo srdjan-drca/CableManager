@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{05900C7E-4AE0-4555-B42D-9B598F29B556}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CableManager.Report</RootNamespace>
+    <AssemblyName>CableManager.Report</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="Spire.License, Version=1.3.6.35, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=4.0.0.2035, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CableManagerReport.cs" />
+    <Compile Include="Common\ColorHelper.cs" />
+    <Compile Include="Common\EnumerableExtensions.cs" />
+    <Compile Include="Common\PdfSpireExtensions.cs" />
+    <Compile Include="Common\ReportEnums.cs" />
+    <Compile Include="Common\ReportUtils.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="Common\TypeConverters.cs" />
+    <Compile Include="ICableManagerReport.cs" />
+    <Compile Include="Generators\Pdf\Documents\BaseReportPdf.cs" />
+    <Compile Include="Generators\Pdf\Documents\CableOfferPdf.cs" />
+    <Compile Include="Models\BaseReportModel.cs" />
+    <Compile Include="Models\CableDetails.cs" />
+    <Compile Include="Models\CustomerDetails.cs" />
+    <Compile Include="Models\OfferReportModel.cs" />
+    <Compile Include="Models\CompanyDetails.cs" />
+    <Compile Include="Generators\Pdf\Sections\BaseSection.cs" />
+    <Compile Include="Generators\Pdf\Sections\CableSection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StyleManager\Cell\CellBackground.cs" />
+    <Compile Include="StyleManager\Cell\CellStyle.cs" />
+    <Compile Include="StyleManager\Common\RectangleDimension.cs" />
+    <Compile Include="StyleManager\Common\ReportAlignment.cs" />
+    <Compile Include="StyleManager\Common\ReportBorder.cs" />
+    <Compile Include="StyleManager\Common\ReportFont.cs" />
+    <Compile Include="StyleManager\ReportStyleItem.cs" />
+    <Compile Include="StyleManager\ReportStyleManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CableManager.Common\CableManager.Common.csproj">
+      <Project>{5f120c8f-e578-4ea3-a6ee-dfc43dcc6b1c}</Project>
+      <Name>CableManager.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CableManager.Localization\CableManager.Localization.csproj">
+      <Project>{d35cbe6a-060e-485e-be52-0ea5c7768fe6}</Project>
+      <Name>CableManager.Localization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generators\Excel\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

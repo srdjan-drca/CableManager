@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="UI_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="UI_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UI_CableManager" xml:space="preserve">
+    <value>Cable Manager</value>
+  </data>
+  <data name="UI_Controls" xml:space="preserve">
+    <value>Controls</value>
+  </data>
+  <data name="UI_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="UI_CreateOfferPdf" xml:space="preserve">
+    <value>Offer pdf</value>
+  </data>
+  <data name="UI_Croatian" xml:space="preserve">
+    <value>Croatian</value>
+  </data>
+  <data name="UI_CurrentlyLoggedUser" xml:space="preserve">
+    <value>Currently logged in user:</value>
+  </data>
+  <data name="UI_Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="UI_CustomerRequest" xml:space="preserve">
+    <value>Customer request</value>
+  </data>
+  <data name="UI_CustomerSaved" xml:space="preserve">
+    <value>Customer saved successfully</value>
+  </data>
+  <data name="UI_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="UI_DragAndDrop" xml:space="preserve">
+    <value>Drag &amp; Drop</value>
+  </data>
+  <data name="UI_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="UI_LogIn" xml:space="preserve">
+    <value>LOG IN</value>
+  </data>
+  <data name="UI_LogOut" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="UI_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="UI_Offer" xml:space="preserve">
+    <value>Offer</value>
+  </data>
+  <data name="UI_Password" xml:space="preserve">
+    <value>PASSWORD</value>
+  </data>
+  <data name="UI_PasswordIsEmpty" xml:space="preserve">
+    <value>Pasword is empty</value>
+  </data>
+  <data name="UI_PasswordsMismatch" xml:space="preserve">
+    <value>Password mismatch</value>
+  </data>
+  <data name="UI_PriceLists" xml:space="preserve">
+    <value>Price lists</value>
+  </data>
+  <data name="UI_ConfirmPassword" xml:space="preserve">
+    <value>CONFIRM PASSWORD</value>
+  </data>
+  <data name="UI_SelectLanguage" xml:space="preserve">
+    <value>Select language:</value>
+  </data>
+  <data name="UI_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="UI_SignUp" xml:space="preserve">
+    <value>SIGN UP</value>
+  </data>
+  <data name="UI_Submit" xml:space="preserve">
+    <value>SUBMIT</value>
+  </data>
+  <data name="UI_UserDatabaseIsNotCreated" xml:space="preserve">
+    <value>User database is not created</value>
+  </data>
+  <data name="UI_UserName" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="UI_UserNameAlreadySigned" xml:space="preserve">
+    <value>User name is already taken</value>
+  </data>
+  <data name="UI_UserNameIsEmpty" xml:space="preserve">
+    <value>User name is empty</value>
+  </data>
+  <data name="UI_UserOrPasswordNotCorrect" xml:space="preserve">
+    <value>User or password are incorrect</value>
+  </data>
+  <data name="UI_UserSuccessfullySignedUp" xml:space="preserve">
+    <value>User successfully signed up</value>
+  </data>
+  <data name="UI_Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="UI_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="UI_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="UI_CustomerMustBeSelected" xml:space="preserve">
+    <value>Customer must be selected</value>
+  </data>
+  <data name="UI_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="UI_AddressTo" xml:space="preserve">
+    <value>Address to...</value>
+  </data>
+  <data name="UI_ApplicationAbout" xml:space="preserve">
+    <value>Application for automatic offer creation based on customer request</value>
+  </data>
+  <data name="UI_City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="UI_Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="UI_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UI_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="UI_PostalCode" xml:space="preserve">
+    <value>Postal code</value>
+  </data>
+  <data name="UI_Rebate" xml:space="preserve">
+    <value>Rebate (%)</value>
+  </data>
+  <data name="UI_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UI_SendToCustomer" xml:space="preserve">
+    <value>Send to customer</value>
+  </data>
+  <data name="UI_Street" xml:space="preserve">
+    <value>Street</value>
+  </data>
+  <data name="UI_TaxNumber" xml:space="preserve">
+    <value>Tax number</value>
+  </data>
+  <data name="UI_CustomerRequestAdded" xml:space="preserve">
+    <value>Customer request document is successfully added</value>
+  </data>
+  <data name="UI_NumberOfOffersDeleted" xml:space="preserve">
+    <value>Number of offers deleted:</value>
+  </data>
+  <data name="UI_OfferDocumentNotSelected" xml:space="preserve">
+    <value>Offer document is not selected</value>
+  </data>
+  <data name="UI_NumberOfCustomersDeleted" xml:space="preserve">
+    <value>Number of customers deleted:</value>
+  </data>
+  <data name="UI_PriceDocumentsLoaded" xml:space="preserve">
+    <value>Price list documents successfully loaded</value>
+  </data>
+  <data name="UI_CustomerNameMustBeEntered" xml:space="preserve">
+    <value>Customer name must be entered</value>
+  </data>
+  <data name="UI_CustomerNameAlreadySaved" xml:space="preserve">
+    <value>Customer name already saved</value>
+  </data>
+  <data name="UI_CustomerTaxNumberMustBeUnique" xml:space="preserve">
+    <value>Customer tax number is already registered</value>
+  </data>
+  <data name="UI_OfferDocumentSaved" xml:space="preserve">
+    <value>Offer successfully saved</value>
+  </data>
+  <data name="UI_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="UI_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="UI_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="UI_User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UI_Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="UI_CreateOfferExcel" xml:space="preserve">
+    <value>Offer excel</value>
+  </data>
+  <data name="UI_Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="UI_Mobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="UI_Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="UI_ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="UI_FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="UI_LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="UI_CurrentPassword" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="UI_CompanyContactSaved" xml:space="preserve">
+    <value>Company contact saved</value>
+  </data>
+  <data name="UI_NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="UI_ConfirmNewPassword" xml:space="preserve">
+    <value>Confirm new password</value>
+  </data>
+  <data name="UI_UserSuccessfullySaved" xml:space="preserve">
+    <value>User successfully saved</value>
+  </data>
+  <data name="UI_CurrentPasswordIsEmpty" xml:space="preserve">
+    <value>Current password is empty</value>
+  </data>
+  <data name="UI_NewPasswordIsEmpty" xml:space="preserve">
+    <value>New password is empty</value>
+  </data>
+  <data name="UI_PasswordSuccessfullyChanged" xml:space="preserve">
+    <value>Password successfully changed</value>
+  </data>
+  <data name="UI_CustomerRequestMustBeSelected" xml:space="preserve">
+    <value>Customer request must be selected</value>
+  </data>
+  <data name="UI_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="UI_CableName" xml:space="preserve">
+    <value>Cable name</value>
+  </data>
+  <data name="UI_Synonyms" xml:space="preserve">
+    <value>Synonyms</value>
+  </data>
+  <data name="UI_NumberOfCablesDeleted" xml:space="preserve">
+    <value>Number of cables deleted:</value>
+  </data>
+  <data name="UI_CableNameSaved" xml:space="preserve">
+    <value>Cable name saved</value>
+  </data>
+  <data name="UI_Load" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="UI_UserNumber" xml:space="preserve">
+    <value>User number</value>
+  </data>
+  <data name="UI_IncludeInSearch" xml:space="preserve">
+    <value>Include in search</value>
+  </data>
+  <data name="UI_CableNameMustBeEntered" xml:space="preserve">
+    <value>Cable name must be entered</value>
+  </data>
+  <data name="UI_CableNotSelected" xml:space="preserve">
+    <value>Cable not selected</value>
+  </data>
+  <data name="UI_CableNameAlreadySaved" xml:space="preserve">
+    <value>Cable name already saved</value>
+  </data>
+  <data name="UI_NumberOfCablesLoaded" xml:space="preserve">
+    <value>Number of cables loaded:</value>
+  </data>
+  <data name="UI_CablesNotSelected" xml:space="preserve">
+    <value>Cables not selected</value>
+  </data>
+  <data name="UI_EnterLicense" xml:space="preserve">
+    <value>Enter license</value>
+  </data>
+  <data name="UI_CustomerTaxNumberMustBeEntered" xml:space="preserve">
+    <value>Customer tax number must be entered</value>
+  </data>
+  <data name="UI_LicenseIsInvalid" xml:space="preserve">
+    <value>License is invalid</value>
+  </data>
+  <data name="UI_LicenseIsValid" xml:space="preserve">
+    <value>License is valid, product is activated</value>
+  </data>
+  <data name="UI_EnterLicenseKey" xml:space="preserve">
+    <value>Enter license key</value>
+  </data>
+  <data name="UI_CableNameAddInstruction" xml:space="preserve">
+    <value>Synonym names must be divided by comma [,]</value>
+  </data>
+  <data name="UI_LicenseKey" xml:space="preserve">
+    <value>License key:</value>
+  </data>
+  <data name="UI_Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+</root>

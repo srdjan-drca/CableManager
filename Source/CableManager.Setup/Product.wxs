@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include Product.Defines.wxi ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.ProductUpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <!--Properties-->
+    <Icon Id="CableManager.ico" SourceFile="$(var.CableManagerUIResources)\CableManagerLogo.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="CableManager.ico"/>
+    <Property Id="ARPHELPLINK" Value="$(var.ManufacturerWeb)"/>
+    <Property Id="ARPURLINFOABOUT" Value="$(var.ManufacturerWeb)"/>
+    <Property Id="ARPNOREPAIR" Value="1"/>
+
+    <!--Directory structure-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
+          <Directory Id="dirHrHr" Name="hr-HR" />
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.ProductName)" />
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+
+    <!--Components-->
+    <DirectoryRef Id="INSTALLFOLDER">
+      <!--CableManager-->
+      <Component Id="cmpMainExecutable" Guid="64cc9d3c-3a83-4ccd-8a98-2725d8d79425" Permanent="no">
+        <File Id="cmpMainExecutable" Source="$(var.CableManagerUIBin)\CableManager.UI.exe" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpCableManagerCommonDll" Guid="3dab96ee-5b51-4150-a5c4-377c3693560a" Permanent="no">
+        <File Id="cmpCableManagerCommonDll" Source="$(var.CableManagerUIBin)\CableManager.Common.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpCableManagerLocalizationDll" Guid="79ad8b20-a27b-4681-b11e-0f2956a023cb" Permanent="no">
+        <File Id="cmpCableManagerLocalizationDll" Source="$(var.CableManagerUIBin)\CableManager.Localization.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpCableManagerReportDll" Guid="72268423-2959-48e6-a3b7-17a53b4129b6" Permanent="no">
+        <File Id="cmpCableManagerReportDll" Source="$(var.CableManagerUIBin)\CableManager.Report.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpCableManagerRepositoryDll" Guid="a7025518-3b60-4092-8008-19d4332b1625" Permanent="no">
+        <File Id="cmpCableManagerRepositoryDll" Source="$(var.CableManagerUIBin)\CableManager.Repository.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpCableManagerServicesDll" Guid="5b3742ff-4ed2-40d1-acf7-da124a4e2f22" Permanent="no">
+        <File Id="cmpCableManagerServicesDll" Source="$(var.CableManagerUIBin)\CableManager.Services.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <!--CableManager license-->
+      <Component Id="cmpCableManagerLicenseDll" Guid="e9c8e815-6e6c-40f7-b724-fec0981c6b2d" Permanent="no">
+        <File Id="cmpCableManagerLicenseDll" Source="$(var.CableManagerUIBin)\CableManager.License.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpQLicenseDll" Guid="3f753531-2f1e-47bf-ae3a-1065ede91b89" Permanent="no">
+        <File Id="cmpQLicenseDll" Source="$(var.CableManagerUIBin)\QLicense.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <!--MvvmLight-->
+      <Component Id="cmpMvvmLightDll" Guid="5a386960-784e-4a49-8427-1028fa8a6f45" Permanent="no">
+        <File Id="cmpMvvmLightDll" Source="$(var.CableManagerUIBin)\GalaSoft.MvvmLight.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpMvvmLightExtrasDll" Guid="d75b0f2d-2310-46a1-9607-26103b23e2aa" Permanent="no">
+        <File Id="cmpMvvmLightExtrasDll" Source="$(var.CableManagerUIBin)\GalaSoft.MvvmLight.Extras.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpMvvmLightPlatformDll" Guid="f4da6f00-643c-4a21-a0f3-099181266bb2" Permanent="no">
+        <File Id="cmpMvvmLightPlatformDll" Source="$(var.CableManagerUIBin)\GalaSoft.MvvmLight.Platform.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpCommonServiceLocatorDll" Guid="0de24160-ec0e-4298-a086-b611fb94e74e" Permanent="no">
+        <File Id="cmpCommonServiceLocatorDll" Source="$(var.CableManagerUIBin)\CommonServiceLocator.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <!--MahhApps-->
+      <Component Id="cmpMahAppsMetroDll" Guid="fb2af2af-0aac-42a0-a60b-4c7e42563bf6" Permanent="no">
+        <File Id="cmpMahAppsMetroDll" Source="$(var.CableManagerUIBin)\MahApps.Metro.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpControlzExDll" Guid="1c31c6fa-4bf2-45ca-a60b-1981d256bd21" Permanent="no">
+        <File Id="cmpControlzExDll" Source="$(var.CableManagerUIBin)\ControlzEx.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <!--MeterialDesign-->
+      <Component Id="cmpMaterialDesignColorsDll" Guid="dbbe8fb8-c408-4d62-83ac-bbde5b520157" Permanent="no">
+        <File Id="cmpMaterialDesignColorsDll" Source="$(var.CableManagerUIBin)\MaterialDesignColors.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpMaterialDesignThemesDll" Guid="7b2fe79e-0f21-44f3-ab82-b42b3498622e" Permanent="no">
+        <File Id="cmpMaterialDesignThemesDll" Source="$(var.CableManagerUIBin)\MaterialDesignThemes.Wpf.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <!--DocumentHandlers-->
+      <Component Id="cmpEPPlusDll" Guid="d0d9b140-60fa-4649-920e-28ba7d907ea6" Permanent="no">
+        <File Id="cmpEPPlusDll" Source="$(var.CableManagerUIBin)\EPPlus.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpSpirePdfDll" Guid="a65ed5b2-5dac-4b10-ad0d-a41303abdea6" Permanent="no">
+        <File Id="cmpSpirePdfDll" Source="$(var.CableManagerUIBin)\Spire.Pdf.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpSpireLicenseDll" Guid="992ff5d1-51c4-411a-8a9d-cdf89fd891d1" Permanent="no">
+        <File Id="cmpSpireLicenseDll" Source="$(var.CableManagerUIBin)\Spire.License.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpMicrosoftMshtmlDll" Guid="56d1a8b7-eaed-47f0-995b-e97e783bbdf6" Permanent="no">
+        <File Id="cmpMicrosoftMshtmlDll" Source="$(var.CableManagerUIBin)\Microsoft.mshtml.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <!--UI-->
+      <Component Id="cmpFluentDll" Guid="0c332826-69b6-4c60-a3b5-167b9d60b6de" Permanent="no">
+        <File Id="cmpFluentDll" Source="$(var.CableManagerUIBin)\Fluent.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpWPFTextBoxAutoCompleteDll" Guid="1612f6ff-faad-4242-ab34-452dafd8d94d" Permanent="no">
+        <File Id="cmpWPFTextBoxAutoCompleteDll" Source="$(var.CableManagerUIBin)\WPFTextBoxAutoComplete.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpSystemWindowsInteractivityDll" Guid="d5826542-b77f-40b2-b70e-145474dc9690" Permanent="no">
+        <File Id="cmpSystemWindowsInteractivityDll" Source="$(var.CableManagerUIBin)\System.Windows.Interactivity.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="dirHrHr">
+      <Component Id="cmpCableManagerLocalizationHrDll" Guid="84053b23-7650-421c-a5b5-1c63c76c5410" Permanent="no">
+        <File Id="cmpCableManagerLocalizationHrDll" Source="$(var.CableManagerUIBin)\hr-HR\CableManager.Localization.resources.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!--Shortcuts-->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="cmpApplicationShortcut" Guid="5f2bd32a-c1b7-4c74-9531-6b3c66f34477" Permanent="no">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="$(var.ProductName)"
+                  Description="Opens cable manager application"
+                  Target="[#cmpMainExecutable]"
+                  Icon="CableManager.ico"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <Shortcut Id="UninstallProduct"
+                  Name="Uninstall cable manager"
+                  Description="Uninstalls cable manager application"
+                  Target="[System64Folder]msiexec.exe"
+                  Arguments="/x [ProductCode]"/>
+
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\EnergyCentarPlus\CableManager" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="cmpDesktopShortcut" Guid="76ac7465-b575-4c78-b601-74ee66e63bff" Permanent="no">
+        <Shortcut Id="DesktopShortcut"
+                  Name="$(var.ProductName)"
+                  Description="Opens cable manager application"
+                  Target="[#cmpMainExecutable]"
+                  Icon="CableManager.ico"
+                  WorkingDirectory="INSTALLFOLDER"/>
+
+        <RemoveFolder Id="CleanUpDesktopShortCut" Directory="DesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\EnergyCentarPlus\CableManager" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Tell WiX to install the files -->
+    <Feature Id="ProductFeature" Title="Cable manager" Level="1">
+      <!--CableManager-->
+      <ComponentRef Id="cmpMainExecutable" />
+      <ComponentRef Id="cmpCableManagerCommonDll" />
+      <ComponentRef Id="cmpCableManagerLocalizationDll" />
+      <ComponentRef Id="cmpCableManagerLocalizationHrDll" />
+      <ComponentRef Id="cmpCableManagerReportDll" />
+      <ComponentRef Id="cmpCableManagerRepositoryDll" />
+      <ComponentRef Id="cmpCableManagerServicesDll" />
+      <!--CableManager license-->
+      <ComponentRef Id="cmpCableManagerLicenseDll" />
+      <ComponentRef Id="cmpQLicenseDll" />
+      <!--MvvmLight-->
+      <ComponentRef Id="cmpMvvmLightDll" />
+      <ComponentRef Id="cmpMvvmLightExtrasDll" />
+      <ComponentRef Id="cmpMvvmLightPlatformDll" />
+      <ComponentRef Id="cmpCommonServiceLocatorDll" />
+      <!--MahApps-->
+      <ComponentRef Id="cmpMahAppsMetroDll" />
+      <ComponentRef Id="cmpControlzExDll" />
+      <!--MaterialDesign-->
+      <ComponentRef Id="cmpMaterialDesignColorsDll" />
+      <ComponentRef Id="cmpMaterialDesignThemesDll" />
+      <!--DocumentHandlers-->
+      <ComponentRef Id="cmpEPPlusDll" />
+      <ComponentRef Id="cmpSpirePdfDll" />
+      <ComponentRef Id="cmpSpireLicenseDll" />
+      <ComponentRef Id="cmpMicrosoftMshtmlDll" />
+      <!--UI-->
+      <ComponentRef Id="cmpFluentDll" />
+      <ComponentRef Id="cmpWPFTextBoxAutoCompleteDll" />
+      <ComponentRef Id="cmpSystemWindowsInteractivityDll" />
+      <!--Shortcuts-->
+      <ComponentRef Id="cmpApplicationShortcut" />
+      <ComponentRef Id="cmpDesktopShortcut" />
+
+      <ComponentRef Id="UninstallFolder" Primary="yes"/>
+    </Feature>
+
+    <!-- Set WixUI Dialogs -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
+
+    <!-- Tell WiX to ask for .NET framework -->
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_462_OR_LATER_INSTALLED"/>
+    <Condition Message="This application requires .NET Framework 4.6.2. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_462_OR_LATER_INSTALLED]]>
+    </Condition>
+
+    <!-- Customize WixUI Dialogs -->
+    <WixVariable Id="WixUILicenseRtf" Value="Resources\License.rtf" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+  </Product>
+
+  <Fragment Id="FolderUninstall">
+    <?define RegDir="SYSTEM\ControlSet001\services\[Manufacturer]:[ProductName]"?>
+    <?define RegValueName="InstallDir"?>
+    <Property Id="INSTALLFOLDER">
+      <RegistrySearch Root="HKLM" Key="$(var.RegDir)" Type="raw" Id="APPLICATIONFOLDER_REGSEARCH" Name="$(var.RegValueName)" />
+    </Property>
+
+    <DirectoryRef Id='INSTALLFOLDER'>
+      <Component Id="UninstallFolder" Guid="*">
+        <CreateFolder Directory="INSTALLFOLDER"/>
+        <util:RemoveFolderEx Property="INSTALLFOLDER" On="uninstall"/>
+        <RemoveFolder Id="INSTALLFOLDER" On="uninstall"/>
+        <RegistryValue Root="HKLM" Key="$(var.RegDir)" Name="$(var.RegValueName)" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

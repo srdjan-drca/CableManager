@@ -1,0 +1,155 @@
+﻿<Page x:Class="CableManager.UI.Views.Pages.OfferCreatePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:controls="clr-namespace:CableManager.UI.Views.Controls"
+      xmlns:wpfTextBoxAutoComplete="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:dragDrop="clr-namespace:CableManager.UI.Helpers.DragDrop"
+      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=OfferCreatePageViewModel}"
+      ShowsNavigationUI="False"
+      mc:Ignorable="d"
+      d:DesignHeight="470" d:DesignWidth="710"
+      Title="OfferCreatePage">
+
+   <StackPanel>
+      <!--Customer address section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_SendToCustomer]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         Margin="13,0,0,5" />
+      <TextBox
+         Text="{Binding SelectedCustomer, UpdateSourceTrigger=PropertyChanged}"
+         Style="{DynamicResource SearchMetroTextBox}"
+         wpfTextBoxAutoComplete:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Customers}"
+         wpfTextBoxAutoComplete:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"
+         mah:TextBoxHelper.Watermark="{Binding Path=LabelProvider[UI_AddressTo]}"
+         mah:TextBoxHelper.UseFloatingWatermark="True"
+         mah:TextBoxHelper.IsWaitingForData="True"
+         BorderBrush="#41B1E1"
+         Width="400" Height="50"
+         Margin="0,0,0,20" />
+
+      <!--Customer request section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_CustomerRequest]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         Margin="13,0,0,5" />
+      <TextBox
+         Style="{DynamicResource MetroTextBox}"
+         BorderBrush="#41B1E1"
+         IsReadOnly="True"
+         Text="{Binding Path=CustomerRequestFile}"
+         Width="690"
+         Height="25"
+         Margin="0,0,0,10" />
+      <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
+         <controls:DragDropBoxControl
+             AllowDrop="True"
+             Background="Transparent"
+             dragDrop:FileDragDropHelper.IsFileDragDropEnabled="True"
+             dragDrop:FileDragDropHelper.FileDragDropTarget="{Binding}"
+             VerticalAlignment="Center"
+             Margin="0,0,20,10" />
+         <Button
+             Content="{Binding Path=LabelProvider[UI_Browse]}"
+             Command="{Binding Path=BrowseCustomerRequestFileCommand}"
+             Background="#41B1E1"
+             Foreground="White"
+             VerticalContentAlignment="Center"
+             Width="130" Height="30" />
+      </StackPanel>
+
+      <!--Note section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_Note]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         Margin="13,0,0,5" />
+      <TextBox
+         Style="{DynamicResource MetroTextBox}"
+         BorderBrush="#41B1E1"
+         Text="{Binding Path=Note}"
+         AcceptsReturn="True"
+         TextWrapping="Wrap"
+         Width="690"
+         Height="50"
+         Margin="0,0,0,10" />
+
+      <!--Actions section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_Actions]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         Margin="13,0,0,5" />
+      <StackPanel Orientation="Horizontal" Margin="13,0,0,20">
+         <Button
+            Content="{Binding Path=LabelProvider[UI_CreateOfferPdf]}"
+            Command="{Binding Path=CreateOfferPdfCommand}"
+            Background="#41B1E1"
+            Foreground="White"
+            Margin="0,0,10,0"
+            Width="130" Height="30" />
+         <Button
+            Content="{Binding Path=LabelProvider[UI_CreateOfferExcel]}"
+            Command="{Binding Path=CreateOfferExcelCommand}"
+            Background="#41B1E1"
+            Foreground="White"
+            Margin="0,0,10,0"
+            Width="130" Height="30" />
+      </StackPanel>
+
+      <!--Status section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_Status]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         Margin="13,0,0,5" />
+      <TextBlock
+         Text="{Binding Path=StatusMessage}"
+         FontSize="14"
+         TextWrapping="Wrap"
+         Margin="13,0,0,20" />
+   </StackPanel>
+
+   <i:Interaction.Triggers>
+      <i:EventTrigger EventName="LostFocus">
+         <i:InvokeCommandAction
+            Command="{Binding Path=ClearStatusMessageCommand}" />
+      </i:EventTrigger>
+   </i:Interaction.Triggers>
+</Page>

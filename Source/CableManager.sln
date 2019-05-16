@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.UI", "CableManager.UI\CableManager.UI.csproj", "{57272398-BBD6-4A0B-A948-3E820C57C3CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.Common", "CableManager.Common\CableManager.Common.csproj", "{5F120C8F-E578-4EA3-A6EE-DFC43DCC6B1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.Localization", "CableManager.Localization\CableManager.Localization.csproj", "{D35CBE6A-060E-485E-BE52-0EA5C7768FE6}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "CableManager.Setup", "CableManager.Setup\CableManager.Setup.wixproj", "{75095B32-8A30-4084-A7B1-26609FE45209}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.Report", "CableManager.Report\CableManager.Report.csproj", "{05900C7E-4AE0-4555-B42D-9B598F29B556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.Repository", "CableManager.Repository\CableManager.Repository.csproj", "{1C1E4AA4-A481-4FC0-A143-1BCF004C0276}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.Services", "CableManager.Services\CableManager.Services.csproj", "{F448455F-9579-4089-BC89-220771AB392E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.License", "CableManager.License\CableManager.License.csproj", "{3188C5B2-A45D-42AE-8E0C-3C7E5BB9CE94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57272398-BBD6-4A0B-A948-3E820C57C3CB}.Debug|x86.ActiveCfg = Debug|x86
+		{57272398-BBD6-4A0B-A948-3E820C57C3CB}.Debug|x86.Build.0 = Debug|x86
+		{57272398-BBD6-4A0B-A948-3E820C57C3CB}.Release|x86.ActiveCfg = Release|x86
+		{57272398-BBD6-4A0B-A948-3E820C57C3CB}.Release|x86.Build.0 = Release|x86
+		{5F120C8F-E578-4EA3-A6EE-DFC43DCC6B1C}.Debug|x86.ActiveCfg = Debug|x86
+		{5F120C8F-E578-4EA3-A6EE-DFC43DCC6B1C}.Debug|x86.Build.0 = Debug|x86
+		{5F120C8F-E578-4EA3-A6EE-DFC43DCC6B1C}.Release|x86.ActiveCfg = Release|x86
+		{5F120C8F-E578-4EA3-A6EE-DFC43DCC6B1C}.Release|x86.Build.0 = Release|x86
+		{D35CBE6A-060E-485E-BE52-0EA5C7768FE6}.Debug|x86.ActiveCfg = Debug|x86
+		{D35CBE6A-060E-485E-BE52-0EA5C7768FE6}.Debug|x86.Build.0 = Debug|x86
+		{D35CBE6A-060E-485E-BE52-0EA5C7768FE6}.Release|x86.ActiveCfg = Release|x86
+		{D35CBE6A-060E-485E-BE52-0EA5C7768FE6}.Release|x86.Build.0 = Release|x86
+		{75095B32-8A30-4084-A7B1-26609FE45209}.Debug|x86.ActiveCfg = Debug|x86
+		{75095B32-8A30-4084-A7B1-26609FE45209}.Debug|x86.Build.0 = Debug|x86
+		{75095B32-8A30-4084-A7B1-26609FE45209}.Release|x86.ActiveCfg = Release|x86
+		{75095B32-8A30-4084-A7B1-26609FE45209}.Release|x86.Build.0 = Release|x86
+		{05900C7E-4AE0-4555-B42D-9B598F29B556}.Debug|x86.ActiveCfg = Debug|x86
+		{05900C7E-4AE0-4555-B42D-9B598F29B556}.Debug|x86.Build.0 = Debug|x86
+		{05900C7E-4AE0-4555-B42D-9B598F29B556}.Release|x86.ActiveCfg = Release|x86
+		{05900C7E-4AE0-4555-B42D-9B598F29B556}.Release|x86.Build.0 = Release|x86
+		{1C1E4AA4-A481-4FC0-A143-1BCF004C0276}.Debug|x86.ActiveCfg = Debug|x86
+		{1C1E4AA4-A481-4FC0-A143-1BCF004C0276}.Debug|x86.Build.0 = Debug|x86
+		{1C1E4AA4-A481-4FC0-A143-1BCF004C0276}.Release|x86.ActiveCfg = Release|x86
+		{1C1E4AA4-A481-4FC0-A143-1BCF004C0276}.Release|x86.Build.0 = Release|x86
+		{F448455F-9579-4089-BC89-220771AB392E}.Debug|x86.ActiveCfg = Debug|x86
+		{F448455F-9579-4089-BC89-220771AB392E}.Debug|x86.Build.0 = Debug|x86
+		{F448455F-9579-4089-BC89-220771AB392E}.Release|x86.ActiveCfg = Release|x86
+		{F448455F-9579-4089-BC89-220771AB392E}.Release|x86.Build.0 = Release|x86
+		{3188C5B2-A45D-42AE-8E0C-3C7E5BB9CE94}.Debug|x86.ActiveCfg = Debug|x86
+		{3188C5B2-A45D-42AE-8E0C-3C7E5BB9CE94}.Debug|x86.Build.0 = Debug|x86
+		{3188C5B2-A45D-42AE-8E0C-3C7E5BB9CE94}.Release|x86.ActiveCfg = Release|x86
+		{3188C5B2-A45D-42AE-8E0C-3C7E5BB9CE94}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define ProductName = "Cable manager"?>
+  <?define ProductVersion = "1.0.0"?>
+  <?define ProductUpgradeCode = "26C718B0-A80D-4E0B-9E27-4D02DA8EA166"?>
+  <?define ProductDescription = "Application which create offers for electro components"?>
+  <?define Manufacturer = "Energy Centar Plus j.d.o.o."?>
+  <?define ManufacturerWeb = "http://www.energycentar.hr/"?>
+  <?define CableManagerUIBin = "$(var.SolutionDir)CableManager.UI\bin\x86\$(var.Configuration)"?>
+  <?define CableManagerUIResources = "$(var.SolutionDir)CableManager.UI\Resources\Images"?>
+  <?define CableManagerStorage = "[INSTALLDIR]\..\..\ProgramData"?>
+</Include>

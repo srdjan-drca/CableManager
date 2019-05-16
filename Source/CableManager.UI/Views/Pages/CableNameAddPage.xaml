@@ -1,0 +1,127 @@
+﻿<Page x:Class="CableManager.UI.Views.Pages.CableNameAddPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=CableNameAddPageViewModel}"
+      mc:Ignorable="d"
+      d:DesignHeight="470" d:DesignWidth="710"
+      Title="CableNameAddPage">
+
+   <StackPanel>
+      <!--Edit section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_Add]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         Margin="13,0,0,5" />
+      <Grid Margin="13,0,0,20">
+         <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="2" />
+         </Grid.RowDefinitions>
+
+         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="350" />
+         </Grid.ColumnDefinitions>
+
+         <TextBlock
+            Text="{Binding Path=LabelProvider[UI_CableName]}"
+            Grid.Row="0" Grid.Column="0"
+            VerticalAlignment="Center"
+            FontWeight="Bold" />
+         <TextBox
+            x:Name="CableName"
+            Grid.Row="0" Grid.Column="1"
+            BorderBrush="LightSkyBlue"
+            BorderThickness="1" />
+
+         <TextBlock
+            Text="{Binding Path=LabelProvider[UI_Synonyms]}"
+            Grid.Row="2" Grid.Column="0"
+            VerticalAlignment="Center"
+            FontWeight="Bold" />
+         <TextBox
+            x:Name="Synonyms"
+            Grid.Row="2" Grid.Column="1"
+            BorderBrush="LightSkyBlue"
+            BorderThickness="1" />
+
+         <TextBlock
+            Text="{Binding Path=LabelProvider[UI_CableNameAddInstruction]}"
+            Grid.Row="4" Grid.Column="1"
+            VerticalAlignment="Center"
+            FontWeight="Bold" />
+      </Grid>
+
+      <!--Actions section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_Actions]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         Margin="13,0,0,5" />
+      <StackPanel
+         Orientation="Horizontal"
+         Margin="13,0,0,20">
+         <Button
+            Content="{Binding Path=LabelProvider[UI_Save]}"
+            Command="{Binding Path=SaveCableNameCommand}"
+            Margin="0,0,10,0"
+            Width="130" Height="30">
+            <Button.CommandParameter>
+               <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                  <Binding ElementName="CableName" Path="Text" />
+                  <Binding ElementName="Synonyms" Path="Text" />
+               </MultiBinding>
+            </Button.CommandParameter>
+         </Button>
+         <Button
+            Content="{Binding Path=LabelProvider[UI_Load]}"
+            Command="{Binding Path=LoadCableNamesCommand}"
+            Margin="0,0,10,0"
+            Width="130" Height="30" />
+      </StackPanel>
+
+      <!--Status section-->
+      <Rectangle
+         Fill="LightGray"
+         HorizontalAlignment="Center"
+         Width="690" Height="1"
+         Margin="0,0,0,1" />
+      <TextBlock
+         Text="{Binding Path=LabelProvider[UI_Status]}"
+         FontStyle="Italic"
+         Foreground="LightGray"
+         HorizontalAlignment="Left"
+         Margin="13,0,0,5" />
+      <TextBlock
+         Text="{Binding Path=StatusMessage}"
+         FontSize="14"
+         Margin="13,0,0,20" />
+   </StackPanel>
+
+   <i:Interaction.Triggers>
+      <i:EventTrigger EventName="LostFocus">
+         <i:InvokeCommandAction
+            Command="{Binding Path=ClearStatusMessageCommand}" />
+      </i:EventTrigger>
+   </i:Interaction.Triggers>
+</Page>

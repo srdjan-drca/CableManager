@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F448455F-9579-4089-BC89-220771AB392E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CableManager.Services</RootNamespace>
+    <AssemblyName>CableManager.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="QLicense">
+      <HintPath>..\CableManager.License\Lib\QLicense.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf">
+      <HintPath>..\CableManager.Report\Libs\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DocumentLoaders\CableName\CableNameLoader.cs" />
+    <Compile Include="DocumentLoaders\CableName\ICableNameLoader.cs" />
+    <Compile Include="DocumentLoaders\CustomerRequest\CustomerRequestLoader.cs" />
+    <Compile Include="DocumentLoaders\CustomerRequest\ICustomerRequestLoader.cs" />
+    <Compile Include="Helpers\PdfDocumentHelper.cs" />
+    <Compile Include="DocumentLoaders\Price\IPriceLoader.cs" />
+    <Compile Include="DocumentLoaders\Price\PriceLoader.cs" />
+    <Compile Include="License\ILicenseService.cs" />
+    <Compile Include="License\LicenseService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\IReportService.cs" />
+    <Compile Include="Report\ReportService.cs" />
+    <Compile Include="Result\UserResult.cs" />
+    <Compile Include="User\IUserService.cs" />
+    <Compile Include="User\UserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CableManager.License\CableManager.License.csproj">
+      <Project>{3188c5b2-a45d-42ae-8e0c-3c7e5bb9ce94}</Project>
+      <Name>CableManager.License</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CableManager.Report\CableManager.Report.csproj">
+      <Project>{05900c7e-4ae0-4555-b42d-9b598f29b556}</Project>
+      <Name>CableManager.Report</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CableManager.Repository\CableManager.Repository.csproj">
+      <Project>{1c1e4aa4-a481-4fc0-a143-1bcf004c0276}</Project>
+      <Name>CableManager.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CableManager.Common\CableManager.Common.csproj">
+      <Project>{5f120c8f-e578-4ea3-a6ee-dfc43dcc6b1c}</Project>
+      <Name>CableManager.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CableManager.Localization\CableManager.Localization.csproj">
+      <Project>{d35cbe6a-060e-485e-be52-0ea5c7768fe6}</Project>
+      <Name>CableManager.Localization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

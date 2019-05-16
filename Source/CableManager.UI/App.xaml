@@ -1,0 +1,42 @@
+﻿<Application x:Class="CableManager.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:CableManager.UI.ViewModels"
+             xmlns:converters="clr-namespace:CableManager.UI.Converters"
+             StartupUri="Views/Windows/LoginWindow.xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             d1p1:Ignorable="d"
+             xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
+   <Application.Resources>
+      <ResourceDictionary>
+         <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Statusbar.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Indigo.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
+
+            <ResourceDictionary Source="Styles/Controls.CmDataGrid.xaml" />
+            <ResourceDictionary Source="Styles/Controls.CmTextBox.xaml" />
+         </ResourceDictionary.MergedDictionaries>
+
+         <!--View models-->
+         <viewModels:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" />
+
+         <!--Converters-->
+         <converters:MultiParameterConverter x:Key="MultiParameterConverter" />
+         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+         <converters:ToUpperValueConverter x:Key="ToUpperValueConverter" />
+
+         <!--Fonts-->
+         <FontFamily x:Key="Champagne-Limousines">pack://application:,,,/Resources/Fonts/#Champagne_Limousines</FontFamily>
+      </ResourceDictionary>
+   </Application.Resources>
+</Application>

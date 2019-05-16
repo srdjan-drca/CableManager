@@ -1,0 +1,135 @@
+﻿<fluent:RibbonWindow x:Name="MainWindowId"
+        x:Class="CableManager.UI.Views.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fluent="urn:fluent-ribbon"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainWindowViewModel}"
+        Title="{Binding Path=LabelProvider[UI_CableManager]}"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Background="#41B1E1"
+        Foreground="White"
+        Height="660" Width="710">
+   <Grid Background="White">
+      <Grid.RowDefinitions>
+         <RowDefinition Height="130" />
+         <RowDefinition Height="470" />
+         <RowDefinition Height="40" />
+      </Grid.RowDefinitions>
+
+      <fluent:Ribbon Grid.Row="0" CanMinimize="False" FontSize="12">
+         <!--Tabs-->
+         <fluent:RibbonTabItem Header="">
+            <fluent:RibbonGroupBox Header="{Binding Path=LabelProvider[UI_Offer]}">
+               <fluent:Button
+                        Header="{Binding Path=LabelProvider[UI_Create]}"
+                        Command="{Binding Path=NavigateOfferCreatePageCommand}"
+                        Icon="{Binding Path=OfferCreateIconPath}"
+                        LargeIcon="{Binding Path=OfferCreateIconPath}"
+                        Width="60">
+               </fluent:Button>
+               <fluent:Button
+                        Header="{Binding Path=LabelProvider[UI_Overview]}"
+                        Command="{Binding Path=NavigateOfferOverviewPageCommand}"
+                        Icon="{Binding Path=OfferOverviewIconPath}"
+                        LargeIcon="{Binding Path=OfferOverviewIconPath}"
+                        Width="60" />
+            </fluent:RibbonGroupBox>
+
+            <fluent:RibbonGroupBox Header="{Binding Path=LabelProvider[UI_CableName]}">
+               <fluent:Button
+                  Header="{Binding Path=LabelProvider[UI_Add]}"
+                  Command="{Binding Path=NavigateCableNameAddPageCommand}"
+                  Icon="{Binding Path=CableNameAddIconPath}"
+                  LargeIcon="{Binding Path=CableNameAddIconPath}"
+                  Width="60" />
+               <fluent:Button
+                  Header="{Binding Path=LabelProvider[UI_Overview]}"
+                  Command="{Binding Path=NavigateCableNameOverviewPageCommand}"
+                  Icon="{Binding Path=CableNameOverviewIconPath}"
+                  LargeIcon="{Binding Path=CableNameOverviewIconPath}"
+                  Width="60" />
+               <fluent:Button
+                  Header="{Binding Path=LabelProvider[UI_PriceLists]}"
+                  Command="{Binding Path=NavigateCablePriceAddPageCommand}"
+                  Icon="{Binding Path=CablePriceAddIconPath}"
+                  LargeIcon="{Binding Path=CablePriceAddIconPath}"
+                  Width="60" />
+            </fluent:RibbonGroupBox>
+
+            <fluent:RibbonGroupBox Header="{Binding Path=LabelProvider[UI_Customer]}">
+               <fluent:Button
+                        Header="{Binding Path=LabelProvider[UI_Add]}"
+                        Command="{Binding Path=NavigateCustomerAddPageCommand}"
+                        Icon="{Binding Path=CustomerAddIconPath}"
+                        LargeIcon="{Binding Path=CustomerAddIconPath}"
+                        Width="60" />
+               <fluent:Button
+                        Header="{Binding Path=LabelProvider[UI_Overview]}"
+                        Command="{Binding Path=NavigateCustomerOverviewPageCommand}"
+                        Icon="{Binding Path=CustomerOverviewIconPath}"
+                        LargeIcon="{Binding Path=CustomerOverviewIconPath}"
+                        Width="60" />
+            </fluent:RibbonGroupBox>
+
+            <fluent:RibbonGroupBox Header="{Binding Path=LabelProvider[UI_Company]}">
+               <fluent:Button
+                  Header="{Binding Path=LabelProvider[UI_Contact]}"
+                  Command="{Binding Path=NavigateCompanyContactPageCommand}"
+                  Icon="{Binding Path=CompanyContactIconPath}"
+                  LargeIcon="{Binding Path=CompanyContactIconPath}"
+                  Width="60" />
+               <fluent:Button
+                  Header="{Binding Path=LabelProvider[UI_User]}"
+                  Command="{Binding Path=NavigateCompanyUserPageCommand}"
+                  Icon="{Binding Path=CompanyUserIconPath}"
+                  LargeIcon="{Binding Path=CompanyUserIconPath}"
+                  Width="60" />
+            </fluent:RibbonGroupBox>
+
+            <fluent:RibbonGroupBox Header="{Binding Path=LabelProvider[UI_Controls]}">
+               <fluent:Button
+                        Header="{Binding Path=LabelProvider[UI_Settings]}"
+                        Command="{Binding Path=NavigateSettingsPageCommand}"
+                        Icon="{Binding Path=SettingsIconPath}"
+                        LargeIcon="{Binding Path=SettingsIconPath}"
+                        Width="60" />
+               <fluent:Button
+                        Header="{Binding Path=LabelProvider[UI_LogOut]}"
+                        Command="{Binding Path=UserLogoutCommand}"
+                        Icon="{Binding Path=LogOutIconPath}"
+                        LargeIcon="{Binding Path=LogOutIconPath}"
+                        Width="60" />
+            </fluent:RibbonGroupBox>
+         </fluent:RibbonTabItem>
+      </fluent:Ribbon>
+
+      <DockPanel Grid.Row="1">
+         <Grid>
+            <Frame x:Name="MainFrame"
+                    NavigationUIVisibility="Hidden"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch" />
+         </Grid>
+      </DockPanel>
+
+      <fluent:StatusBar Grid.Row="2" Background="#41B1E1" VerticalAlignment="Bottom" Height="40">
+         <fluent:StatusBarItem
+                Foreground="White"
+                Content="{Binding Path=LabelProvider[UI_CurrentlyLoggedUser]}"
+                HorizontalAlignment="Left"
+                Padding="10, 0, 0, 0"
+                FontSize="18" />
+         <Separator Style="{StaticResource MetroStatusBarSeparator}" />
+         <fluent:StatusBarItem
+                Foreground="White"
+                Content="{Binding Path=CurrentUserName}"
+                HorizontalAlignment="Left"
+                Padding="10, 0, 0, 0"
+                FontSize="18" />
+      </fluent:StatusBar>
+   </Grid>
+</fluent:RibbonWindow>

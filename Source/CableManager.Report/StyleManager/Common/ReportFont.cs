@@ -1,5 +1,5 @@
-﻿using CableManager.Report.Common;
-using System.Drawing;
+﻿using System.Drawing;
+using CableManager.Report.Helpers;
 
 namespace CableManager.Report.StyleManager.Common
 {

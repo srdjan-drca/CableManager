@@ -61,6 +61,258 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        internal static string DOC_Amount {
+            get {
+                return ResourceManager.GetString("DOC_Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approved by:.
+        /// </summary>
+        internal static string DOC_ApprovedBy {
+            get {
+                return ResourceManager.GetString("DOC_ApprovedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The offer serves only as invitation for payment.
+        /// </summary>
+        internal static string DOC_Bottom1 {
+            get {
+                return ResourceManager.GetString("DOC_Bottom1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value added tax declared (VAT 25%) can not be recognized as a pre-tax based on this offer.
+        /// </summary>
+        internal static string DOC_Bottom2 {
+            get {
+                return ResourceManager.GetString("DOC_Bottom2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controlled by:.
+        /// </summary>
+        internal static string DOC_ControlledBy {
+            get {
+                return ResourceManager.GetString("DOC_ControlledBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer tax number:.
+        /// </summary>
+        internal static string DOC_CustomerTaxNumber {
+            get {
+                return ResourceManager.GetString("DOC_CustomerTaxNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date:.
+        /// </summary>
+        internal static string DOC_Date {
+            get {
+                return ResourceManager.GetString("DOC_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delivery date:.
+        /// </summary>
+        internal static string DOC_DeliveryDate {
+            get {
+                return ResourceManager.GetString("DOC_DeliveryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document composed by:.
+        /// </summary>
+        internal static string DOC_DocumentComposedBy {
+            get {
+                return ResourceManager.GetString("DOC_DocumentComposedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to email:.
+        /// </summary>
+        internal static string DOC_Email {
+            get {
+                return ResourceManager.GetString("DOC_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to fax:.
+        /// </summary>
+        internal static string DOC_Fax {
+            get {
+                return ResourceManager.GetString("DOC_Fax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISSUED BY:.
+        /// </summary>
+        internal static string DOC_IssuedBy {
+            get {
+                return ResourceManager.GetString("DOC_IssuedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mob:.
+        /// </summary>
+        internal static string DOC_Mobile {
+            get {
+                return ResourceManager.GetString("DOC_Mobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string DOC_Name {
+            get {
+                return ResourceManager.GetString("DOC_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OFFER No:.
+        /// </summary>
+        internal static string DOC_OfferNumber {
+            get {
+                return ResourceManager.GetString("DOC_OfferNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string DOC_OrdinalNumber {
+            get {
+                return ResourceManager.GetString("DOC_OrdinalNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to phone:.
+        /// </summary>
+        internal static string DOC_Phone {
+            get {
+                return ResourceManager.GetString("DOC_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        internal static string DOC_Price {
+            get {
+                return ResourceManager.GetString("DOC_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        internal static string DOC_Quantity {
+            get {
+                return ResourceManager.GetString("DOC_Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rebate %.
+        /// </summary>
+        internal static string DOC_Rebate {
+            get {
+                return ResourceManager.GetString("DOC_Rebate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rebate total:.
+        /// </summary>
+        internal static string DOC_RebateTotal {
+            get {
+                return ResourceManager.GetString("DOC_RebateTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax number:.
+        /// </summary>
+        internal static string DOC_TaxNumber {
+            get {
+                return ResourceManager.GetString("DOC_TaxNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total:.
+        /// </summary>
+        internal static string DOC_Total {
+            get {
+                return ResourceManager.GetString("DOC_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total VAT:.
+        /// </summary>
+        internal static string DOC_TotalVAT {
+            get {
+                return ResourceManager.GetString("DOC_TotalVAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total without VAT:.
+        /// </summary>
+        internal static string DOC_TotalWithoutVAT {
+            get {
+                return ResourceManager.GetString("DOC_TotalWithoutVAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit.
+        /// </summary>
+        internal static string DOC_Unit {
+            get {
+                return ResourceManager.GetString("DOC_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VAT %.
+        /// </summary>
+        internal static string DOC_VAT {
+            get {
+                return ResourceManager.GetString("DOC_VAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Worth until.
+        /// </summary>
+        internal static string DOC_WorthUntil {
+            get {
+                return ResourceManager.GetString("DOC_WorthUntil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         internal static string UI_About {

@@ -51,24 +51,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CableManagerReport.cs" />
-    <Compile Include="Common\ColorHelper.cs" />
-    <Compile Include="Common\EnumerableExtensions.cs" />
-    <Compile Include="Common\PdfSpireExtensions.cs" />
-    <Compile Include="Common\ReportEnums.cs" />
-    <Compile Include="Common\ReportUtils.cs" />
-    <Compile Include="Common\StringExtensions.cs" />
-    <Compile Include="Common\TypeConverters.cs" />
+    <Compile Include="Helpers\ColorHelper.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\EpplusExtensions.cs" />
+    <Compile Include="Extensions\PdfSpireExtensions.cs" />
+    <Compile Include="Helpers\ReportEnums.cs" />
+    <Compile Include="Helpers\ReportUtils.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeConverterExtensions.cs" />
+    <Compile Include="Generators\Excel\Workbooks\BaseWorkbook.cs" />
+    <Compile Include="Generators\Excel\Workbooks\CableOfferWorkbook.cs" />
+    <Compile Include="Generators\Excel\Worksheets\BaseWorksheet.cs" />
+    <Compile Include="Generators\Excel\Worksheets\CableWorksheet.cs" />
     <Compile Include="ICableManagerReport.cs" />
-    <Compile Include="Generators\Pdf\Documents\BaseReportPdf.cs" />
-    <Compile Include="Generators\Pdf\Documents\CableOfferPdf.cs" />
+    <Compile Include="Generators\Pdf\Documents\BasePdfDocument.cs" />
+    <Compile Include="Generators\Pdf\Documents\CableOfferPdfDocument.cs" />
     <Compile Include="Models\BaseReportModel.cs" />
     <Compile Include="Models\CableDetails.cs" />
     <Compile Include="Models\CustomerDetails.cs" />
     <Compile Include="Models\OfferReportModel.cs" />
     <Compile Include="Models\CompanyDetails.cs" />
-    <Compile Include="Generators\Pdf\Sections\BaseSection.cs" />
-    <Compile Include="Generators\Pdf\Sections\CableSection.cs" />
+    <Compile Include="Generators\Pdf\Sections\BasePdfSection.cs" />
+    <Compile Include="Generators\Pdf\Sections\CablePdfSection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result\OfferResult.cs" />
     <Compile Include="StyleManager\Cell\CellBackground.cs" />
     <Compile Include="StyleManager\Cell\CellStyle.cs" />
     <Compile Include="StyleManager\Common\RectangleDimension.cs" />
@@ -91,8 +97,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Generators\Excel\" />
+    <EmbeddedResource Include="Resources\Images\Logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

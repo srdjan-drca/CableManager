@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CableManager.Report.Common
+namespace CableManager.Report.Helpers
 {
    public static class ColorHelper
    {

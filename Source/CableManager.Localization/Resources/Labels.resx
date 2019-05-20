@@ -420,4 +420,88 @@
   <data name="UI_Browse" xml:space="preserve">
     <value>Browse</value>
   </data>
+  <data name="DOC_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="DOC_ApprovedBy" xml:space="preserve">
+    <value>Approved by:</value>
+  </data>
+  <data name="DOC_Bottom1" xml:space="preserve">
+    <value>The offer serves only as invitation for payment</value>
+  </data>
+  <data name="DOC_Bottom2" xml:space="preserve">
+    <value>Value added tax declared (VAT 25%) can not be recognized as a pre-tax based on this offer</value>
+  </data>
+  <data name="DOC_ControlledBy" xml:space="preserve">
+    <value>Controlled by:</value>
+  </data>
+  <data name="DOC_CustomerTaxNumber" xml:space="preserve">
+    <value>Customer tax number:</value>
+  </data>
+  <data name="DOC_Date" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="DOC_DeliveryDate" xml:space="preserve">
+    <value>Delivery date:</value>
+  </data>
+  <data name="DOC_DocumentComposedBy" xml:space="preserve">
+    <value>Document composed by:</value>
+  </data>
+  <data name="DOC_Email" xml:space="preserve">
+    <value>email:</value>
+  </data>
+  <data name="DOC_Fax" xml:space="preserve">
+    <value>fax:</value>
+  </data>
+  <data name="DOC_IssuedBy" xml:space="preserve">
+    <value>ISSUED BY:</value>
+  </data>
+  <data name="DOC_Mobile" xml:space="preserve">
+    <value>mob:</value>
+  </data>
+  <data name="DOC_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="DOC_OfferNumber" xml:space="preserve">
+    <value>OFFER No:</value>
+  </data>
+  <data name="DOC_OrdinalNumber" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="DOC_Phone" xml:space="preserve">
+    <value>phone:</value>
+  </data>
+  <data name="DOC_Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="DOC_Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="DOC_Rebate" xml:space="preserve">
+    <value>Rebate %</value>
+  </data>
+  <data name="DOC_RebateTotal" xml:space="preserve">
+    <value>Rebate total:</value>
+  </data>
+  <data name="DOC_TaxNumber" xml:space="preserve">
+    <value>Tax number:</value>
+  </data>
+  <data name="DOC_Total" xml:space="preserve">
+    <value>Total:</value>
+  </data>
+  <data name="DOC_TotalVAT" xml:space="preserve">
+    <value>Total VAT:</value>
+  </data>
+  <data name="DOC_TotalWithoutVAT" xml:space="preserve">
+    <value>Total without VAT:</value>
+  </data>
+  <data name="DOC_Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="DOC_VAT" xml:space="preserve">
+    <value>VAT %</value>
+  </data>
+  <data name="DOC_WorthUntil" xml:space="preserve">
+    <value>Worth until</value>
+  </data>
 </root>

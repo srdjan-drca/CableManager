@@ -1,9 +1,9 @@
-﻿using CableManager.Report.Common;
-using CableManager.Report.StyleManager.Cell;
+﻿using CableManager.Report.StyleManager.Cell;
 using CableManager.Report.StyleManager.Common;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using CableManager.Report.Helpers;
 
 namespace CableManager.Report.StyleManager
 {

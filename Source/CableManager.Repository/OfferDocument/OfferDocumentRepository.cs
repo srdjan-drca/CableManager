@@ -115,12 +115,13 @@ namespace CableManager.Repository.OfferDocument
 
       private OfferDocumentModel ConvertFromDatabaseModel(XElement offerDocumentElement)
       {
-         var offerDocument = new OfferDocumentModel(
-            offerDocumentElement.Element("Id")?.Value,
-            offerDocumentElement.Element("Name")?.Value,
-            offerDocumentElement.Element("Path")?.Value,
-            offerDocumentElement.Element("Date")?.Value
-         );
+         var offerDocument = new OfferDocumentModel
+         {
+            Id = offerDocumentElement.Element("Id")?.Value,
+            Name = offerDocumentElement.Element("Name")?.Value,
+            Path = offerDocumentElement.Element("Path")?.Value,
+            Date = offerDocumentElement.Element("Date")?.Value
+         };
 
          return offerDocument;
       }

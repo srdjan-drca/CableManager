@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Resources;
 using System.Globalization;
-using System.Resources;
+using System.ComponentModel;
 using CableManager.Localization.Resources;
 
 namespace CableManager.Localization

@@ -1,11 +1,12 @@
-﻿using Spire.Pdf.Fields;
-using Spire.Pdf.Graphics;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using CableManager.Report.Helpers;
+using Spire.Pdf.Fields;
+using Spire.Pdf.Graphics;
 
-namespace CableManager.Report.Common
+namespace CableManager.Report.Extensions
 {
-   public static class TypeConverters
+   public static class TypeConverterExtensions
    {
       private static readonly Dictionary<FontStyleEnum, FontStyle> FontMapping = new Dictionary<FontStyleEnum, FontStyle> {
          { FontStyleEnum.Regular, FontStyle.Regular },

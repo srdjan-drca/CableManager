@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CableManager.Report.Common
+namespace CableManager.Report.Extensions
 {
    public static class EnumerableExtensions
    {
@@ -10,10 +10,10 @@ namespace CableManager.Report.Common
          if (len == 0)
             throw new ArgumentNullException();
 
-         var enumer = source.GetEnumerator();
-         while (enumer.MoveNext())
+         var enumerator = source.GetEnumerator();
+         while (enumerator.MoveNext())
          {
-            yield return Take(enumer.Current, enumer, len);
+            yield return Take(enumerator.Current, enumerator, len);
          }
       }
 

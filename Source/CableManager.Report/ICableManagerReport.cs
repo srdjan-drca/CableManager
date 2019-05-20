@@ -1,6 +1,6 @@
-﻿using CableManager.Common.Result;
-using CableManager.Report.Models;
+﻿using System.IO;
 using Spire.Pdf;
+using CableManager.Report.Models;
 
 namespace CableManager.Report
 {
@@ -8,6 +8,6 @@ namespace CableManager.Report
    {
       PdfDocumentBase GenerateOfferPdf(BaseReportModel baseReportModel);
 
-      ReturnResult GenerateOfferExcel(string fileName, BaseReportModel baseReportModel);
+      MemoryStream GenerateOfferExcel(BaseReportModel baseReportModel);
    }
 }

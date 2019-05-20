@@ -1,14 +1,15 @@
 ﻿using System;
-using System.IO;
 using System.Drawing;
-using Spire.Pdf;
-using Spire.Pdf.Grid;
-using Spire.Pdf.Graphics;
+using System.IO;
+using CableManager.Report.Helpers;
 using CableManager.Report.StyleManager;
 using CableManager.Report.StyleManager.Cell;
 using CableManager.Report.StyleManager.Common;
+using Spire.Pdf;
+using Spire.Pdf.Graphics;
+using Spire.Pdf.Grid;
 
-namespace CableManager.Report.Common
+namespace CableManager.Report.Extensions
 {
    public static class PdfSpireExtensions
    {
@@ -27,7 +28,15 @@ namespace CableManager.Report.Common
          var font = new PdfTrueTypeFont(new Font(style.Font.Name, style.Font.Size, style.Font.Style.ToFontStyle()), true);
          var horizontalAlignment = style.Alignment.Horizontal.ToPdfTextAlignment();
 
-         page.Canvas.DrawString(text, font, PdfBrushes.Black, x, y, new PdfStringFormat(horizontalAlignment));
+         if (text != null)
+         {
+            page.Canvas.DrawString(text, font, PdfBrushes.Black, x, y, new PdfStringFormat(horizontalAlignment));
+         }
+      }
+
+      public static void Add(this PdfPageBase page, PdfImage image, float x, float y, float width, float height)
+      {
+         page.Canvas.DrawImage(image, x, y, width, height);
       }
 
       public static void AddLine(this PdfPageBase page, float x1, float y1, float x2, float y2)

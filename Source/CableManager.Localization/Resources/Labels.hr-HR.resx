@@ -420,4 +420,88 @@
   <data name="UI_Browse" xml:space="preserve">
     <value>Pretraži</value>
   </data>
+  <data name="DOC_Amount" xml:space="preserve">
+    <value>Iznos</value>
+  </data>
+  <data name="DOC_ApprovedBy" xml:space="preserve">
+    <value>Odobrio:</value>
+  </data>
+  <data name="DOC_Bottom1" xml:space="preserve">
+    <value>Ponuda služi samo kao poziv na plaćanje</value>
+  </data>
+  <data name="DOC_Bottom2" xml:space="preserve">
+    <value>Iskazani porez na dodanu vrijednost (PDV 25%) ne može se priznati kao predporez temeljem ove ponude.</value>
+  </data>
+  <data name="DOC_ControlledBy" xml:space="preserve">
+    <value>Kontrolirao:</value>
+  </data>
+  <data name="DOC_CustomerTaxNumber" xml:space="preserve">
+    <value>OIB kupca:</value>
+  </data>
+  <data name="DOC_Date" xml:space="preserve">
+    <value>Datum:</value>
+  </data>
+  <data name="DOC_DeliveryDate" xml:space="preserve">
+    <value>Datum ispor.:</value>
+  </data>
+  <data name="DOC_DocumentComposedBy" xml:space="preserve">
+    <value>Dokument sastavio:</value>
+  </data>
+  <data name="DOC_Email" xml:space="preserve">
+    <value>email:</value>
+  </data>
+  <data name="DOC_Fax" xml:space="preserve">
+    <value>fax:</value>
+  </data>
+  <data name="DOC_IssuedBy" xml:space="preserve">
+    <value>IZDAO:</value>
+  </data>
+  <data name="DOC_Mobile" xml:space="preserve">
+    <value>mob:</value>
+  </data>
+  <data name="DOC_Name" xml:space="preserve">
+    <value>Naziv</value>
+  </data>
+  <data name="DOC_OfferNumber" xml:space="preserve">
+    <value>PONUDA br:</value>
+  </data>
+  <data name="DOC_OrdinalNumber" xml:space="preserve">
+    <value>Rb</value>
+  </data>
+  <data name="DOC_Phone" xml:space="preserve">
+    <value>tel:</value>
+  </data>
+  <data name="DOC_Price" xml:space="preserve">
+    <value>Cijena</value>
+  </data>
+  <data name="DOC_Quantity" xml:space="preserve">
+    <value>Količina</value>
+  </data>
+  <data name="DOC_Rebate" xml:space="preserve">
+    <value>Rabat %</value>
+  </data>
+  <data name="DOC_RebateTotal" xml:space="preserve">
+    <value>Ukupno rabat:</value>
+  </data>
+  <data name="DOC_TaxNumber" xml:space="preserve">
+    <value>OIB:</value>
+  </data>
+  <data name="DOC_Total" xml:space="preserve">
+    <value>Ukupno:</value>
+  </data>
+  <data name="DOC_TotalVAT" xml:space="preserve">
+    <value>Ukupno PDV:</value>
+  </data>
+  <data name="DOC_TotalWithoutVAT" xml:space="preserve">
+    <value>Ukupno bez PDV:</value>
+  </data>
+  <data name="DOC_Unit" xml:space="preserve">
+    <value>Jmj.</value>
+  </data>
+  <data name="DOC_VAT" xml:space="preserve">
+    <value>PDV %</value>
+  </data>
+  <data name="DOC_WorthUntil" xml:space="preserve">
+    <value>Vrijedi do:</value>
+  </data>
 </root>

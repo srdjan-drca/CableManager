@@ -1,4 +1,4 @@
-﻿using CableManager.Report.Common;
+﻿using CableManager.Report.Helpers;
 
 namespace CableManager.Report.StyleManager.Common
 {

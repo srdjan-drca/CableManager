@@ -1,12 +1,15 @@
-﻿using System;
-using System.IO;
-using CableManager.Report.Common;
-using CableManager.Report.StyleManager;
-using OfficeOpenXml;
+﻿using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 using Spire.Pdf;
-using CableManager.Common.Result;
-using CableManager.Report.Generators.Pdf.Documents;
+using OfficeOpenXml;
 using CableManager.Report.Models;
+using CableManager.Report.Helpers;
+using CableManager.Report.StyleManager;
+using CableManager.Report.Generators.Excel.Workbooks;
+using CableManager.Report.Generators.Excel.Worksheets;
+using CableManager.Report.Generators.Pdf.Documents;
+using CableManager.Report.Generators.Pdf.Sections;
 
 namespace CableManager.Report
 {
@@ -14,41 +17,57 @@ namespace CableManager.Report
    {
       public CableManagerReport()
       {
-         ReportUtils.RegisterLicence();
+         ReportUtils.RegisterLicense();
          ReportStyleManager.Instance.Initialize();
       }
 
       public PdfDocumentBase GenerateOfferPdf(BaseReportModel baseReportModel)
       {
-         var cableOfferPdf = new CableOfferPdf(baseReportModel);
-         PdfDocumentBase pdfDocument = cableOfferPdf.Generate();
+         var cableOfferPdf = new CableOfferPdfDocument(baseReportModel);
+         PdfDocumentBase pdfDocument = GeneratePdfFile(cableOfferPdf.Sections);
 
          return pdfDocument;
       }
 
-      public ReturnResult GenerateOfferExcel(string fileName, BaseReportModel baseReportModel)
+      public MemoryStream GenerateOfferExcel(BaseReportModel baseReportModel)
       {
-         ReturnResult result;
+         var cableOfferWorkbook = new CableOfferWorkbook(baseReportModel);
+         MemoryStream excelFile = GenerateExcelFile(cableOfferWorkbook.Worksheets);
 
-         try
+         return excelFile;
+      }
+
+      #region Private methods
+
+      private PdfDocumentBase GeneratePdfFile(List<BasePdfSection> sections)
+      {
+         MemoryStream[] reportSections = sections.Select(section => section.GenerateContent()).ToArray();
+         PdfDocumentBase mergedDocument = PdfDocument.MergeFiles(reportSections);
+
+         return mergedDocument;
+      }
+
+      private MemoryStream GenerateExcelFile(List<BaseWorksheet> worksheets)
+      {
+         var excelFile = new MemoryStream();
+
+         using (var package = new ExcelPackage(excelFile))
          {
-            var newFile = new FileInfo(fileName);
-            using (var excelPackage = new ExcelPackage(newFile))
+            foreach (var worksheet in worksheets)
             {
-               ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Test");
+               var excelWorksheet = package.Workbook.Worksheets.Add(worksheet.Name);
 
-               excelPackage.Save();
+               worksheet.AddContent(excelWorksheet);
             }
 
-            result = new SuccessResult();
-         }
-         catch (Exception exception)
-         {
-            Console.WriteLine(exception);
-            throw;
+            package.Save();
          }
 
-         return result;
+         excelFile.Position = 0;
+
+         return excelFile;
       }
+
+      #endregion
    }
 }

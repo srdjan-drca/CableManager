@@ -10,12 +10,8 @@
 
       public string Date { get; set; }
 
-      public OfferDocumentModel(string id, string name, string path, string date)
+      public OfferDocumentModel()
       {
-         Id = id;
-         Name = name;
-         Path = path;
-         Date = date;
       }
 
       public OfferDocumentModel(string name, string path, string date)

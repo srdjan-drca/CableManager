@@ -13,5 +13,7 @@ namespace CableManager.Repository.User
       UserModel GetByNameAndPassword(string userName, string password);
 
       List<UserModel> GetAll();
+
+      void UpdateLastOfferNumber(string userId, string lastOfferNumber);
    }
 }

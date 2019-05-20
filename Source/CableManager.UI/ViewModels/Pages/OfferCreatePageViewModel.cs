@@ -1,13 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.IO;
 using System.Linq;
-using System.Globalization;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
-using CableManager.Common.Helpers;
-using CableManager.Common.Result;
 using CableManager.Localization;
+using CableManager.Report.Result;
 using CableManager.Repository.OfferDocument;
 using CableManager.Repository.Customer;
 using CableManager.Repository.Models;
@@ -24,11 +21,13 @@ namespace CableManager.UI.ViewModels.Pages
 
       private readonly IReportService _reportService;
 
+      private CustomerModel _selectedCustomer;
+
       private string _customerRequestFile;
 
-      private string _selectedCustomer;
+      private string _selectedCustomerName;
 
-      private ObservableCollection<string> _customers;
+      private ObservableCollection<string> _customerNames;
 
       private string _note;
 
@@ -56,34 +55,34 @@ namespace CableManager.UI.ViewModels.Pages
          }
       }
 
-      public string SelectedCustomer
+      public string SelectedCustomerName
       {
-         get { return _selectedCustomer; }
+         get { return _selectedCustomerName; }
          set
          {
-            string customerName = _customerRepository.GetAll()
-               .FirstOrDefault(x => string.Compare(x.Name, value, StringComparison.OrdinalIgnoreCase) == 0)?.Name;
+            _selectedCustomer = _customerRepository.GetAll().FirstOrDefault(x =>
+               string.Compare(x.Name, value, StringComparison.OrdinalIgnoreCase) == 0);
 
-            _selectedCustomer = string.IsNullOrEmpty(customerName)
+            _selectedCustomerName = string.IsNullOrEmpty(_selectedCustomer?.Name)
                ? value
-               : customerName;
+               : _selectedCustomer.Name;
 
-            RaisePropertyChanged(nameof(SelectedCustomer));
+            RaisePropertyChanged(nameof(SelectedCustomerName));
          }
       }
 
-      public ObservableCollection<string> Customers
+      public ObservableCollection<string> CustomerNames
       {
          get
          {
-            _customers = new ObservableCollection<string>();
+            _customerNames = new ObservableCollection<string>();
 
             foreach (string customerName in _customerRepository.GetAll().Select(x => x.Name).ToList())
             {
-               _customers.Add(customerName);
+               _customerNames.Add(customerName);
             }
 
-            return _customers;
+            return _customerNames;
          }
       }
 
@@ -124,7 +123,7 @@ namespace CableManager.UI.ViewModels.Pages
 
       private void CreateOfferPdf(object parameter)
       {
-         if (string.IsNullOrEmpty(SelectedCustomer))
+         if (string.IsNullOrEmpty(SelectedCustomerName))
          {
             StatusMessage = LabelProvider["UI_CustomerNameMustBeEntered"];
             return;
@@ -136,18 +135,14 @@ namespace CableManager.UI.ViewModels.Pages
             return;
          }
 
-         string date = DateTime.Now.ToString(CultureInfo.CurrentCulture);
-         var offerName = CreateOfferName(SelectedCustomer, date, ".pdf");
-         var path = CreateFullPath(offerName);
          string selectedLanguage = Properties.Settings.Default.SelectedLanguage;
-
-         ReturnResult result = _reportService.GeneratePdfReport(offerName, selectedLanguage);
+         OfferResult result = _reportService.GeneratePdfReport(SelectedCustomerName, _selectedCustomer.Id, Note, selectedLanguage);
 
          if (result.IsSuccess)
          {
-            var offerDocument = new OfferDocumentModel(offerName, path, date);
+            var offerDocument = new OfferDocumentModel(result.FileName, result.FileFullName, result.Date);
 
-            result = _offerDocumentRepository.Save(offerDocument);
+            result.Message = _offerDocumentRepository.Save(offerDocument).Message;
          }
 
          StatusMessage = result.Message;
@@ -155,7 +150,7 @@ namespace CableManager.UI.ViewModels.Pages
 
       private void CreateOfferExcel(object parameter)
       {
-         if (string.IsNullOrEmpty(SelectedCustomer))
+         if (string.IsNullOrEmpty(SelectedCustomerName))
          {
             StatusMessage = LabelProvider["UI_CustomerNameMustBeEntered"];
             return;
@@ -167,33 +162,17 @@ namespace CableManager.UI.ViewModels.Pages
             return;
          }
 
-         string date = DateTime.Now.ToString(CultureInfo.CurrentCulture);
-         var offerName = CreateOfferName(SelectedCustomer, date, ".xlsx");
-         var path = CreateFullPath(offerName);
-
-         ReturnResult result = _reportService.GenerateExcelReport(offerName, Properties.Settings.Default.SelectedLanguage);
+         string selectedLanguage = Properties.Settings.Default.SelectedLanguage;
+         OfferResult result = _reportService.GenerateExcelReport(SelectedCustomerName, _selectedCustomer.Id, Note, selectedLanguage);
 
          if (result.IsSuccess)
          {
-            var offerDocument = new OfferDocumentModel(offerName, path, date);
+            var offerDocument = new OfferDocumentModel(result.FileName, result.FileFullName, result.Date);
 
-            result = _offerDocumentRepository.Save(offerDocument);
+            result.Message = _offerDocumentRepository.Save(offerDocument).Message;
          }
 
          StatusMessage = result.Message;
-      }
-
-      private string CreateOfferName(string customerName, string date, string extension)
-      {
-         string date3 = string.Join("_", date.Split(new[] { " " }, StringSplitOptions.None).Take(2));
-         string dateNormalized = date3.Replace("/", "_").Replace(":", "_");
-
-         return customerName + "_" + dateNormalized + extension;
-      }
-
-      private string CreateFullPath(string name)
-      {
-         return new FileInfo(DirectoryHelper.GetApplicationStoragePath() + "/Offers/" + name).FullName;
       }
 
       private void NotificationHandler(Message message)

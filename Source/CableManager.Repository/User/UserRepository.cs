@@ -37,6 +37,7 @@ namespace CableManager.Repository.User
             {
                user.Id = Guid.NewGuid().ToString();
                user.Number = GenerateUserNumber();
+               user.LastOfferNumber = 0.ToString("D7");
 
                XElement userElement = ConvertToDatabaseModel(user);
 
@@ -98,13 +99,27 @@ namespace CableManager.Repository.User
          return users;
       }
 
+      public void UpdateLastOfferNumber(string userId, string lastOfferNumber)
+      {
+         int lastOfferNumberInteger;
+         XElement userFound = _usersXDocument?.Find(userId);
+
+         int.TryParse(lastOfferNumber, out lastOfferNumberInteger);
+
+         lastOfferNumberInteger++;
+
+         userFound?.Element("LastOfferNumber")?.SetValue(lastOfferNumberInteger.ToString("D7"));
+
+         _usersXDocument?.Save(_repositoryFileName);
+      }
+
       #region Private methods
 
       private string GenerateUserNumber()
       {
          List<XElement> userElements = _usersXDocument.Descendants("User").ToList();
          XElement lastElement = userElements.LastOrDefault();
-         string userCode = "000";
+         string userCode = 0.ToString("D3");
 
          if (lastElement != null)
          {
@@ -130,7 +145,8 @@ namespace CableManager.Repository.User
             new XElement("Name", user.Name),
             new XElement("Password", passwordHash),
             new XElement("FirstName", user.FirstName),
-            new XElement("LastName", user.LastName));
+            new XElement("LastName", user.LastName),
+            new XElement("LastOfferNumber", user.LastOfferNumber));
 
          return userElement;
       }
@@ -160,13 +176,16 @@ namespace CableManager.Repository.User
 
       private UserModel ConvertToModel(XElement userElement)
       {
-         var user = new UserModel(
-            userElement.Element("Id")?.Value,
-            userElement.Element("Number")?.Value,
-            userElement.Element("Name")?.Value,
-            userElement.Element("Password")?.Value,
-            userElement.Element("FirstName")?.Value,
-            userElement.Element("LastName")?.Value);
+         var user = new UserModel
+         {
+            Id = userElement.Element("Id")?.Value,
+            Number = userElement.Element("Number")?.Value,
+            Name = userElement.Element("Name")?.Value,
+            Password = userElement.Element("Password")?.Value,
+            FirstName = userElement.Element("FirstName")?.Value,
+            LastName = userElement.Element("LastName")?.Value,
+            LastOfferNumber = userElement.Element("LastOfferNumber")?.Value
+         };
 
          return user;
       }

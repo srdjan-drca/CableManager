@@ -28,9 +28,9 @@
          HorizontalAlignment="Left"
          Margin="13,0,0,5" />
       <TextBox
-         Text="{Binding SelectedCustomer, UpdateSourceTrigger=PropertyChanged}"
+         Text="{Binding SelectedCustomerName, UpdateSourceTrigger=PropertyChanged}"
          Style="{DynamicResource SearchMetroTextBox}"
-         wpfTextBoxAutoComplete:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Customers}"
+         wpfTextBoxAutoComplete:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding CustomerNames}"
          wpfTextBoxAutoComplete:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"
          mah:TextBoxHelper.Watermark="{Binding Path=LabelProvider[UI_AddressTo]}"
          mah:TextBoxHelper.UseFloatingWatermark="True"

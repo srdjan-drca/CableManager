@@ -1,15 +1,16 @@
 ﻿using System.IO;
+using Spire.Pdf;
+using Spire.Pdf.Grid;
 using CableManager.Localization;
-using CableManager.Report.Common;
+using CableManager.Report.Extensions;
+using CableManager.Report.Helpers;
 using CableManager.Report.Models;
 using CableManager.Report.StyleManager;
 using CableManager.Report.StyleManager.Cell;
-using Spire.Pdf;
-using Spire.Pdf.Grid;
 
 namespace CableManager.Report.Generators.Pdf.Sections
 {
-   public abstract class BaseSection
+   public abstract class BasePdfSection
    {
       private CellStyle _arial8BlackLeft;
 
@@ -17,7 +18,7 @@ namespace CableManager.Report.Generators.Pdf.Sections
 
       protected ILabelProvider LabelProvider;
 
-      protected BaseSection(BaseReportModel baseReportModel)
+      protected BasePdfSection(BaseReportModel baseReportModel)
       {
          BaseReportModel = baseReportModel;
          LabelProvider = baseReportModel.LabelProvider;

@@ -14,6 +14,12 @@
 
       public string LastName { get; set; }
 
+      public string LastOfferNumber { get; set; }
+
+      public UserModel()
+      {
+      }
+
       public UserModel(string name)
       {
          Name = name;
@@ -23,14 +29,6 @@
       {
          Name = name;
          Password = password;
-      }
-
-      public UserModel(string id, string number, string name, string password, string firstName, string lastName) : this(name, password)
-      {
-         Id = id;
-         Number = number;
-         FirstName = firstName;
-         LastName = lastName;
       }
    }
 }

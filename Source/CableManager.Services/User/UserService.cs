@@ -151,7 +151,16 @@ namespace CableManager.Services.User
 
       public UserModel GetCurrentlyLoggedInUser()
       {
+         UserModel user = _userRepository.Get(_currentLoggedInUser.Id);
+
+         _currentLoggedInUser = user;
+
          return _currentLoggedInUser;
+      }
+
+      public void UpdateLastOfferNumber(string userId, string lastOfferNumber)
+      {
+         _userRepository.UpdateLastOfferNumber(userId, lastOfferNumber);
       }
 
       private bool IsExists(string userName)

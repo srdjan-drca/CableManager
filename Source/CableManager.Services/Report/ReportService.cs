@@ -1,14 +1,16 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Globalization;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Linq;
 using Spire.Pdf;
 using CableManager.Report;
+using CableManager.Report.Models;
+using CableManager.Report.Result;
 using CableManager.Localization;
 using CableManager.Common.Helpers;
 using CableManager.Common.Result;
-using CableManager.Report.Models;
 using CableManager.Repository.Company;
 using CableManager.Repository.Customer;
 using CableManager.Repository.Models;
@@ -28,6 +30,8 @@ namespace CableManager.Services.Report
 
       private readonly string _offersDirectory;
 
+      private string _language;
+
       public ReportService(ICableManagerReport cableManagerReport, ICustomerRepository customerRepository,
          ICompanyRepository companyRepository, IUserService userService)
       {
@@ -39,48 +43,80 @@ namespace CableManager.Services.Report
          _offersDirectory = new DirectoryInfo(DirectoryHelper.GetApplicationStoragePath() + "/Offers").FullName;
       }
 
-      public ReturnResult GeneratePdfReport(string fileName, string language)
+      public OfferResult GeneratePdfReport(string filePrefix, string customerId, string note, string language)
       {
-         ReturnResult result;
+         OfferResult result;
+         string date = DateTime.Now.ToString(CultureInfo.CurrentCulture);
+         var offerName = CreateOfferName(filePrefix, date, ".pdf");
+         var offerFullName = CreateFullName(offerName);
+
+         _language = language;
 
          try
          {
-            DirectoryHelper.CreateDirectory(_offersDirectory);
-            string offerFile = new FileInfo(_offersDirectory + @"/" + fileName).FullName;
-            BaseReportModel reportModel = CreateBaseReportModel(language);
+            UserModel user = _userService.GetCurrentlyLoggedInUser();
 
-            var pdfDocument = _cableManagerReport.GenerateOfferPdf(reportModel);
+            DirectoryHelper.CreateDirectory(_offersDirectory);
+            string offerFile = new FileInfo(_offersDirectory + @"/" + offerName).FullName;
+            BaseReportModel reportModel = CreateBaseReportModel(customerId, note, user);
+
+            _userService.UpdateLastOfferNumber(user.Id, user.LastOfferNumber);
+
+            PdfDocumentBase pdfDocument = _cableManagerReport.GenerateOfferPdf(reportModel);
 
             pdfDocument.Save(offerFile, FileFormat.PDF);
             Process.Start(offerFile);
 
-            result = new SuccessResult();
+            result = new OfferResult(true, string.Empty)
+            {
+               Date = date,
+               FileName = offerName,
+               FileFullName = offerFullName
+            };
          }
          catch (Exception exception)
          {
-            result = new FailResult(exception.Message);
+            result = new OfferResult(false, exception.Message);
          }
 
          return result;
       }
 
-      public ReturnResult GenerateExcelReport(string fileName, string language)
+      public OfferResult GenerateExcelReport(string filePrefix, string customerId, string note, string language)
       {
-         ReturnResult result;
+         OfferResult result;
+         string date = DateTime.Now.ToString(CultureInfo.CurrentCulture);
+         var offerName = CreateOfferName(filePrefix, date, ".xlsx");
+         var offerFullName = CreateFullName(offerName);
+
+         _language = language;
 
          try
          {
+            UserModel user = _userService.GetCurrentlyLoggedInUser();
+
             DirectoryHelper.CreateDirectory(_offersDirectory);
-            string offerFile = new FileInfo(_offersDirectory + @"/" + fileName).FullName;
-            BaseReportModel reportModel = CreateBaseReportModel(language);
+            BaseReportModel reportModel = CreateBaseReportModel(customerId, note, user);
 
-            result = _cableManagerReport.GenerateOfferExcel(offerFile, reportModel);
+            _userService.UpdateLastOfferNumber(user.Id, user.LastOfferNumber);
 
-            Process.Start(offerFile);
+            MemoryStream excelDocument = _cableManagerReport.GenerateOfferExcel(reportModel);
+            FileHelper.SaveToDisk(excelDocument, offerFullName);
+
+            excelDocument.Dispose();
+
+            Process.Start(offerFullName);
+
+            result = new OfferResult(true, string.Empty)
+            {
+               Date = date,
+               FileName = offerName,
+               FileFullName = offerFullName
+            };
          }
          catch (Exception exception)
          {
-            result = new FailResult(exception.Message);
+            result = new OfferResult(false, exception.Message);
          }
 
          return result;
@@ -109,41 +145,50 @@ namespace CableManager.Services.Report
          return result;
       }
 
-      //--------/////////////////////////////////////////////////////////////////////
-      // CODE BELOW IS TEMPORARY, TO BE DELETED WHEN DTO BUILDERS ARE FINISHED
-      //--------/////////////////////////////////////////////////////////////////////
-
-      private BaseReportModel CreateBaseReportModel(string language)
+      private string CreateOfferName(string customerName, string date, string extension)
       {
-         UserModel user = _userService.GetCurrentlyLoggedInUser();
+         string date3 = string.Join("_", date.Split(new[] { " " }, StringSplitOptions.None).Take(2));
+         string dateNormalized = date3.Replace("/", "_").Replace(":", "_");
 
+         return customerName + "_" + dateNormalized + extension;
+      }
+
+      private string CreateFullName(string name)
+      {
+         return new FileInfo(DirectoryHelper.GetApplicationStoragePath() + "/Offers/" + name).FullName;
+      }
+
+      private BaseReportModel CreateBaseReportModel(string customerId, string note, UserModel user)
+      {
          var offerReportModel = new OfferReportModel
          {
-            Id = "PO0005544",
+            Id = "PO" + user.Number + "-" + user.LastOfferNumber,
             UserNumberAndName = string.Join(" ", user.Number, user.FirstName, user.LastName),
-            Note = "kablovi vrtić",
-            CustomerDetails = CreateCustomerDetails(),
+            Note = note,
+            CustomerDetails = CreateCustomerDetails(customerId),
             CompanyDetails = CreateCompanyDetails(),
             Cables = CreateCableOffer(),
             TimeDate = DateTime.Now.ToString("dd/MM/yyyy"),
             LabelProvider = new LabelProvider()
          };
 
-         offerReportModel.LabelProvider.SetCulture(language);
+         offerReportModel.LabelProvider.SetCulture(_language);
 
          return offerReportModel;
       }
 
-      private CustomerDetails CreateCustomerDetails()
+      private CustomerDetails CreateCustomerDetails(string customerId)
       {
+         CustomerModel customer = _customerRepository.Get(customerId);
+
          return new CustomerDetails
          {
-            Name = "BGS ELEKTRIKA d.o.o.",
-            Street = "Trešnjica 5",
-            PostCodeAndCity = "35000 SLAVONSKI BROD",
-            Country = "HRVATSKA",
-            TaxNumber = "91792295423",
-            Email = "info@bgs.hr"
+            Name = customer.Name,
+            Street = customer.Street,
+            PostCodeAndCity = string.Join(" ", customer.PostalCode, customer.City),
+            Country = customer.Country,
+            TaxNumber = customer.TaxNumber,
+            Email = customer.Email
          };
       }
 
@@ -187,7 +232,6 @@ namespace CableManager.Services.Report
          return new CableDetails
          {
             SerialNumber = 1,
-            ItemCode = 200002,
             Name = "KABEL PPY 3x1,5mm NYM-J",
             Quantity = 1057,
             Unit = "m",
@@ -204,7 +248,6 @@ namespace CableManager.Services.Report
          return new CableDetails
          {
             SerialNumber = 2,
-            ItemCode = 200016,
             Name = "KABEL PPY 5x1,5mm NYM-J (100)",
             Quantity = 296,
             Unit = "m",

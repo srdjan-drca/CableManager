@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CableManager.Report.Common
+namespace CableManager.Report.Helpers
 {
    public enum CellStyleId
    {

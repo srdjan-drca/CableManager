@@ -14,5 +14,7 @@ namespace CableManager.Services.User
       ReturnResult ChangePassword(string userName, string currentPassword, string newPassword, string newPasswordRepeated);
 
       UserModel GetCurrentlyLoggedInUser();
+
+      void UpdateLastOfferNumber(string userId, string lastOfferNumber);
    }
 }

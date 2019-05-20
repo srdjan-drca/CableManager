@@ -1,4 +1,4 @@
-﻿namespace CableManager.Report.Common
+﻿namespace CableManager.Report.Extensions
 {
    public static class StringExtensions
    {

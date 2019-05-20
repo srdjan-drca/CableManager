@@ -224,7 +224,7 @@ namespace CableManager.Report.Generators.Pdf.Sections
             emptyRow.AddCell(cellStyle2, j, string.Empty);
          }
 
-         emptyRow.AddCell(cellStyle3, 8, string.Empty);
+         emptyRow.AddCell(cellStyle3, 9, string.Empty);
       }
 
       private PdfGrid CreateCableOfferTotalsGrid()

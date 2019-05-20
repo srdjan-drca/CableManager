@@ -88,8 +88,8 @@ namespace CableManager.Report.Generators.Excel.Worksheets
       {
          int numberOfRows = 5;
          var pixelTop = 5;
-         var pixelLeft = 930;
-         int pixelWidth = (numberOfRows+3) * DefaultRowHeightInPixels;
+         var pixelLeft = 910;
+         int pixelWidth = (numberOfRows+4) * DefaultRowHeightInPixels;
          int pixelHeight = numberOfRows * DefaultRowHeightInPixels;
 
          var logo = FileHelper.GetResourceStream("CableManager.Report.Resources.Images.Logo.png");
@@ -117,6 +117,8 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
          _rowId = 7;
          _columnId++;
+
+         worksheet.Cells[_rowId, _columnId].Style.Font.Bold = true;
 
          worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.Id);
          worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.TimeDate);
@@ -159,9 +161,12 @@ namespace CableManager.Report.Generators.Excel.Worksheets
             worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.TotalPrice);
             worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.TotalPriceWithVat);
 
+            worksheet.Cells[_rowId, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
             _rowId++;
          }
 
+         worksheet.Cells[_rowId, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
          worksheet.Cells[_rowId, 1, _rowId, 9].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
       }
 
@@ -219,6 +224,7 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
          worksheet.Cells[_rowId, 1, _rowId, 9].Style.Border.Top.Style = ExcelBorderStyle.Thin;
          worksheet.Cells[_rowId, 1, _rowId, 9].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+         worksheet.Cells[_rowId, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
          worksheet.Cells[_rowId, 1, _rowId, 9].Style.Font.Bold = true;
          worksheet.Cells[_rowId, 1, _rowId, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;

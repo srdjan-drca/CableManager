@@ -1,4 +1,6 @@
-﻿namespace CableManager.Repository.Models
+﻿using System.Collections.Generic;
+
+namespace CableManager.Repository.Models
 {
    public class CompanyModel
    {
@@ -21,5 +23,9 @@
       public string Mobile { get; set; }
 
       public string Email { get; set; }
+
+      public string LogoPath { get; set; }
+
+      public List<string> BankAccounts { get; set; }
    }
 }

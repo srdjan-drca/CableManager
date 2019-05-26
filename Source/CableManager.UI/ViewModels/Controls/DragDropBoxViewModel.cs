@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.IO;
+using System.Linq;
 using CableManager.Localization;
 using CableManager.UI.Helpers.DragDrop;
 using CableManager.UI.Notification;
@@ -10,16 +10,14 @@ namespace CableManager.UI.ViewModels.Controls
    {
       public DragDropBoxViewModel(LabelProvider labelProvider) : base(labelProvider)
       {
-         CustomerRequestFiles = new List<string>();
       }
-
-      public List<string> CustomerRequestFiles { get; set; }
 
       public void OnFileDrop(string[] filePaths)
       {
-         CustomerRequestFiles.AddRange(filePaths);
-
-         var message = new Message(filePaths.FirstOrDefault(), MessageType.CustomerRequest);
+         string customerRequestFile = filePaths.FirstOrDefault();
+         string extension = Path.GetExtension(customerRequestFile);
+         string recordId = extension == ".xlsx" ? customerRequestFile : string.Empty;
+         Message message = new Message(recordId, MessageType.CustomerRequest);
 
          MessengerInstance.Send(message);
       }

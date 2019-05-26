@@ -9,7 +9,8 @@
       d:DesignHeight="470" d:DesignWidth="710"
       Title="CompanyContactPage">
 
-   <StackPanel>
+   <ScrollViewer>
+      <StackPanel>
       <!--Company details section-->
       <Rectangle
            Fill="LightGray"
@@ -42,11 +43,14 @@
             <RowDefinition Height="2" />
             <RowDefinition Height="30" />
             <RowDefinition Height="2" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="2" />
          </Grid.RowDefinitions>
 
          <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="130" />
          </Grid.ColumnDefinitions>
 
          <TextBlock
@@ -147,6 +151,22 @@
             Grid.Row="16" Grid.Column="1"
             BorderBrush="LightSkyBlue"
             BorderThickness="1" />
+
+         <TextBlock
+            Text="{Binding Path=LabelProvider[UI_Logo]}"
+            Grid.Row="18" Grid.Column="0"
+            VerticalAlignment="Center"
+            FontWeight="Bold" />
+         <TextBox
+            Text="{Binding Path=Company.LogoPath, Mode=TwoWay}"
+            Grid.Row="18" Grid.Column="1"
+            BorderBrush="LightSkyBlue"
+            BorderThickness="1" />
+         <Button
+            Content="{Binding Path=LabelProvider[UI_Browse]}"
+            Command="{Binding Path=BrowseLogoCommand}"
+            Grid.Row="18" Grid.Column="2"
+            Width="130" Height="30" />
       </Grid>
 
       <!--Actions section-->
@@ -187,8 +207,8 @@
          FontSize="14"
          Margin="13,0,0,20" />
    </StackPanel>
-
-   <i:Interaction.Triggers>
+   </ScrollViewer>
+         <i:Interaction.Triggers>
       <i:EventTrigger EventName="LostFocus">
          <i:InvokeCommandAction
             Command="{Binding Path=ClearStatusMessageCommand}" />

@@ -11,14 +11,13 @@ using CableManager.Repository.PriceDocument;
 using CableManager.Services.User;
 using CableManager.Services.Report;
 using CableManager.Services.License;
-using CableManager.Services.DocumentLoaders.CableName;
-using CableManager.Services.DocumentLoaders.CustomerRequest;
-using CableManager.Services.DocumentLoaders.Price;
 using CableManager.UI.Navigation;
 using CableManager.UI.ViewModels.Controls;
 using CableManager.UI.ViewModels.Pages;
 using CableManager.UI.ViewModels.Windows;
 using CableManager.Report;
+using CableManager.Services.Calculation;
+using CableManager.Services.Search;
 
 namespace CableManager.UI.Configuration
 {
@@ -54,10 +53,8 @@ namespace CableManager.UI.Configuration
          SimpleIoc.Default.Register<IUserService, UserService>();
          SimpleIoc.Default.Register<IReportService, ReportService>();
          SimpleIoc.Default.Register<ILicenseService, LicenseService>();
-         //Document loaders
-         SimpleIoc.Default.Register<ICableNameLoader, CableNameLoader>();
-         SimpleIoc.Default.Register<ICustomerRequestLoader, CustomerRequestLoader>();
-         SimpleIoc.Default.Register<IPriceLoader, PriceLoader>();
+         SimpleIoc.Default.Register<IOfferService, OfferService>();
+         SimpleIoc.Default.Register<ICableSearchService, CableSearchService>();
          //Other
          SimpleIoc.Default.Register<LabelProvider>();
          SimpleIoc.Default.Register<ICableManagerReport, CableManagerReport>();

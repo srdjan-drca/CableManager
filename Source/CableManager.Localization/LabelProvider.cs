@@ -28,6 +28,11 @@ namespace CableManager.Localization
          CurrentCulture = new CultureInfo(cultureCode);
       }
 
+      public string GetCulture()
+      {
+         return CurrentCulture.Name;
+      }
+
       #region Private methods
 
       private CultureInfo CurrentCulture

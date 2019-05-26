@@ -133,7 +133,7 @@
     <value>Create</value>
   </data>
   <data name="UI_CreateOfferPdf" xml:space="preserve">
-    <value>Offer pdf</value>
+    <value>Offer PDF</value>
   </data>
   <data name="UI_Croatian" xml:space="preserve">
     <value>Croatian</value>
@@ -310,7 +310,7 @@
     <value>Company</value>
   </data>
   <data name="UI_CreateOfferExcel" xml:space="preserve">
-    <value>Offer excel</value>
+    <value>Offer Excel</value>
   </data>
   <data name="UI_Fax" xml:space="preserve">
     <value>Fax</value>
@@ -503,5 +503,14 @@
   </data>
   <data name="DOC_WorthUntil" xml:space="preserve">
     <value>Worth until</value>
+  </data>
+  <data name="UI_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="UI_CustomerRequestMustBeXlsx" xml:space="preserve">
+    <value>Customer request must be in xlsx format</value>
+  </data>
+  <data name="UI_Logo" xml:space="preserve">
+    <value>Logo</value>
   </data>
 </root>

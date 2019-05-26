@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Drawing;
+using System.Globalization;
 using Spire.Pdf;
 using Spire.Pdf.Grid;
 using Spire.Pdf.Graphics;
-using CableManager.Common.Helpers;
 using CableManager.Report.Extensions;
 using CableManager.Report.Helpers;
 using CableManager.Report.Models;
@@ -31,11 +31,14 @@ namespace CableManager.Report.Generators.Pdf.Sections
 
       private readonly OfferReportModel _offerReportModel;
 
+      private readonly CultureInfo _cultureInfo;
+
       public CablePdfSection(BaseReportModel baseReportModel) : base(baseReportModel)
       {
          CreateCellStyles();
 
          _offerReportModel = (OfferReportModel)baseReportModel;
+         _cultureInfo = new CultureInfo("hr-HR");
       }
 
       public override MemoryStream GenerateContent()
@@ -51,7 +54,7 @@ namespace CableManager.Report.Generators.Pdf.Sections
          PdfPageBase page = pdfDocument.Pages.Add(PdfPageSize.A4);
          PdfGrid companyDetailsGrid = CreateCompanyDetailsContent();
          PdfGrid customerDetailsGrid = CreateCustomerDetailsContent();
-         PdfImage logo = PdfImage.FromStream(FileHelper.GetResourceStream("CableManager.Report.Resources.Images.Logo.png"));
+         PdfImage logo = CreateLogoImage();
          PdfGrid offerDetailsGrid = CreateOfferDetailsGrid();
          PdfGrid cableOfferGrid = CreateCableOfferGrid(out mainTableHeight);
          PdfGrid cableOfferTotalsGrid = CreateCableOfferTotalsGrid();
@@ -77,11 +80,11 @@ namespace CableManager.Report.Generators.Pdf.Sections
          PdfGridRow row2 = grid.AddRow();
          PdfGridRow row3 = grid.AddRow();
          PdfGridRow row4 = grid.AddRow();
-         string taxNumber = string.Join(" ", LabelProvider["DOC_TaxNumber"] + _offerReportModel.CompanyDetails?.TaxNumber);
+         string taxNumber = string.Join(" ", LabelProvider["DOC_TaxNumber"] + _offerReportModel.CompanyModelPdf?.TaxNumber);
 
-         row1.AddCell(_arial12BlackLeftBold, 0, _offerReportModel.CompanyDetails?.Name);
-         row2.AddCell(_arial10BlackLeftBold, 0, _offerReportModel.CompanyDetails?.Street);
-         row3.AddCell(_arial10BlackLeftBold, 0, _offerReportModel.CompanyDetails?.City);
+         row1.AddCell(_arial12BlackLeftBold, 0, _offerReportModel.CompanyModelPdf?.Name);
+         row2.AddCell(_arial10BlackLeftBold, 0, _offerReportModel.CompanyModelPdf?.Street);
+         row3.AddCell(_arial10BlackLeftBold, 0, _offerReportModel.CompanyModelPdf?.City);
          row4.AddCell(_arial10BlackLeftBold, 0, taxNumber);
 
          return grid;
@@ -95,12 +98,27 @@ namespace CableManager.Report.Generators.Pdf.Sections
          PdfGridRow row3 = grid.AddRow();
          PdfGridRow row4 = grid.AddRow();
 
-         row1.AddCell(_arial10BlackLeftBold, 0, _offerReportModel.CustomerDetails.Name);
-         row2.AddCell(_arial10BlackLeft, 0, _offerReportModel.CustomerDetails.Street);
-         row3.AddCell(_arial10BlackLeft, 0, _offerReportModel.CustomerDetails.PostCodeAndCity);
-         row4.AddCell(_arial10BlackLeft, 0, _offerReportModel.CustomerDetails.Country);
+         row1.AddCell(_arial10BlackLeftBold, 0, _offerReportModel.CustomerModelPdf.Name);
+         row2.AddCell(_arial10BlackLeft, 0, _offerReportModel.CustomerModelPdf.Street);
+         row3.AddCell(_arial10BlackLeft, 0, _offerReportModel.CustomerModelPdf.PostCodeAndCity);
+         row4.AddCell(_arial10BlackLeft, 0, _offerReportModel.CustomerModelPdf.Country);
 
          return grid;
+      }
+
+      private PdfImage CreateLogoImage()
+      {
+         PdfImage logo = null;
+
+         if (_offerReportModel.CompanyModelPdf.LogoPath != null)
+         {
+            string logoPath = new FileInfo(_offerReportModel.CompanyModelPdf.LogoPath).FullName;
+            Image image = Image.FromFile(logoPath);
+
+            logo = PdfImage.FromImage(image);
+         }
+
+         return logo;
       }
 
       private PdfGrid CreateOfferDetailsGrid()
@@ -119,7 +137,7 @@ namespace CableManager.Report.Generators.Pdf.Sections
          row2.AddCell(_arial9BlackLeft, 1, _offerReportModel.TimeDate);
 
          row3.AddCell(_arial9BlackLeft, 0, LabelProvider["DOC_CustomerTaxNumber"]);
-         row3.AddCell(_arial9BlackLeft, 1, _offerReportModel.CustomerDetails.TaxNumber);
+         row3.AddCell(_arial9BlackLeft, 1, _offerReportModel.CustomerModelPdf.TaxNumber);
 
          row4.AddCell(_arial9BlackLeft, 0, LabelProvider["DOC_WorthUntil"]);
          row4.AddCell(_arial9BlackLeft, 1, string.Empty);
@@ -133,24 +151,24 @@ namespace CableManager.Report.Generators.Pdf.Sections
       private void AddUserDetails(PdfPageBase page)
       {
          string userDetails = string.Join(" ",LabelProvider["DOC_DocumentComposedBy"], _offerReportModel.UserNumberAndName);
-         string userEmail = string.Join(" ", LabelProvider["DOC_Email"], _offerReportModel.CustomerDetails.Email);
+         string userEmail = string.Join(" ", LabelProvider["DOC_Email"], _offerReportModel.CustomerModelPdf.Email);
          string contactInfo = CreateContactInfo();
 
          page.AddText(userDetails, _arial9BlackLeft, 0, 240);
          page.AddText(userEmail, _arial9BlackLeft, 0, 250);
          page.AddText(_offerReportModel.Note, _arial9BlackLeft, 0, 260);
          page.AddText(contactInfo, _arial9BlackLeft, 0, 290);
-         page.AddText(_offerReportModel.CompanyDetails?.BankAccount1 , _arial9BlackLeft, 0, 310);
-         page.AddText(_offerReportModel.CompanyDetails?.BankAccount2, _arial9BlackLeft, 0, 320);
+         page.AddText(_offerReportModel.CompanyModelPdf?.BankAccounts[0] , _arial9BlackLeft, 0, 310);
+         page.AddText(_offerReportModel.CompanyModelPdf?.BankAccounts[1], _arial9BlackLeft, 0, 320);
       }
 
       private string CreateContactInfo()
       {
-         string phones = string.Join(", ", _offerReportModel.CompanyDetails?.Phone1, _offerReportModel.CompanyDetails?.Phone2);
+         string phones = string.Join(", ", _offerReportModel.CompanyModelPdf?.Phone1, _offerReportModel.CompanyModelPdf?.Phone2);
          string phoneInfo = string.Join(" ", LabelProvider["DOC_Phone"], phones);
-         string faxInfo = string.Join(" ", LabelProvider["DOC_Fax"], _offerReportModel.CompanyDetails?.Fax);
-         string mobileInfo = string.Join(" ", LabelProvider["DOC_Mobile"], _offerReportModel.CompanyDetails?.MobilePhone);
-         string emailInfo = string.Join(" ", LabelProvider["DOC_Email"], _offerReportModel.CompanyDetails?.Email);
+         string faxInfo = string.Join(" ", LabelProvider["DOC_Fax"], _offerReportModel.CompanyModelPdf?.Fax);
+         string mobileInfo = string.Join(" ", LabelProvider["DOC_Mobile"], _offerReportModel.CompanyModelPdf?.MobilePhone);
+         string emailInfo = string.Join(" ", LabelProvider["DOC_Email"], _offerReportModel.CompanyModelPdf?.Email);
          string contactInfo = string.Join(", ", phoneInfo, faxInfo, mobileInfo, emailInfo);
 
          return contactInfo;
@@ -165,20 +183,20 @@ namespace CableManager.Report.Generators.Pdf.Sections
 
          offset = 60;
 
-         foreach (CableDetails cableDetails in _offerReportModel.Cables)
+         foreach (OfferItem offerItem in _offerReportModel.OfferItems)
          {
             PdfGridRow contentRow = grid.AddRow();
 
             contentRow.AddCell(_arial8BlackLeftWhiteLeftBorder, 0, string.Empty);
-            contentRow.AddCell(_arial8BlackLeft, 1, cableDetails.SerialNumber);
-            contentRow.AddCell(_arial8BlackLeft, 2, cableDetails.Name);
-            contentRow.AddCell(_arial8BlackLeft, 3, cableDetails.Quantity);
-            contentRow.AddCell(_arial8BlackLeft, 4, cableDetails.Unit);
-            contentRow.AddCell(_arial8BlackLeft, 5, cableDetails.PricePerUnit);
-            contentRow.AddCell(_arial8BlackLeft, 6, cableDetails.Rebate);
-            contentRow.AddCell(_arial8BlackLeft, 7, cableDetails.Vat);
-            contentRow.AddCell(_arial8BlackLeft, 8, cableDetails.TotalPrice);
-            contentRow.AddCell(_arial8BlackLeftWhiteRightBorder, 9, cableDetails.TotalPriceWithVat);
+            contentRow.AddCell(_arial8BlackLeft, 1, offerItem.SerialNumber);
+            contentRow.AddCell(_arial8BlackLeft, 2, offerItem.Name);
+            contentRow.AddCell(_arial8BlackLeft, 3, offerItem.Quantity);
+            contentRow.AddCell(_arial8BlackLeft, 4, offerItem.Unit);
+            contentRow.AddCell(_arial8BlackLeft, 5, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.PricePerItem));
+            contentRow.AddCell(_arial8BlackLeft, 6, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.Rebate));
+            contentRow.AddCell(_arial8BlackLeft, 7, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.ValueAddedTax));
+            contentRow.AddCell(_arial8BlackLeft, 8, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPrice));
+            contentRow.AddCell(_arial8BlackLeftWhiteRightBorder, 9, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithVat));
 
             offset += 10;
          }
@@ -238,16 +256,22 @@ namespace CableManager.Report.Generators.Pdf.Sections
          row2.RemoveAllBorders();
          row3.RemoveAllBorders();
 
+         string totalRebate = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalRebate);
+         string totalPrice = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalPrice);
+         string totalValueAddedTax = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalValueAddedTax);
+         string grandTotal = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.GrandTotal);
+
          row1.AddCell(_arial9BlackLeft, 1, LabelProvider["DOC_RebateTotal"]);
-         row1.AddCell(_arial9BlackLeft, 2, "5.284,14");
+         row1.AddCell(_arial9BlackLeft, 2, totalRebate);
+
          row1.AddCell(_arial9BlackLeft.Clone().SetRightAlignment(), 3, LabelProvider["DOC_TotalWithoutVAT"]);
-         row1.AddCell(_arial9BlackLeft.Clone().SetRightAlignment(), 5, "15.852,36");
+         row1.AddCell(_arial9BlackLeft.Clone().SetRightAlignment(), 5, totalPrice);
 
          row2.AddCell(_arial9BlackLeft.Clone().SetRightAlignment(), 3, LabelProvider["DOC_TotalVAT"]);
-         row2.AddCell(_arial9BlackLeft.Clone().SetRightAlignment(), 5, "3.963,09");
+         row2.AddCell(_arial9BlackLeft.Clone().SetRightAlignment(), 5, totalValueAddedTax);
 
          row3.AddCell(_arial9BlackLeftBold.Clone().SetRightAlignment(), 3, LabelProvider["DOC_Total"]);
-         row3.AddCell(_arial9BlackLeftBold.Clone().SetRightAlignment(), 5, "19.815,45");
+         row3.AddCell(_arial9BlackLeftBold.Clone().SetRightAlignment(), 5, grandTotal);
 
          return grid;
       }

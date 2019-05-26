@@ -18,7 +18,8 @@ namespace CableManager.UI.ViewModels.Pages
 
       private PriceDocumentModel _selectedPriceDocument;
 
-      public CablePriceAddPageViewModel(LabelProvider labelProvider, ICablePriceDocumentRepository cablePriceDocumentRepository) : base(labelProvider)
+      public CablePriceAddPageViewModel(LabelProvider labelProvider, ICablePriceDocumentRepository cablePriceDocumentRepository)
+         : base(labelProvider)
       {
          _cablePriceDocumentRepository = cablePriceDocumentRepository;
 
@@ -55,12 +56,12 @@ namespace CableManager.UI.ViewModels.Pages
 
       #region Private methods
 
-      private void BrowsePriceDocument(object obj)
+      private void BrowsePriceDocument(object parameter)
       {
          var openFileDialog = new OpenFileDialog
          {
             Title = "Select price list files",
-            Filter = "Price list files (*.XLS;*.XLSX;*.PDF)|*.XLS;*.XLSX;*.PDF",
+            Filter = "Price list files (*.XLSX;*.PDF)|*.XLSX;*.PDF",
             Multiselect = true
          };
 

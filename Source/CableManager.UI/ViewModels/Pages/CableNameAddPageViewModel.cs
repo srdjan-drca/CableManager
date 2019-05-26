@@ -5,7 +5,7 @@ using CableManager.Common.Result;
 using CableManager.Localization;
 using CableManager.Repository.Cable;
 using CableManager.Repository.Models;
-using CableManager.Services.DocumentLoaders.CableName;
+using CableManager.Services.Calculation;
 
 namespace CableManager.UI.ViewModels.Pages
 {
@@ -13,12 +13,13 @@ namespace CableManager.UI.ViewModels.Pages
    {
       private readonly ICableRepository _cableRepository;
 
-      private readonly ICableNameLoader _cableNameLoader;
+      private readonly IOfferService _offerService;
 
-      public CableNameAddPageViewModel(LabelProvider labelProvider, ICableRepository cableRepository, ICableNameLoader cableNameLoader) : base(labelProvider)
+      public CableNameAddPageViewModel(LabelProvider labelProvider, ICableRepository cableRepository, IOfferService offerService)
+         : base(labelProvider)
       {
          _cableRepository = cableRepository;
-         _cableNameLoader = cableNameLoader;
+         _offerService = offerService;
 
          SaveCableNameCommand = new RelayCommand<object>(SaveCableName);
          LoadCableNamesCommand = new RelayCommand<object>(LoadCableNames);
@@ -43,15 +44,15 @@ namespace CableManager.UI.ViewModels.Pages
          var openFileDialog = new OpenFileDialog
          {
             Title = "Select file with cable name definitions",
-            Filter = "Cable name files (*.XLS;*.XLSX)|*.XLS;*.XLSX"
+            Filter = "Cable name files (*.XLSX)|*.XLSX"
          };
 
          bool? isSuccess = openFileDialog.ShowDialog();
 
          if (isSuccess != null && isSuccess.Value)
          {
-            List<CableModel> cables = _cableNameLoader.Load(openFileDialog.FileName);
-            ReturnResult result = _cableRepository.SaveAll(cables);
+            List<CableModel> cableNames = _offerService.LoadCableNames(openFileDialog.FileName);
+            ReturnResult result = _cableRepository.SaveAll(cableNames);
 
             StatusMessage = result.Message;
          }

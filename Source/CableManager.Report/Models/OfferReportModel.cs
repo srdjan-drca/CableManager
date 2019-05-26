@@ -10,10 +10,12 @@ namespace CableManager.Report.Models
 
       public string Note { get; set; }
 
-      public CustomerDetails CustomerDetails { get; set; }
+      public CustomerModelPdf CustomerModelPdf { get; set; }
 
-      public CompanyDetails CompanyDetails { get; set; }
+      public CompanyModelPdf CompanyModelPdf { get; set; }
 
-      public List<CableDetails> Cables { get; set; }
+      public List<OfferItem> OfferItems { get; set; }
+
+      public OfferTotal OfferTotal { get; set; }
    }
 }

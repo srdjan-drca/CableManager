@@ -95,7 +95,7 @@ namespace CableManager.Services.License
             using (var memoryStream = new MemoryStream())
             {
                Stream licenseVerifyStream = File.OpenRead(licenseFile);
-               licenseVerifyStream?.CopyTo(memoryStream);
+               licenseVerifyStream.CopyTo(memoryStream);
 
                publicKey = memoryStream.ToArray();
             }

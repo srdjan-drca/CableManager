@@ -504,4 +504,13 @@
   <data name="DOC_WorthUntil" xml:space="preserve">
     <value>Vrijedi do:</value>
   </data>
+  <data name="UI_Clear" xml:space="preserve">
+    <value>Očisti</value>
+  </data>
+  <data name="UI_CustomerRequestMustBeXlsx" xml:space="preserve">
+    <value>Zahtjev klijenta mora bitu u xlsx formatu</value>
+  </data>
+  <data name="UI_Logo" xml:space="preserve">
+    <value>Logo</value>
+  </data>
 </root>

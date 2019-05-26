@@ -1,7 +1,7 @@
 ﻿using System.IO;
+using System.Drawing;
 using OfficeOpenXml;
 using CableManager.Report.Models;
-using CableManager.Common.Helpers;
 using CableManager.Report.Extensions;
 using CableManager.Report.Helpers;
 using OfficeOpenXml.Style;
@@ -24,7 +24,7 @@ namespace CableManager.Report.Generators.Excel.Worksheets
       {
          _offerReportModel = (OfferReportModel)baseReportModel;
 
-         _sheetName = "Test sheet";
+         _sheetName = "Offer";
       }
 
       public override string Name
@@ -58,16 +58,16 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
       private void InsertCompanyDetailsContent(ExcelWorksheet worksheet)
       {
-         string taxNumber = string.Join(" ", LabelProvider["DOC_TaxNumber"] + _offerReportModel.CompanyDetails?.TaxNumber);
+         string taxNumber = string.Join(" ", LabelProvider["DOC_TaxNumber"] + _offerReportModel.CompanyModelPdf?.TaxNumber);
 
          _rowId = 2;
          _columnId = 1;
 
          worksheet.Cells[2, 1, 5, 1].Style.Font.Bold = true;
 
-         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CompanyDetails?.Name);
-         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CompanyDetails?.Street);
-         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CompanyDetails?.City);
+         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CompanyModelPdf?.Name);
+         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CompanyModelPdf?.Street);
+         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CompanyModelPdf?.City);
          worksheet.Cells[_rowId++, _columnId].SetValue(taxNumber);
       }
 
@@ -78,10 +78,10 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
          worksheet.Cells[_rowId, _columnId].Style.Font.Bold = true;
 
-         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerDetails.Name);
-         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerDetails.Street);
-         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerDetails.PostCodeAndCity);
-         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerDetails.Country);
+         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerModelPdf.Name);
+         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerModelPdf.Street);
+         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerModelPdf.PostCodeAndCity);
+         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerModelPdf.Country);
       }
 
       private void InsertLogo(ExcelWorksheet worksheet)
@@ -92,13 +92,12 @@ namespace CableManager.Report.Generators.Excel.Worksheets
          int pixelWidth = (numberOfRows+4) * DefaultRowHeightInPixels;
          int pixelHeight = numberOfRows * DefaultRowHeightInPixels;
 
-         var logo = FileHelper.GetResourceStream("CableManager.Report.Resources.Images.Logo.png");
-
-         using (var memoryStream = new MemoryStream())
+         if (_offerReportModel.CompanyModelPdf.LogoPath != null)
          {
-            logo.CopyTo(memoryStream);
+            string logoPath = new FileInfo(_offerReportModel.CompanyModelPdf.LogoPath).FullName;
+            Image logoImage = Image.FromFile(logoPath);
 
-            worksheet.InsertImage(memoryStream, "Logo", pixelTop, pixelLeft, pixelWidth, pixelHeight);
+            worksheet.InsertImage(logoImage, "Logo", pixelTop, pixelLeft, pixelWidth, pixelHeight);
          }
       }
 
@@ -122,7 +121,7 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
          worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.Id);
          worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.TimeDate);
-         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerDetails.TaxNumber);
+         worksheet.Cells[_rowId++, _columnId].SetValue(_offerReportModel.CustomerModelPdf.TaxNumber);
          worksheet.Cells[_rowId++, _columnId].SetValue(string.Empty);
          worksheet.Cells[_rowId++, _columnId].SetValue(string.Empty);
       }
@@ -130,15 +129,15 @@ namespace CableManager.Report.Generators.Excel.Worksheets
       private void InsertUserDetails(ExcelWorksheet worksheet)
       {
          string userDetails = string.Join(" ", LabelProvider["DOC_DocumentComposedBy"], _offerReportModel.UserNumberAndName);
-         string userEmail = string.Join(" ", LabelProvider["DOC_Email"], _offerReportModel.CustomerDetails.Email);
+         string userEmail = string.Join(" ", LabelProvider["DOC_Email"], _offerReportModel.CustomerModelPdf.Email);
          string contactInfo = CreateContactInfo();
 
          worksheet.Cells[12, 1].SetValue(userDetails);
          worksheet.Cells[13, 1].SetValue(userEmail);
          worksheet.Cells[14, 1].SetValue(_offerReportModel.Note);
          worksheet.Cells[15, 1].SetValue(contactInfo);
-         worksheet.Cells[16, 1].SetValue(_offerReportModel.CompanyDetails?.BankAccount1);
-         worksheet.Cells[17, 1].SetValue(_offerReportModel.CompanyDetails?.BankAccount2);
+         worksheet.Cells[16, 1].SetValue(_offerReportModel.CompanyModelPdf?.BankAccounts[0]);
+         worksheet.Cells[17, 1].SetValue(_offerReportModel.CompanyModelPdf?.BankAccounts[1]);
       }
 
       private void InsertCableOfferGrid(ExcelWorksheet worksheet)
@@ -147,7 +146,7 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
          _rowId = 21;
 
-         foreach (CableDetails cableDetails in _offerReportModel.Cables)
+         foreach (OfferItem cableDetails in _offerReportModel.OfferItems)
          {
             _columnId = 1;
 
@@ -155,9 +154,9 @@ namespace CableManager.Report.Generators.Excel.Worksheets
             worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Name);
             worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Quantity);
             worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Unit);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.PricePerUnit);
+            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.PricePerItem);
             worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Rebate);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Vat);
+            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.ValueAddedTax);
             worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.TotalPrice);
             worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.TotalPriceWithVat);
 
@@ -207,11 +206,11 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
       private string CreateContactInfo()
       {
-         string phones = string.Join(", ", _offerReportModel.CompanyDetails?.Phone1, _offerReportModel.CompanyDetails?.Phone2);
+         string phones = string.Join(", ", _offerReportModel.CompanyModelPdf?.Phone1, _offerReportModel.CompanyModelPdf?.Phone2);
          string phoneInfo = string.Join(" ", LabelProvider["DOC_Phone"], phones);
-         string faxInfo = string.Join(" ", LabelProvider["DOC_Fax"], _offerReportModel.CompanyDetails?.Fax);
-         string mobileInfo = string.Join(" ", LabelProvider["DOC_Mobile"], _offerReportModel.CompanyDetails?.MobilePhone);
-         string emailInfo = string.Join(" ", LabelProvider["DOC_Email"], _offerReportModel.CompanyDetails?.Email);
+         string faxInfo = string.Join(" ", LabelProvider["DOC_Fax"], _offerReportModel.CompanyModelPdf?.Fax);
+         string mobileInfo = string.Join(" ", LabelProvider["DOC_Mobile"], _offerReportModel.CompanyModelPdf?.MobilePhone);
+         string emailInfo = string.Join(" ", LabelProvider["DOC_Email"], _offerReportModel.CompanyModelPdf?.Email);
          string contactInfo = string.Join(", ", phoneInfo, faxInfo, mobileInfo, emailInfo);
 
          return contactInfo;

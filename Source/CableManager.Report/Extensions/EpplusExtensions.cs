@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 
@@ -9,9 +8,8 @@ namespace CableManager.Report.Extensions
    public static class EpplusExtensions
    {
       public static void InsertImage(this ExcelWorksheet worksheet,
-         MemoryStream imageAsMemoryStream, string name, int pixelTop, int pixelLeft, int pixelWidth, int pixelHeight)
+         Image image, string name, int pixelTop, int pixelLeft, int pixelWidth, int pixelHeight)
       {
-         Image image = Image.FromStream(imageAsMemoryStream);
          ExcelPicture picture = worksheet.Drawings.AddPicture(name, image);
 
          picture.SetPosition(pixelTop, pixelLeft);

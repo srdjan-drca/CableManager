@@ -48,19 +48,23 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DocumentLoaders\CableName\CableNameLoader.cs" />
-    <Compile Include="DocumentLoaders\CableName\ICableNameLoader.cs" />
-    <Compile Include="DocumentLoaders\CustomerRequest\CustomerRequestLoader.cs" />
-    <Compile Include="DocumentLoaders\CustomerRequest\ICustomerRequestLoader.cs" />
+    <Compile Include="Calculation\OfferType.cs" />
+    <Compile Include="Helpers\CalculationHelper.cs" />
+    <Compile Include="Search\CableSearchService.cs" />
+    <Compile Include="Search\ICableSearchService.cs" />
+    <Compile Include="Search\Iterator\CellItem.cs" />
+    <Compile Include="Search\Iterator\CellIterator.cs" />
+    <Compile Include="Calculation\OfferService.cs" />
+    <Compile Include="Calculation\IOfferService.cs" />
+    <Compile Include="Calculation\Models\Offer.cs" />
     <Compile Include="Helpers\PdfDocumentHelper.cs" />
-    <Compile Include="DocumentLoaders\Price\IPriceLoader.cs" />
-    <Compile Include="DocumentLoaders\Price\PriceLoader.cs" />
     <Compile Include="License\ILicenseService.cs" />
     <Compile Include="License\LicenseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Report\ReportService.cs" />
     <Compile Include="Result\UserResult.cs" />
+    <Compile Include="Search\Model\Cable.cs" />
     <Compile Include="User\IUserService.cs" />
     <Compile Include="User\UserService.cs" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿namespace CableManager.Report.Models
 {
-   public class CustomerDetails
+   public class CustomerModelPdf
    {
       public string Name { get; set; }
 

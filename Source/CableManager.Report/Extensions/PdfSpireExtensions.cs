@@ -36,7 +36,10 @@ namespace CableManager.Report.Extensions
 
       public static void Add(this PdfPageBase page, PdfImage image, float x, float y, float width, float height)
       {
-         page.Canvas.DrawImage(image, x, y, width, height);
+         if (image != null)
+         {
+            page.Canvas.DrawImage(image, x, y, width, height);
+         }
       }
 
       public static void AddLine(this PdfPageBase page, float x1, float y1, float x2, float y2)

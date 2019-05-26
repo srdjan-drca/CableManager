@@ -125,6 +125,13 @@
             Foreground="White"
             Margin="0,0,10,0"
             Width="130" Height="30" />
+         <Button
+            Content="{Binding Path=LabelProvider[UI_Clear]}"
+            Command="{Binding Path=ClearOfferCommand}"
+            Background="#41B1E1"
+            Foreground="White"
+            Margin="0,0,10,0"
+            Width="130" Height="30" />
       </StackPanel>
 
       <!--Status section-->

@@ -457,6 +457,15 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        internal static string UI_Clear {
+            get {
+                return ResourceManager.GetString("UI_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Company.
         /// </summary>
         internal static string UI_Company {
@@ -529,7 +538,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Offer excel.
+        ///   Looks up a localized string similar to Offer Excel.
         /// </summary>
         internal static string UI_CreateOfferExcel {
             get {
@@ -538,7 +547,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Offer pdf.
+        ///   Looks up a localized string similar to Offer PDF.
         /// </summary>
         internal static string UI_CreateOfferPdf {
             get {
@@ -642,6 +651,15 @@ namespace CableManager.Localization.Resources {
         internal static string UI_CustomerRequestMustBeSelected {
             get {
                 return ResourceManager.GetString("UI_CustomerRequestMustBeSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer request must be in xlsx format.
+        /// </summary>
+        internal static string UI_CustomerRequestMustBeXlsx {
+            get {
+                return ResourceManager.GetString("UI_CustomerRequestMustBeXlsx", resourceCulture);
             }
         }
         
@@ -831,6 +849,15 @@ namespace CableManager.Localization.Resources {
         internal static string UI_LogIn {
             get {
                 return ResourceManager.GetString("UI_LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo.
+        /// </summary>
+        internal static string UI_Logo {
+            get {
+                return ResourceManager.GetString("UI_Logo", resourceCulture);
             }
         }
         

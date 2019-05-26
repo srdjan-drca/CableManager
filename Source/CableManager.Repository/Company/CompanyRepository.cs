@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using System.Collections.Generic;
 using CableManager.Common.Extensions;
 using CableManager.Common.Helpers;
 using CableManager.Common.Result;
@@ -92,7 +92,8 @@ namespace CableManager.Repository.Company
             new XElement("Phone2", company.Phone2),
             new XElement("Fax", company.Fax),
             new XElement("Mobile", company.Mobile),
-            new XElement("Email", company.Email));
+            new XElement("Email", company.Email),
+            new XElement("LogoPath", company.LogoPath));
 
          return companyElement;
       }
@@ -108,10 +109,17 @@ namespace CableManager.Repository.Company
          companyElement.Element("Fax")?.SetValue(company.Fax ?? string.Empty);
          companyElement.Element("Mobile")?.SetValue(company.Mobile ?? string.Empty);
          companyElement.Element("Email")?.SetValue(company.Email ?? string.Empty);
+         companyElement.Element("LogoPath")?.SetValue(company.LogoPath ?? string.Empty);
       }
 
       private CompanyModel ConvertToModel(XElement customerElement)
       {
+         List<string> bankAccounts = new List<string>
+         {
+            "ERSTE BANK: HR3124020061100678549",
+            "SOCIETE GENERALE BANKA: HR7823300031153012079"
+         };
+
          var company = new CompanyModel
          {
             Id = customerElement.Element("Id")?.Value,
@@ -123,7 +131,9 @@ namespace CableManager.Repository.Company
             Phone2 = customerElement.Element("Phone2")?.Value,
             Fax = customerElement.Element("Fax")?.Value,
             Mobile = customerElement.Element("Mobile")?.Value,
-            Email = customerElement.Element("Email")?.Value
+            Email = customerElement.Element("Email")?.Value,
+            LogoPath = customerElement.Element("LogoPath")?.Value,
+            BankAccounts = bankAccounts
          };
 
          return company;

@@ -1,10 +1,12 @@
-﻿namespace CableManager.Report.Extensions
+﻿using System;
+
+namespace CableManager.Report.Extensions
 {
    public static class StringExtensions
    {
-      public static string AddColon(this string stringValue)
+      public static bool Contains(this string source, string toCheck, StringComparison stringComparison)
       {
-         return stringValue + ":";
+         return source?.IndexOf(toCheck, stringComparison) >= 0;
       }
    }
 }

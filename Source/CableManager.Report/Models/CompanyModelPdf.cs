@@ -1,6 +1,8 @@
-﻿namespace CableManager.Report.Models
+﻿using System.Collections.Generic;
+
+namespace CableManager.Report.Models
 {
-   public class CompanyDetails
+   public class CompanyModelPdf
    {
       public string Name { get; set; }
 
@@ -20,8 +22,8 @@
 
       public string Email { get; set; }
 
-      public string BankAccount1 { get; set; }
+      public string LogoPath { get; set; }
 
-      public string BankAccount2 { get; set; }
+      public List<string> BankAccounts { get; set; }
    }
 }

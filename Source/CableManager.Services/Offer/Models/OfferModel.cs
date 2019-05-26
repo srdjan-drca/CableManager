@@ -2,9 +2,9 @@
 using CableManager.Report.Models;
 using CableManager.Repository.Models;
 
-namespace CableManager.Services.Calculation.Models
+namespace CableManager.Services.Offer.Models
 {
-   public class Offer
+   public class OfferModel
    {
       public string Name { get; set; }
 

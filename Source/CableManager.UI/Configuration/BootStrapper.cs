@@ -16,8 +16,9 @@ using CableManager.UI.ViewModels.Controls;
 using CableManager.UI.ViewModels.Pages;
 using CableManager.UI.ViewModels.Windows;
 using CableManager.Report;
-using CableManager.Services.Calculation;
+using CableManager.Services.Offer;
 using CableManager.Services.Search;
+using CableManager.PriceLoader.Core;
 
 namespace CableManager.UI.Configuration
 {
@@ -58,6 +59,7 @@ namespace CableManager.UI.Configuration
          //Other
          SimpleIoc.Default.Register<LabelProvider>();
          SimpleIoc.Default.Register<ICableManagerReport, CableManagerReport>();
+         SimpleIoc.Default.Register<IPriceLoader, SimplePriceLoader>();
          SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
 
          //Repositories

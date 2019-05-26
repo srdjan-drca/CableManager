@@ -48,16 +48,15 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculation\OfferType.cs" />
+    <Compile Include="Offer\OfferType.cs" />
     <Compile Include="Helpers\CalculationHelper.cs" />
     <Compile Include="Search\CableSearchService.cs" />
     <Compile Include="Search\ICableSearchService.cs" />
     <Compile Include="Search\Iterator\CellItem.cs" />
     <Compile Include="Search\Iterator\CellIterator.cs" />
-    <Compile Include="Calculation\OfferService.cs" />
-    <Compile Include="Calculation\IOfferService.cs" />
-    <Compile Include="Calculation\Models\Offer.cs" />
-    <Compile Include="Helpers\PdfDocumentHelper.cs" />
+    <Compile Include="Offer\OfferService.cs" />
+    <Compile Include="Offer\IOfferService.cs" />
+    <Compile Include="Offer\Models\OfferModel.cs" />
     <Compile Include="License\ILicenseService.cs" />
     <Compile Include="License\LicenseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +71,10 @@
     <ProjectReference Include="..\CableManager.License\CableManager.License.csproj">
       <Project>{3188c5b2-a45d-42ae-8e0c-3c7e5bb9ce94}</Project>
       <Name>CableManager.License</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CableManager.PriceLoader\CableManager.PriceLoader.csproj">
+      <Project>{EC2B164D-275D-445E-A143-B6E200532842}</Project>
+      <Name>CableManager.PriceLoader</Name>
     </ProjectReference>
     <ProjectReference Include="..\CableManager.Report\CableManager.Report.csproj">
       <Project>{05900c7e-4ae0-4555-b42d-9b598f29b556}</Project>

@@ -1,4 +1,4 @@
-﻿namespace CableManager.Services.Calculation
+﻿namespace CableManager.Services.Offer
 {
    public enum OfferType
    {

@@ -5,7 +5,7 @@ using CableManager.Common.Result;
 using CableManager.Localization;
 using CableManager.Repository.Cable;
 using CableManager.Repository.Models;
-using CableManager.Services.Calculation;
+using CableManager.Services.Offer;
 
 namespace CableManager.UI.ViewModels.Pages
 {

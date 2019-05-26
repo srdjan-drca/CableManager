@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using CableManager.Common.Result;
-using CableManager.Services.Calculation.Models;
+using CableManager.Services.Offer.Models;
 
 namespace CableManager.Services.Report
 {
    public interface IReportService
    {
-      ReturnResult GeneratePdfReport(Offer offer);
+      ReturnResult GeneratePdfReport(OfferModel offer);
 
-      ReturnResult GenerateExcelReport(Offer offer);
+      ReturnResult GenerateExcelReport(OfferModel offer);
 
       ReturnResult DeleteReport(List<string> fullFileNames);
    }

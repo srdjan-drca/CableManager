@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Spire.Pdf;
 
-namespace CableManager.Services.Helpers
+namespace CableManager.PriceLoader.Helpers
 {
    public static class PdfDocumentHelper
    {

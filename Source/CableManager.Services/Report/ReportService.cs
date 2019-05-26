@@ -9,7 +9,7 @@ using CableManager.Localization;
 using CableManager.Common.Helpers;
 using CableManager.Common.Result;
 using CableManager.Repository.Models;
-using CableManager.Services.Calculation.Models;
+using CableManager.Services.Offer.Models;
 
 namespace CableManager.Services.Report
 {
@@ -24,7 +24,7 @@ namespace CableManager.Services.Report
          _cableManagerReport = cableManagerReport;
       }
 
-      public ReturnResult GeneratePdfReport(Offer offer)
+      public ReturnResult GeneratePdfReport(OfferModel offer)
       {
          ReturnResult result;
 
@@ -51,7 +51,7 @@ namespace CableManager.Services.Report
          return result;
       }
 
-      public ReturnResult GenerateExcelReport(Offer offer)
+      public ReturnResult GenerateExcelReport(OfferModel offer)
       {
          ReturnResult result;
 
@@ -105,7 +105,7 @@ namespace CableManager.Services.Report
 
       #region Private methods
 
-      private BaseReportModel CreateBaseReportModel(Offer offer)
+      private BaseReportModel CreateBaseReportModel(OfferModel offer)
       {
          UserModel user = offer.User;
 

@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Globalization;
-using System.Collections.Generic;
-using CableManager.Common.Extensions;
 using CableManager.Common.Helpers;
 using CableManager.Localization;
 using CableManager.Report.Models;
@@ -12,14 +11,16 @@ using CableManager.Repository.Company;
 using CableManager.Repository.Customer;
 using CableManager.Repository.Models;
 using CableManager.Repository.PriceDocument;
-using CableManager.Services.Calculation.Models;
 using CableManager.Services.Helpers;
+using CableManager.Services.Offer.Models;
 using CableManager.Services.Search;
 using CableManager.Services.Search.Model;
 using CableManager.Services.User;
 using OfficeOpenXml;
+using CableManager.PriceLoader.Core;
+using CableManager.PriceLoader.Models;
 
-namespace CableManager.Services.Calculation
+namespace CableManager.Services.Offer
 {
    public class OfferService : IOfferService
    {
@@ -37,17 +38,11 @@ namespace CableManager.Services.Calculation
 
       private readonly IUserService _userService;
 
-      private readonly CultureInfo _commaCulture = new CultureInfo("en")
-      {
-         NumberFormat =
-         {
-            NumberDecimalSeparator = ","
-         }
-      };
+      private readonly IPriceLoader _priceLoader;
 
       public OfferService(LabelProvider labelProvider, ICableRepository cableRepository, ICompanyRepository companyRepository,
          ICablePriceDocumentRepository cablePriceDocumentRepository, ICustomerRepository customerRepository,
-         ICableSearchService cableSearchService, IUserService userService)
+         ICableSearchService cableSearchService, IUserService userService, IPriceLoader priceLoader)
       {
          _labelProvider = labelProvider;
          _cableRepository = cableRepository;
@@ -56,17 +51,18 @@ namespace CableManager.Services.Calculation
          _customerRepository = customerRepository;
          _cableSearchService = cableSearchService;
          _userService = userService;
+         _priceLoader = priceLoader;
       }
 
-      public Offer CreateOffer(string customerRequestFilePath, string customerId, string note, OfferType offerType)
+      public OfferModel CreateOffer(string customerRequestFilePath, string customerId, string note, OfferType offerType)
       {
          var fileInfo = new FileInfo(customerRequestFilePath);
          Stream customerRequestFile = File.OpenRead(fileInfo.FullName);
          List<CableModel> cableNames = _cableRepository.GetAll();
          List<List<string>> searchCriteriaList = CreateSearchCriteria(cableNames);
          List<Cable> cables = _cableSearchService.GetCables(customerRequestFile, searchCriteriaList);
-         List<string> cablePriceDocuments = _cablePriceDocumentRepository.GetAll().Select(x => x.Path).ToList();
-         Dictionary<string, float> prices = LoadPrices(cablePriceDocuments);
+         List<PriceDocumentModel> cablePriceDocuments = _cablePriceDocumentRepository.GetAll();
+         List<PriceModel> prices = LoadPrices(cablePriceDocuments);
 
          string extension = offerType == OfferType.Excel ? ".xlsx" : ".pdf";
          CustomerModel customer = _customerRepository.Get(customerId);
@@ -77,7 +73,7 @@ namespace CableManager.Services.Calculation
          UserModel user = _userService.GetCurrentlyLoggedInUser();
          List<OfferItem> offerItems = CreateOfferItems(cables, customer);
 
-         var offer = new Offer
+         var offer = new OfferModel
          {
             Name = offerName,
             FullName = offerFullName,
@@ -204,111 +200,28 @@ namespace CableManager.Services.Calculation
          return offerTotals;
       }
 
-      private Dictionary<string, float> LoadPrices(List<string> priceDocumentPaths)
+      private List<PriceModel> LoadPrices(List<PriceDocumentModel> priceDocuments)
       {
-         var prices = new Dictionary<string, float>();
+         var prices = new List<PriceModel>();
 
-         foreach (string priceDocumentPath in priceDocumentPaths)
+         foreach (PriceDocumentModel priceDocument in priceDocuments)
          {
-            string extension = Path.GetExtension(priceDocumentPath);
+            string extension = Path.GetExtension(priceDocument.Path);
 
             switch (extension)
             {
                case ".pdf":
-                  var pricesPdf = LoadPdf(priceDocumentPath);
-                  prices.AddRange(pricesPdf);
+                  List<PriceModel> priceModelsPdf = _priceLoader.LoadPricesFromPdf(priceDocument.Path, priceDocument.Id);
+                  prices.AddRange(priceModelsPdf);
                   break;
 
                case ".xlsx":
-                  var pricesExcel = LoadExcel(priceDocumentPath);
-                  prices.AddRange(pricesExcel);
+                  List<PriceModel> priceModelsExcel = _priceLoader.LoadPricesFromExcel(priceDocument.Path, priceDocument.Id);
+                  prices.AddRange(priceModelsExcel);
                   break;
 
                default:
                   throw new Exception("Document format not supported");
-            }
-         }
-
-         return prices;
-      }
-
-      private Dictionary<string, float> LoadPdf(string priceDocumentPath)
-      {
-         List<string> allPagesContent = PdfDocumentHelper.GetPagesWithPrices(priceDocumentPath);
-         var prices = new Dictionary<string, float>();
-         string cableName = null;
-
-         foreach (string page in allPagesContent)
-         {
-            string[] pageLines = page.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Select(x => x.TrimStart()).ToArray();
-
-            pageLines = pageLines.Skip(2).Where(x => x.Length > 0).Reverse().Skip(1).Reverse().ToArray();
-
-            foreach (string line in pageLines)
-            {
-               string[] lineItems = line.Split(new[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
-
-               if (lineItems.Length == 1)
-               {
-                  cableName = lineItems.FirstOrDefault();
-               }
-
-               if (lineItems.Length >= 2)
-               {
-                  float price;
-
-                  if (float.TryParse(lineItems[1], NumberStyles.Any, _commaCulture, out price))
-                  {
-                     string dimension = lineItems[0];
-                     var key = cableName + " " + dimension;
-
-                     prices.Add(key, price);
-                  }
-                  else
-                  {
-                     if (lineItems.Length <= 3)
-                     {
-                        cableName = lineItems[0] + " " + lineItems[1];
-                     }
-                  }
-               }
-            }
-         }
-
-         return prices;
-      }
-
-      private Dictionary<string, float> LoadExcel(string priceDocumentPath)
-      {
-         var prices = new Dictionary<string, float>();
-         var fileInfo = new FileInfo(priceDocumentPath);
-
-         using (var excelPackage = new ExcelPackage(fileInfo))
-         {
-            ExcelWorksheet priceWorksheet;
-
-            try
-            {
-               priceWorksheet = excelPackage.Workbook.Worksheets["Lista"];
-            }
-            catch
-            {
-               priceWorksheet = excelPackage.Workbook.Worksheets["Lista"];
-            }
-
-            var start = priceWorksheet.Dimension.Start;
-            var end = priceWorksheet.Dimension.End;
-
-            for (int row = start.Row + 1; row <= end.Row; row++)
-            {
-               string name = priceWorksheet.Cells[row, 2].Text;
-               string priceRaw = priceWorksheet.Cells[row, 4].Text;
-               float price;
-
-               if (float.TryParse(priceRaw, NumberStyles.Any, _commaCulture, out price))
-               {
-                  prices.Add(name, price);
-               }
             }
          }
 

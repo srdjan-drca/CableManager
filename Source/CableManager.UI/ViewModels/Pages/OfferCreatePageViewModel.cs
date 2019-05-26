@@ -8,8 +8,8 @@ using CableManager.Localization;
 using CableManager.Repository.OfferDocument;
 using CableManager.Repository.Customer;
 using CableManager.Repository.Models;
-using CableManager.Services.Calculation;
-using CableManager.Services.Calculation.Models;
+using CableManager.Services.Offer;
+using CableManager.Services.Offer.Models;
 using CableManager.Services.Report;
 using CableManager.Services.User;
 using CableManager.UI.Notification;
@@ -135,7 +135,7 @@ namespace CableManager.UI.ViewModels.Pages
 
       private void CreateOfferPdf(object parameter)
       {
-         Offer offer = null;
+         OfferModel offer = null;
          ReturnResult result = ValidateInput(SelectedCustomerName, CustomerRequestFile);
 
          if (result.IsSuccess)
@@ -169,7 +169,7 @@ namespace CableManager.UI.ViewModels.Pages
 
       private void CreateOfferExcel(object parameter)
       {
-         Offer offer = null;
+         OfferModel offer = null;
          ReturnResult result = ValidateInput(SelectedCustomerName, CustomerRequestFile);
 
          if (result.IsSuccess)

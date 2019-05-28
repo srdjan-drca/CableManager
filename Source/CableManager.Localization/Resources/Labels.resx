@@ -513,4 +513,7 @@
   <data name="UI_Logo" xml:space="preserve">
     <value>Logo</value>
   </data>
+  <data name="UI_SelectPriceListDocument" xml:space="preserve">
+    <value>Select at least one price list document</value>
+  </data>
 </root>

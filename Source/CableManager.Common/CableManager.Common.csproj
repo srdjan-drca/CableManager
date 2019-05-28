@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\XDocumentExtension.cs" />
     <Compile Include="Helpers\ConversionHelper.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />

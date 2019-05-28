@@ -38,7 +38,8 @@ namespace CableManager.Report.Generators.Pdf.Sections
          CreateCellStyles();
 
          _offerReportModel = (OfferReportModel)baseReportModel;
-         _cultureInfo = new CultureInfo("hr-HR");
+
+         _cultureInfo = new CultureInfo(_offerReportModel.LabelProvider.GetCulture());
       }
 
       public override MemoryStream GenerateContent()
@@ -195,7 +196,7 @@ namespace CableManager.Report.Generators.Pdf.Sections
             contentRow.AddCell(_arial8BlackLeft, 5, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.PricePerItem));
             contentRow.AddCell(_arial8BlackLeft, 6, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.Rebate));
             contentRow.AddCell(_arial8BlackLeft, 7, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.ValueAddedTax));
-            contentRow.AddCell(_arial8BlackLeft, 8, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPrice));
+            contentRow.AddCell(_arial8BlackLeft, 8, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithRebate));
             contentRow.AddCell(_arial8BlackLeftWhiteRightBorder, 9, string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithVat));
 
             offset += 10;
@@ -247,7 +248,7 @@ namespace CableManager.Report.Generators.Pdf.Sections
 
       private PdfGrid CreateCableOfferTotalsGrid()
       {
-         PdfGrid grid = CreateGrid(90, 100, 100, 80, 90, 50);
+         PdfGrid grid = CreateGrid(90, 100, 100, 80, 70, 70);
          PdfGridRow row1 = grid.AddRow();
          PdfGridRow row2 = grid.AddRow();
          PdfGridRow row3 = grid.AddRow();

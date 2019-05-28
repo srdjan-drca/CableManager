@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Globalization;
+using System.Collections.Generic;
+using OfficeOpenXml;
 using CableManager.Common.Helpers;
 using CableManager.Localization;
 using CableManager.Report.Models;
@@ -16,7 +17,6 @@ using CableManager.Services.Offer.Models;
 using CableManager.Services.Search;
 using CableManager.Services.Search.Model;
 using CableManager.Services.User;
-using OfficeOpenXml;
 using CableManager.PriceLoader.Core;
 using CableManager.PriceLoader.Models;
 
@@ -54,18 +54,26 @@ namespace CableManager.Services.Offer
          _priceLoader = priceLoader;
       }
 
-      public OfferModel CreateOffer(string customerRequestFilePath, string customerId, string note, OfferType offerType)
+      public OfferModel CreateOffer(OfferParameters offerParameters)
       {
-         var fileInfo = new FileInfo(customerRequestFilePath);
+         var fileInfo = new FileInfo(offerParameters.CustomerRequestFilePath);
          Stream customerRequestFile = File.OpenRead(fileInfo.FullName);
          List<CableModel> cableNames = _cableRepository.GetAll();
          List<List<string>> searchCriteriaList = CreateSearchCriteria(cableNames);
          List<Cable> cables = _cableSearchService.GetCables(customerRequestFile, searchCriteriaList);
          List<PriceDocumentModel> cablePriceDocuments = _cablePriceDocumentRepository.GetAll();
-         List<PriceModel> prices = LoadPrices(cablePriceDocuments);
+         List<PriceModel> prices = LoadPrices(cablePriceDocuments, searchCriteriaList);
+         List<PriceModel> filteredPrices = prices.Where(x => offerParameters.PriceDocumentIds.Contains(x.DocumentGuid)).ToList();
 
-         string extension = offerType == OfferType.Excel ? ".xlsx" : ".pdf";
-         CustomerModel customer = _customerRepository.Get(customerId);
+         foreach (Cable cable in cables)
+         {
+            float price = FindPrice(cable, filteredPrices);
+
+            cable.Price = price;
+         }
+
+         string extension = offerParameters.OfferType == OfferType.Excel ? ".xlsx" : ".pdf";
+         CustomerModel customer = _customerRepository.Get(offerParameters.CustomerId);
          string date = DateTime.Now.ToString(CultureInfo.CurrentCulture);
          var offerName = CreateOfferName(customer.Name, date, extension);
          var offerFullName = CreateFullName(offerName);
@@ -77,7 +85,7 @@ namespace CableManager.Services.Offer
          {
             Name = offerName,
             FullName = offerFullName,
-            Note = note,
+            Note = offerParameters.Note,
             Date = date,
             Language = _labelProvider.GetCulture(),
             Customer = customer,
@@ -88,6 +96,33 @@ namespace CableManager.Services.Offer
          };
 
          return offer;
+      }
+
+      private float FindPrice(Cable cable, List<PriceModel> prices)
+      {
+         foreach (PriceModel priceModel in prices)
+         {
+            foreach (string priceModelCableName in priceModel.CableNames)
+            {
+               if (cable.SearchCriteria.Contains(priceModelCableName))
+               {
+                  string cableName = cable.Name.Split(' ').FirstOrDefault(x => x.Contains("mm2"))?.Replace(" ", string.Empty).Replace(",", ".").Replace("mm2", string.Empty);
+
+                  if (cableName != null)
+                  {
+                     foreach (PriceItem priceItem in priceModel.PriceItems)
+                     {
+                        if (priceItem.Name.Contains(cableName))
+                        {
+                           return priceItem.Price;
+                        }
+                     }
+                  }
+               }
+            }
+         }
+
+         return 0;
       }
 
       public List<CableModel> LoadCableNames(string fileName)
@@ -159,8 +194,10 @@ namespace CableManager.Services.Offer
 
          foreach (Cable cable in cables)
          {
-            float totalPrice = cable.Quantity * cable.Price;
-            float totalPriceWithVat = totalPrice + CalculationHelper.CalculatePercent(totalPrice, valueAddedTax);
+            float rebate = (float) Convert.ToDouble(customer.Rebate);
+            float totalPrice = CalculationHelper.CalculatePrice(cable.Price, 0, cable.Quantity);
+            float totalPriceWithRebate = CalculationHelper.CalculatePrice(cable.Price, rebate, cable.Quantity);
+            float totalPriceWithVat = CalculationHelper.CalculatePriceWithVat(totalPriceWithRebate, valueAddedTax);
 
             var offerItem = new OfferItem
             {
@@ -169,8 +206,9 @@ namespace CableManager.Services.Offer
                Quantity = cable.Quantity,
                Unit = "m",
                PricePerItem = cable.Price,
-               Rebate = (float)Convert.ToDouble(customer.Rebate),
+               Rebate = rebate,
                TotalPrice = totalPrice,
+               TotalPriceWithRebate = totalPriceWithRebate,
                TotalPriceWithVat = totalPriceWithVat,
                ValueAddedTax = valueAddedTax
             };
@@ -186,21 +224,21 @@ namespace CableManager.Services.Offer
       private OfferTotal CreateOfferTotals(List<OfferItem> offerItems)
       {
          float totalPrice = CalculationHelper.CalculateTotalPrice(offerItems);
-         float totalPriceWithVat = CalculationHelper.CalculateTotalPriceWithVat(offerItems);
-         float rebate = CalculationHelper.CalculateRebate(offerItems);
+         float totalPriceWithRebate = CalculationHelper.CalculateTotalPriceWithRebate(offerItems);
+         float totalPriceWithRebateAndVat = CalculationHelper.CalculateTotalPriceWithVat(offerItems);
 
          var offerTotals = new OfferTotal
          {
-            TotalPrice = totalPrice,
-            TotalValueAddedTax = totalPriceWithVat - totalPrice,
-            GrandTotal = totalPriceWithVat,
-            TotalRebate = rebate
+            TotalPrice = totalPriceWithRebate,
+            TotalValueAddedTax = totalPriceWithRebateAndVat - totalPriceWithRebate,
+            GrandTotal = totalPriceWithRebateAndVat,
+            TotalRebate = totalPrice - totalPriceWithRebate
          };
 
          return offerTotals;
       }
 
-      private List<PriceModel> LoadPrices(List<PriceDocumentModel> priceDocuments)
+      private List<PriceModel> LoadPrices(List<PriceDocumentModel> priceDocuments, List<List<string>> searchCriteriaList)
       {
          var prices = new List<PriceModel>();
 
@@ -212,11 +250,41 @@ namespace CableManager.Services.Offer
             {
                case ".pdf":
                   List<PriceModel> priceModelsPdf = _priceLoader.LoadPricesFromPdf(priceDocument.Path, priceDocument.Id);
+
+                  foreach (PriceModel priceModel in priceModelsPdf)
+                  {
+                     foreach (List<string> searchCriteria in searchCriteriaList)
+                     {
+                        var intersect = priceModel.CableNames.Intersect(searchCriteria);
+
+                        if (intersect.Any())
+                        {
+                           priceModel.CableNames.AddRange(searchCriteria);
+                           priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
+                        }
+                     }
+                  }
+
                   prices.AddRange(priceModelsPdf);
                   break;
 
                case ".xlsx":
                   List<PriceModel> priceModelsExcel = _priceLoader.LoadPricesFromExcel(priceDocument.Path, priceDocument.Id);
+
+                  foreach (PriceModel priceModel in priceModelsExcel)
+                  {
+                     foreach (List<string> searchCriteria in searchCriteriaList)
+                     {
+                        var intersect = priceModel.CableNames.Intersect(searchCriteria);
+
+                        if (intersect.Any())
+                        {
+                           priceModel.CableNames.AddRange(searchCriteria);
+                           priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
+                        }
+                     }
+                  }
+
                   prices.AddRange(priceModelsExcel);
                   break;
 

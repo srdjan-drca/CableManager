@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Drawing;
+using System.Globalization;
 using OfficeOpenXml;
 using CableManager.Report.Models;
 using CableManager.Report.Extensions;
@@ -20,11 +21,15 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
       private readonly string _sheetName;
 
+      private readonly CultureInfo _cultureInfo;
+
       public CableWorksheet(BaseReportModel baseReportModel) : base(baseReportModel)
       {
          _offerReportModel = (OfferReportModel)baseReportModel;
 
          _sheetName = "Offer";
+
+         _cultureInfo = new CultureInfo(_offerReportModel.LabelProvider.GetCulture());
       }
 
       public override string Name
@@ -146,19 +151,19 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
          _rowId = 21;
 
-         foreach (OfferItem cableDetails in _offerReportModel.OfferItems)
+         foreach (OfferItem offerItem in _offerReportModel.OfferItems)
          {
             _columnId = 1;
 
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.SerialNumber);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Name);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Quantity);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Unit);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.PricePerItem);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.Rebate);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.ValueAddedTax);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.TotalPrice);
-            worksheet.Cells[_rowId, _columnId++].SetValue(cableDetails.TotalPriceWithVat);
+            worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.SerialNumber);
+            worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.Name);
+            worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.Quantity);
+            worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.Unit);
+            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.PricePerItem));
+            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.Rebate));
+            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.ValueAddedTax));
+            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithRebate));
+            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithVat));
 
             worksheet.Cells[_rowId, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
@@ -173,20 +178,25 @@ namespace CableManager.Report.Generators.Excel.Worksheets
       {
          _rowId += 2;
 
+         string totalRebate = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalRebate);
+         string totalPrice = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalPrice);
+         string totalValueAddedTax = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalValueAddedTax);
+         string grandTotal = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.GrandTotal);
+
          worksheet.Cells[_rowId, 2].SetValue(LabelProvider["DOC_RebateTotal"]);
-         worksheet.Cells[_rowId, 3].SetValue("5.284,14");
+         worksheet.Cells[_rowId, 3].SetValue(totalRebate);
 
          worksheet.Cells[_rowId, 7].SetValue(LabelProvider["DOC_TotalWithoutVAT"]);
-         worksheet.Cells[_rowId++, 9].SetValue("15.852,36");
+         worksheet.Cells[_rowId++, 9].SetValue(totalPrice);
 
          worksheet.Cells[_rowId, 7].SetValue(LabelProvider["DOC_TotalVAT"]);
-         worksheet.Cells[_rowId++, 9].SetValue("3.963,09");
+         worksheet.Cells[_rowId++, 9].SetValue(totalValueAddedTax);
 
          worksheet.Cells[_rowId, 7].Style.Font.Bold = true;
          worksheet.Cells[_rowId, 9].Style.Font.Bold = true;
 
          worksheet.Cells[_rowId, 7].SetValue(LabelProvider["DOC_Total"]);
-         worksheet.Cells[_rowId, 9].SetValue("19.815,45");
+         worksheet.Cells[_rowId, 9].SetValue(grandTotal);
       }
 
       private void InsertBottomLine(ExcelWorksheet worksheet)

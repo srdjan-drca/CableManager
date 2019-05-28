@@ -6,7 +6,7 @@ namespace CableManager.Services.Offer
 {
    public interface IOfferService
    {
-      OfferModel CreateOffer(string customerRequestFilePath, string customerId, string note, OfferType offerType);
+      OfferModel CreateOffer(OfferParameters offerParameters);
 
       List<CableModel> LoadCableNames(string fileName);
    }

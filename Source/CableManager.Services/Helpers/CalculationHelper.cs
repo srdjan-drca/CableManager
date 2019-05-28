@@ -6,9 +6,18 @@ namespace CableManager.Services.Helpers
 {
    public static class CalculationHelper
    {
-      public static float CalculatePercent(float number, int percent)
+      public static float CalculatePrice(float price, float rebate, float quantity)
       {
-         return ((float)number * percent) / 100;
+         float rebateQuota = ((100 - rebate) / 100);
+
+         return price * rebateQuota * quantity;
+      }
+
+      public static float CalculatePriceWithVat(float price, int valueAddedTax)
+      {
+         float vatQuota = ((float)(100 + valueAddedTax) / 100);
+
+         return price * vatQuota;
       }
 
       public static float CalculateTotalPrice(List<OfferItem> offerItems)
@@ -16,14 +25,14 @@ namespace CableManager.Services.Helpers
          return offerItems.Sum(x => x.TotalPrice);
       }
 
+      public static float CalculateTotalPriceWithRebate(List<OfferItem> offerItems)
+      {
+         return offerItems.Sum(x => x.TotalPriceWithRebate);
+      }
+
       public static float CalculateTotalPriceWithVat(List<OfferItem> offerItems)
       {
          return offerItems.Sum(x => x.TotalPriceWithVat);
-      }
-
-      public static float CalculateRebate(List<OfferItem> offerItems)
-      {
-         return 0;
       }
    }
 }

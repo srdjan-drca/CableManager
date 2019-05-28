@@ -48,6 +48,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Offer\Models\OfferParameters.cs" />
     <Compile Include="Offer\OfferType.cs" />
     <Compile Include="Helpers\CalculationHelper.cs" />
     <Compile Include="Search\CableSearchService.cs" />

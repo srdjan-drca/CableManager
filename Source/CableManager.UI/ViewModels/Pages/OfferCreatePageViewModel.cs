@@ -1,13 +1,16 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+using CableManager.Common.Extensions;
 using CableManager.Common.Result;
 using GalaSoft.MvvmLight.Command;
 using CableManager.Localization;
 using CableManager.Repository.OfferDocument;
 using CableManager.Repository.Customer;
 using CableManager.Repository.Models;
+using CableManager.Repository.PriceDocument;
 using CableManager.Services.Offer;
 using CableManager.Services.Offer.Models;
 using CableManager.Services.Report;
@@ -21,6 +24,8 @@ namespace CableManager.UI.ViewModels.Pages
       private readonly ICustomerRepository _customerRepository;
 
       private readonly IOfferDocumentRepository _offerDocumentRepository;
+
+      private readonly ICablePriceDocumentRepository _cablePriceDocumentRepository;
 
       private readonly IUserService _userService;
 
@@ -39,10 +44,11 @@ namespace CableManager.UI.ViewModels.Pages
       private string _note;
 
       public OfferCreatePageViewModel(LabelProvider labelProvider, ICustomerRepository customerRepository, IOfferDocumentRepository offerDocumentRepository,
-         IUserService userService, IOfferService offerService, IReportService reportService) : base(labelProvider)
+         ICablePriceDocumentRepository cablePriceDocumentRepository, IUserService userService, IOfferService offerService, IReportService reportService) : base(labelProvider)
       {
          _customerRepository = customerRepository;
          _offerDocumentRepository = offerDocumentRepository;
+         _cablePriceDocumentRepository = cablePriceDocumentRepository;
          _userService = userService;
          _offerService = offerService;
          _reportService = reportService;
@@ -135,14 +141,24 @@ namespace CableManager.UI.ViewModels.Pages
 
       private void CreateOfferPdf(object parameter)
       {
+         List<PriceDocumentModel> priceDocuments = _cablePriceDocumentRepository.GetAll();
+         ReturnResult result = ValidateInput(SelectedCustomerName, CustomerRequestFile, priceDocuments);
          OfferModel offer = null;
-         ReturnResult result = ValidateInput(SelectedCustomerName, CustomerRequestFile);
 
          if (result.IsSuccess)
          {
             try
             {
-               offer = _offerService.CreateOffer(CustomerRequestFile, _selectedCustomer.Id, Note, OfferType.Pdf);
+               var offerParameters = new OfferParameters
+               {
+                  OfferType = OfferType.Pdf,
+                  PriceDocumentIds = priceDocuments.Where(x => x.IsSelected).ToHashSet(x => x.Id),
+                  CustomerRequestFilePath = CustomerRequestFile,
+                  CustomerId = _selectedCustomer.Id,
+                  Note = Note
+               };
+
+               offer = _offerService.CreateOffer(offerParameters);
             }
             catch (Exception exception)
             {
@@ -169,14 +185,24 @@ namespace CableManager.UI.ViewModels.Pages
 
       private void CreateOfferExcel(object parameter)
       {
+         List<PriceDocumentModel> priceDocuments = _cablePriceDocumentRepository.GetAll();
+         ReturnResult result = ValidateInput(SelectedCustomerName, CustomerRequestFile, priceDocuments);
          OfferModel offer = null;
-         ReturnResult result = ValidateInput(SelectedCustomerName, CustomerRequestFile);
 
          if (result.IsSuccess)
          {
             try
             {
-               offer = _offerService.CreateOffer(CustomerRequestFile, _selectedCustomer.Id, Note, OfferType.Excel);
+               var offerParameters = new OfferParameters
+               {
+                  OfferType = OfferType.Excel,
+                  PriceDocumentIds = priceDocuments.Where(x => x.IsSelected).ToHashSet(x => x.Id),
+                  CustomerRequestFilePath = CustomerRequestFile,
+                  CustomerId = _selectedCustomer.Id,
+                  Note = Note
+               };
+
+               offer = _offerService.CreateOffer(offerParameters);
             }
             catch (Exception exception)
             {
@@ -207,7 +233,7 @@ namespace CableManager.UI.ViewModels.Pages
          SelectedCustomerName = string.Empty;
       }
 
-      private ReturnResult ValidateInput(string customerName, string customerRequestFile)
+      private ReturnResult ValidateInput(string customerName, string customerRequestFile, List<PriceDocumentModel> priceDocuments)
       {
          string message;
 
@@ -225,6 +251,13 @@ namespace CableManager.UI.ViewModels.Pages
             return new FailResult(message);
          }
 
+         if (priceDocuments.All(x => x.IsSelected == false))
+         {
+            message = LabelProvider["UI_SelectPriceListDocument"];
+
+            return new FailResult(message);
+         }
+
          return new SuccessResult();
       }
 
@@ -232,7 +265,7 @@ namespace CableManager.UI.ViewModels.Pages
       {
          if (message.Type == MessageType.CustomerRequest)
          {
-            string recordId = message.RecordId;
+            string recordId = message.RecordId as string;
 
             if (string.IsNullOrEmpty(recordId))
             {

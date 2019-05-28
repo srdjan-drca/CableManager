@@ -1,8 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
-using System.Collections.Generic;
+using System.Linq;
 using GalaSoft.MvvmLight.Command;
 using CableManager.Localization;
 using CableManager.Repository.Models;
@@ -22,11 +23,10 @@ namespace CableManager.UI.ViewModels.Pages
          : base(labelProvider)
       {
          _cablePriceDocumentRepository = cablePriceDocumentRepository;
-
-         PriceDocuments?.Clear();
          PriceDocuments = _cablePriceDocumentRepository.GetAll();
 
          BrowsePriceDocumentCommand = new RelayCommand<object>(BrowsePriceDocument);
+         SelectPriceDocumentForOfferCommand = new RelayCommand<object>(SelectPriceDocumentForOffer);
       }
 
       public List<PriceDocumentModel> PriceDocuments
@@ -53,6 +53,8 @@ namespace CableManager.UI.ViewModels.Pages
       }
 
       public RelayCommand<object> BrowsePriceDocumentCommand { get; }
+
+      public RelayCommand<object> SelectPriceDocumentForOfferCommand { get; }
 
       #region Private methods
 
@@ -85,6 +87,23 @@ namespace CableManager.UI.ViewModels.Pages
             PriceDocuments = _cablePriceDocumentRepository.GetAll();
 
             StatusMessage = LabelProvider["UI_PriceDocumentsLoaded"];
+         }
+      }
+
+      private void SelectPriceDocumentForOffer(object parameter)
+      {
+         string documentId = SelectedPriceDocument.Id;
+         bool? isSelected = parameter as bool?;
+
+         if (isSelected != null)
+         {
+            var priceDocument = PriceDocuments.FirstOrDefault(x => x.Id == documentId);
+
+            if (priceDocument != null)
+            {
+               priceDocument.IsSelected = isSelected.Value;
+               _cablePriceDocumentRepository.Save(priceDocument);
+            }
          }
       }
 

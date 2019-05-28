@@ -178,7 +178,7 @@ namespace CableManager.UI.ViewModels.Windows
          if (message.Type == MessageType.LicenseActivation)
          {
             bool isLicenseValid;
-            bool.TryParse(message.RecordId, out isLicenseValid);
+            bool.TryParse(message.RecordId as string, out isLicenseValid);
 
             if (isLicenseValid)
             {

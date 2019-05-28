@@ -2,7 +2,7 @@
 
 namespace CableManager.Services.Search.Model
 {
-   public struct Cable
+   public class Cable
    {
       public string Name { get; set; }
 

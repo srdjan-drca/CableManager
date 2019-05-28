@@ -18,6 +18,8 @@
 
       public float TotalPrice { get; set; }
 
+      public float TotalPriceWithRebate { get; set; }
+
       public float TotalPriceWithVat { get; set; }
    }
 }

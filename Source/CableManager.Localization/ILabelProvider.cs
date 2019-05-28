@@ -4,6 +4,8 @@
    {
       void SetCulture(string cultureCode);
 
+      string GetCulture();
+
       string this[string key] { get; }
    }
 }

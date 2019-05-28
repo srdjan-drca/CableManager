@@ -26,6 +26,7 @@
          Margin="13,0,0,5" />
       <DataGrid
          ItemsSource="{Binding Path=PriceDocuments}"
+         SelectedItem="{Binding Path=SelectedPriceDocument, Mode=TwoWay}"
          ColumnHeaderStyle="{StaticResource DataGridColumnHeader}"
          IsReadOnly="True"
          GridLinesVisibility="All"
@@ -46,11 +47,21 @@
                   <TextBlock Text="{Binding Path=Data.LabelProvider[UI_Date], Source={StaticResource Proxy}}" />
                </DataGridTextColumn.Header>
             </DataGridTextColumn>
-            <DataGridCheckBoxColumn Binding="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" Width="*">
-               <DataGridCheckBoxColumn.Header>
+            <DataGridTemplateColumn IsReadOnly="False" Width="*">
+               <DataGridTemplateColumn.Header>
                   <TextBlock Text="{Binding Path=Data.LabelProvider[UI_IncludeInSearch], Source={StaticResource Proxy}}" />
-               </DataGridCheckBoxColumn.Header>
-            </DataGridCheckBoxColumn>
+               </DataGridTemplateColumn.Header>
+               <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                     <CheckBox
+                        IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                        HorizontalAlignment="Center"
+                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.SelectPriceDocumentForOfferCommand}"
+                        CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsChecked}">
+                     </CheckBox>
+                  </DataTemplate>
+               </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
          </DataGrid.Columns>
       </DataGrid>
 

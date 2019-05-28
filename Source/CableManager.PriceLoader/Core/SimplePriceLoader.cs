@@ -75,12 +75,12 @@ namespace CableManager.PriceLoader.Core
                string nameOriginal = priceWorksheet.Cells[row, 2].Text;
                string group = priceWorksheet.Cells[row, 3].Text;
                float price = GetPrice(priceWorksheet.Cells[row, 4].Text);
-               string name = nameOriginal.Replace(group, "").Trim();
+               string name = nameOriginal.Replace(group, string.Empty).Replace(",", ".").Trim();
 
                if (previousGroup != group)
                {
                   var cableNames = new List<string> { group };
-                  var priceModel = new PriceModel(string.Empty, cableNames);
+                  var priceModel = new PriceModel(documentId, cableNames);
                   priceModel.PriceItems.Add(new PriceItem(name, price));
 
                   priceModels.Add(priceModel);
@@ -111,7 +111,7 @@ namespace CableManager.PriceLoader.Core
 
             foreach (string line in pageLines)
             {
-               string[] lineItems = line.Split(new[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+               string[] lineItems = GetLineItems(line);
 
                bool isLineWithPrices = IsLineWithPrices(lineItems);
 
@@ -123,6 +123,21 @@ namespace CableManager.PriceLoader.Core
          }
 
          return priceItems;
+      }
+
+      private string[] GetLineItems(string line)
+      {
+         var items = new List<string>();
+
+         foreach (string lineItem in line.Split(new[] {"  "}, StringSplitOptions.RemoveEmptyEntries))
+         {
+            foreach (string lineSubItem in lineItem.Split(new[] {" / "}, StringSplitOptions.RemoveEmptyEntries))
+            {
+               items.Add(lineSubItem);
+            }
+         }
+
+         return items.ToArray();
       }
 
       private string GetName(List<string> lineItems)
@@ -141,7 +156,7 @@ namespace CableManager.PriceLoader.Core
             name = string.Join(" ", name, lineItem);
          }
 
-         return name;
+         return name?.Replace(",", ".").Replace(" ", string.Empty);
       }
 
       private float GetPrice(List<string> lineItems)

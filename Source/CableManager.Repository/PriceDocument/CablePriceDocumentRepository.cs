@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using CableManager.Common.Extensions;
 using CableManager.Common.Helpers;
 using CableManager.Common.Result;
 using CableManager.Localization;
@@ -39,6 +40,15 @@ namespace CableManager.Repository.PriceDocument
                XElement priceDocumentElement = ConvertToDatabaseModel(priceDocument);
 
                _priceDocumentsXDocument?.Root?.Add(priceDocumentElement);
+            }
+            else
+            {
+               XElement priceDocumentFound = _priceDocumentsXDocument?.Find(priceDocument.Id);
+
+               if (priceDocumentFound != null)
+               {
+                  UpdateDatabaseModel(priceDocumentFound, priceDocument);
+               }
             }
 
             _priceDocumentsXDocument?.Save(_repositoryFileName);
@@ -83,9 +93,18 @@ namespace CableManager.Repository.PriceDocument
             new XElement("Id", priceDocument.Id),
             new XElement("Name", priceDocument.Name),
             new XElement("Path", priceDocument.Path),
-            new XElement("Date", priceDocument.Date));
+            new XElement("Date", priceDocument.Date),
+            new XElement("IsSelected", priceDocument.IsSelected));
 
          return priceDocumentElement;
+      }
+
+      private void UpdateDatabaseModel(XElement priceDocumentElement, PriceDocumentModel priceDocument)
+      {
+         priceDocumentElement.Element("Name")?.SetValue(priceDocument.Name ?? string.Empty);
+         priceDocumentElement.Element("Path")?.SetValue(priceDocument.Path ?? string.Empty);
+         priceDocumentElement.Element("Date")?.SetValue(priceDocument.Date ?? string.Empty);
+         priceDocumentElement.Element("IsSelected")?.SetValue(priceDocument.IsSelected);
       }
 
       private PriceDocumentModel ConvertToModel(XElement priceDocumentElement)

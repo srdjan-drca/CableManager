@@ -1096,6 +1096,15 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select at least one price list document.
+        /// </summary>
+        internal static string UI_SelectPriceListDocument {
+            get {
+                return ResourceManager.GetString("UI_SelectPriceListDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send to customer.
         /// </summary>
         internal static string UI_SendToCustomer {

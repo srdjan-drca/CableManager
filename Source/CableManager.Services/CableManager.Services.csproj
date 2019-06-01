@@ -64,7 +64,7 @@
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Report\ReportService.cs" />
     <Compile Include="Result\UserResult.cs" />
-    <Compile Include="Search\Model\Cable.cs" />
+    <Compile Include="Search\Model\CableDetails.cs" />
     <Compile Include="User\IUserService.cs" />
     <Compile Include="User\UserService.cs" />
   </ItemGroup>

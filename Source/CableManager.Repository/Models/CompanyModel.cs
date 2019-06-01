@@ -27,5 +27,10 @@ namespace CableManager.Repository.Models
       public string LogoPath { get; set; }
 
       public List<string> BankAccounts { get; set; }
+
+      public CompanyModel()
+      {
+         BankAccounts = new List<string>();
+      }
    }
 }

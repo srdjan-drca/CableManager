@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Globalization;
+using System.Collections.Generic;
 using CableManager.PriceLoader.Helpers;
 using CableManager.PriceLoader.Models;
 using OfficeOpenXml;
@@ -51,45 +51,22 @@ namespace CableManager.PriceLoader.Core
       public List<PriceModel> LoadPricesFromExcel(string path, string documentId)
       {
          var priceModels = new List<PriceModel>();
-         var fileInfo = new FileInfo(path);
 
-         using (var excelPackage = new ExcelPackage(fileInfo))
+         List<PageLineItem> pageItems = GetPageItems(path);
+
+         foreach (PageLineItem pageItem in pageItems)
          {
-            ExcelWorksheet priceWorksheet;
-
-            try
+            if (!pageItem.IsPrice)
             {
-               priceWorksheet = excelPackage.Workbook.Worksheets["Lista"];
+               List<string> cableNames = pageItem.LineItems.Select(x => x.Trim()).ToList();
+               priceModels.Add(new PriceModel(documentId, cableNames));
             }
-            catch
+            else
             {
-               priceWorksheet = excelPackage.Workbook.Worksheets["Lista"];
-            }
+               string name = GetName(pageItem.LineItems);
+               float price = GetPrice(pageItem.LineItems);
 
-            ExcelCellAddress start = priceWorksheet.Dimension.Start;
-            ExcelCellAddress end = priceWorksheet.Dimension.End;
-            string previousGroup = string.Empty;
-
-            for (int row = start.Row + 1; row <= end.Row; row++)
-            {
-               string nameOriginal = priceWorksheet.Cells[row, 2].Text;
-               string group = priceWorksheet.Cells[row, 3].Text;
-               float price = GetPrice(priceWorksheet.Cells[row, 4].Text);
-               string name = nameOriginal.Replace(group, string.Empty).Replace(",", ".").Trim();
-
-               if (previousGroup != group)
-               {
-                  var cableNames = new List<string> { group };
-                  var priceModel = new PriceModel(documentId, cableNames);
-                  priceModel.PriceItems.Add(new PriceItem(name, price));
-
-                  priceModels.Add(priceModel);
-                  previousGroup = group;
-               }
-               else
-               {
-                  priceModels.Last().PriceItems.Add(new PriceItem(name, price));
-               }
+               priceModels.Last().PriceItems.Add(new PriceItem(name, price));
             }
          }
 
@@ -111,13 +88,13 @@ namespace CableManager.PriceLoader.Core
 
             foreach (string line in pageLines)
             {
-               string[] lineItems = GetLineItems(line);
-
-               bool isLineWithPrices = IsLineWithPrices(lineItems);
+               List<string> lineItems = GetLineItems(line);
 
                if (lineItems.FirstOrDefault() != "Dimenzije" && lineItems.FirstOrDefault() != "(mm2)")
                {
-                  priceItems.Add(new PageLineItem(isLineWithPrices, lineItems.ToList()));
+                  bool isLineWithPrices = IsLineWithPrices(lineItems);
+
+                  priceItems.Add(new PageLineItem(isLineWithPrices, lineItems));
                }
             }
          }
@@ -125,19 +102,72 @@ namespace CableManager.PriceLoader.Core
          return priceItems;
       }
 
-      private string[] GetLineItems(string line)
+      private List<PageLineItem> GetPageItems(string path)
       {
-         var items = new List<string>();
+         var priceItems = new List<PageLineItem>();
+         var fileInfo = new FileInfo(path);
+
+         using (var excelPackage = new ExcelPackage(fileInfo))
+         {
+            ExcelWorksheet priceWorksheet;
+
+            try
+            {
+               priceWorksheet = excelPackage.Workbook.Worksheets["Cjenik"];
+            }
+            catch
+            {
+               priceWorksheet = excelPackage.Workbook.Worksheets["Cjenik"];
+            }
+
+            ExcelCellAddress start = priceWorksheet.Dimension.Start;
+            ExcelCellAddress end = priceWorksheet.Dimension.End;
+
+            for (int row = start.Row; row <= end.Row; row++)
+            {
+               List<string> lineItems = priceWorksheet.Cells[row, start.Column, row, 6].Where(x => x.Text != string.Empty).Select(x => x.Text).ToList();
+               var lineItemsOutput = new List<string>();
+
+               if (lineItems.Any() && !(lineItems.First().StartsWith("Konstrukcija") || lineItems.First().StartsWith("HRN")))
+               {
+                  bool isLineWithPrices = IsLineWithPrices(lineItems);
+
+                  if (isLineWithPrices)
+                  {
+                     lineItemsOutput = lineItems.Where(x => x != "9").Skip(1).Take(2).ToList();
+                  }
+                  else
+                  {
+                     foreach (string lineItem in lineItems.Where(x => x != "0").Take(2))
+                     {
+                        lineItemsOutput.AddRange(lineItem.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries).ToList());
+                     }
+                  }
+
+                  if (lineItemsOutput.Any())
+                  {
+                     priceItems.Add(new PageLineItem(isLineWithPrices, lineItemsOutput));
+                  }
+               }
+            }
+         }
+
+         return priceItems;
+      }
+
+      private List<string> GetLineItems(string line)
+      {
+         var lineItems = new List<string>();
 
          foreach (string lineItem in line.Split(new[] {"  "}, StringSplitOptions.RemoveEmptyEntries))
          {
             foreach (string lineSubItem in lineItem.Split(new[] {" / "}, StringSplitOptions.RemoveEmptyEntries))
             {
-               items.Add(lineSubItem);
+               lineItems.Add(lineSubItem);
             }
          }
 
-         return items.ToArray();
+         return lineItems;
       }
 
       private string GetName(List<string> lineItems)
@@ -174,25 +204,13 @@ namespace CableManager.PriceLoader.Core
          return price;
       }
 
-      private float GetPrice(string priceRaw)
-      {
-         float price;
-
-         if (float.TryParse(priceRaw, NumberStyles.Any, _commaCulture, out price))
-         {
-            return price;
-         }
-
-         return -1;
-      }
-
-      private bool IsLineWithPrices(string[] lineItems)
+      private bool IsLineWithPrices(List<string> lineItems)
       {
          foreach (string lineItem in lineItems)
          {
             float number;
 
-            if (float.TryParse(lineItem, out number))
+            if (float.TryParse(lineItem, out number) && number > 0)
             {
                return true;
             }

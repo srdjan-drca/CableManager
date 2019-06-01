@@ -66,10 +66,10 @@ namespace CableManager.Report.Generators.Pdf.Sections
          page.Add(offerDetailsGrid, 300, 130);
          AddUserDetails(page);
          page.Add(cableOfferGrid, 0, 360);
-         page.Add(cableOfferTotalsGrid, 0, 360 + mainTableHeight);
-         AddBottomLine(page, 410 + mainTableHeight);
+         //page.Add(cableOfferTotalsGrid, 0, 360 + mainTableHeight);
+         //AddBottomLine(page, 410 + mainTableHeight);
 
-         page.Add(ReportFooter);
+         //page.Add(ReportFooter);
 
          return pdfDocument.ToMemoryStream();
       }
@@ -111,7 +111,7 @@ namespace CableManager.Report.Generators.Pdf.Sections
       {
          PdfImage logo = null;
 
-         if (_offerReportModel.CompanyModelPdf.LogoPath != null)
+         if (!string.IsNullOrEmpty(_offerReportModel.CompanyModelPdf.LogoPath))
          {
             string logoPath = new FileInfo(_offerReportModel.CompanyModelPdf.LogoPath).FullName;
             Image image = Image.FromFile(logoPath);

@@ -516,4 +516,10 @@
   <data name="UI_SelectPriceListDocument" xml:space="preserve">
     <value>Izaberi bar jedan cijenik</value>
   </data>
+  <data name="UI_BankAccounts" xml:space="preserve">
+    <value>Bankovni računi</value>
+  </data>
+  <data name="UI_MaxNumberOfBankAccountsIsFive" xml:space="preserve">
+    <value>Moguće je uneti maksimalno pet bankovnih računa</value>
+  </data>
 </root>

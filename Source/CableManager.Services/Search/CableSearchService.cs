@@ -10,9 +10,9 @@ namespace CableManager.Services.Search
 {
    public class CableSearchService : ICableSearchService
    {
-      public List<Cable> GetCables(Stream customerRequestFile, List<List<string>> searchCriteriaList)
+      public List<CableDetails> GetCables(Stream customerRequestFile, List<List<string>> searchCriteriaList)
       {
-         var cableDetails = new List<Cable>();
+         var cableDetails = new List<CableDetails>();
 
          using (var excelPackage = new ExcelPackage(customerRequestFile))
          {
@@ -27,29 +27,73 @@ namespace CableManager.Services.Search
 
                int columnIdStart = cellItem.Column;
                int columnIdEnd = excelPackage.Workbook.Worksheets[cellItem.Worksheet].Dimension.End.Column;
+               bool isFound = false;
 
                foreach (List<string> searchCriteria in searchCriteriaList)
                {
                   foreach (string cableName in searchCriteria)
                   {
-                     if (cellItem.Text.Contains(cableName, StringComparison.OrdinalIgnoreCase))
+                     string cableName2 = CableNamePatch(cableName);
+
+                     if (cellItem.Text.Contains(cableName2, StringComparison.OrdinalIgnoreCase))
                      {
                         var worksheet = excelPackage.Workbook.Worksheets[cellItem.Worksheet];
                         string cableUnit = FindCableUnit(worksheet, cellItem.Row, columnIdStart, columnIdEnd);
 
-                        if (cableUnit == "m")
+                        if (cableUnit != null)
                         {
                            float quantity = FindCableQuantity(worksheet, cellItem.Row, columnIdStart, columnIdEnd);
 
-                           cableDetails.Add(new Cable(cellItem.Text, quantity, 1, searchCriteria));
+                           cableDetails.Add(new CableDetails(cellItem.Text.Trim(), quantity, searchCriteria));
+                           isFound = true;
+                           break;
                         }
                      }
                   }
+
+                  if (isFound)
+                     break;
                }
             }
          }
 
          return cableDetails;
+      }
+
+      private string CableNamePatch(string cableName)
+      {
+         string cableName2;
+         cableName2 = cableName;
+         if (cableName == "P")
+         {
+            cableName2 = " P ";
+         }
+         else if (cableName == "PL")
+         {
+            cableName2 = " PL ";
+         }
+         else if (cableName == "LAN")
+         {
+            cableName2 = " LAN ";
+         }
+         else if (cableName == "PPR")
+         {
+            cableName2 = " PPR ";
+         }
+         else if (cableName == "YM")
+         {
+            cableName2 = " YM ";
+         }
+         else if (cableName == "PF")
+         {
+            cableName2 = " PF ";
+         }
+         else if (cableName == "PP00")
+         {
+            cableName2 = " PPOO ";
+         }
+
+         return cableName2;
       }
 
       private string FindCableUnit(ExcelWorksheet worksheet, int rowId, int columnIdStart, int columnIdEnd)
@@ -58,7 +102,8 @@ namespace CableManager.Services.Search
          {
             string cellValue = worksheet.Cells[rowId, columnId].Text;
 
-            if (cellValue.Equals("m", StringComparison.OrdinalIgnoreCase) && cellValue.Length == 1)
+            if (cellValue.Equals("m", StringComparison.OrdinalIgnoreCase) && cellValue.Length == 1 ||
+                cellValue.Equals("m'", StringComparison.OrdinalIgnoreCase) && cellValue.Length == 2)
             {
                return "m";
             }

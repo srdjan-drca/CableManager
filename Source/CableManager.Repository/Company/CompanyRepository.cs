@@ -78,10 +78,20 @@ namespace CableManager.Repository.Company
          return companies;
       }
 
+      public void DeleteAccount(string bankAccount)
+      {
+         var bankAccountElement = _companiesXDocument.Descendants("BankAccount").FirstOrDefault(x => x.Value == bankAccount);
+         bankAccountElement?.Remove();
+
+         _companiesXDocument?.Save(_repositoryFileName);
+      }
+
       #region Private methods
 
       private XElement ConvertToDatabaseModel(CompanyModel company)
       {
+         List<XElement> bankAccounts = CreateBankAccounts(company.BankAccounts);
+
          XElement companyElement = new XElement("Company",
             new XElement("Id", company.Id),
             new XElement("Name", company.Name),
@@ -93,7 +103,8 @@ namespace CableManager.Repository.Company
             new XElement("Fax", company.Fax),
             new XElement("Mobile", company.Mobile),
             new XElement("Email", company.Email),
-            new XElement("LogoPath", company.LogoPath));
+            new XElement("LogoPath", company.LogoPath),
+            new XElement("BankAccounts", bankAccounts));
 
          return companyElement;
       }
@@ -110,16 +121,25 @@ namespace CableManager.Repository.Company
          companyElement.Element("Mobile")?.SetValue(company.Mobile ?? string.Empty);
          companyElement.Element("Email")?.SetValue(company.Email ?? string.Empty);
          companyElement.Element("LogoPath")?.SetValue(company.LogoPath ?? string.Empty);
+
+         var bankAccounts = CreateBankAccounts(company.BankAccounts);
+         companyElement.Element("BankAccounts")?.ReplaceAll(bankAccounts);
+      }
+
+      private List<XElement> CreateBankAccounts(List<string> bankAccounts)
+      {
+         var bankAccountElements = new List<XElement>();
+
+         foreach (string bankAccount in bankAccounts)
+         {
+            bankAccountElements.Add(new XElement("BankAccount", bankAccount));
+         }
+
+         return bankAccountElements;
       }
 
       private CompanyModel ConvertToModel(XElement customerElement)
       {
-         List<string> bankAccounts = new List<string>
-         {
-            "ERSTE BANK: HR3124020061100678549",
-            "SOCIETE GENERALE BANKA: HR7823300031153012079"
-         };
-
          var company = new CompanyModel
          {
             Id = customerElement.Element("Id")?.Value,
@@ -133,7 +153,7 @@ namespace CableManager.Repository.Company
             Mobile = customerElement.Element("Mobile")?.Value,
             Email = customerElement.Element("Email")?.Value,
             LogoPath = customerElement.Element("LogoPath")?.Value,
-            BankAccounts = bankAccounts
+            BankAccounts = customerElement.Element("BankAccounts").Descendants("BankAccount").Select(x => x.Value).ToList()
          };
 
          return company;

@@ -12,10 +12,6 @@ namespace CableManager.Services.Search.Iterator
 
       public string Text { get; set; }
 
-      public float Quantity { get; set; }
-
-      public List<string> SearchCriteria { get; set; }
-
       public CellItem(int worksheet, int row, int column, string text)
       {
          Worksheet = worksheet;

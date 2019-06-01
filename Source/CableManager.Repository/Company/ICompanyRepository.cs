@@ -9,5 +9,7 @@ namespace CableManager.Repository.Company
       ReturnResult Save(CompanyModel company);
 
       List<CompanyModel> GetAll();
+
+      void DeleteAccount(string bankAccount);
    }
 }

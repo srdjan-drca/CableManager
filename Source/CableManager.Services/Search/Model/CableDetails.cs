@@ -2,21 +2,20 @@
 
 namespace CableManager.Services.Search.Model
 {
-   public class Cable
+   public class CableDetails
    {
       public string Name { get; set; }
 
       public float Quantity { get; set; }
 
-      public float Price { get; set; }
-
       public List<string> SearchCriteria { get; set; }
 
-      public Cable(string name, float quantity, float price, List<string> searchCriteria)
+      public float Price { get; set; }
+
+      public CableDetails(string name, float quantity, List<string> searchCriteria)
       {
          Name = name;
          Quantity = quantity;
-         Price = price;
          SearchCriteria = searchCriteria;
       }
    }

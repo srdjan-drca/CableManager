@@ -358,6 +358,15 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bank accounts.
+        /// </summary>
+        internal static string UI_BankAccounts {
+            get {
+                return ResourceManager.GetString("UI_BankAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
         internal static string UI_Browse {
@@ -867,6 +876,15 @@ namespace CableManager.Localization.Resources {
         internal static string UI_LogOut {
             get {
                 return ResourceManager.GetString("UI_LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It is possible to enter maximum five bank accounts.
+        /// </summary>
+        internal static string UI_MaxNumberOfBankAccountsIsFive {
+            get {
+                return ResourceManager.GetString("UI_MaxNumberOfBankAccountsIsFive", resourceCulture);
             }
         }
         

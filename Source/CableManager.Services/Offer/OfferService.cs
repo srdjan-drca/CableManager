@@ -60,12 +60,12 @@ namespace CableManager.Services.Offer
          Stream customerRequestFile = File.OpenRead(fileInfo.FullName);
          List<CableModel> cableNames = _cableRepository.GetAll();
          List<List<string>> searchCriteriaList = CreateSearchCriteria(cableNames);
-         List<Cable> cables = _cableSearchService.GetCables(customerRequestFile, searchCriteriaList);
+         List<CableDetails> cables = _cableSearchService.GetCables(customerRequestFile, searchCriteriaList);
          List<PriceDocumentModel> cablePriceDocuments = _cablePriceDocumentRepository.GetAll();
          List<PriceModel> prices = LoadPrices(cablePriceDocuments, searchCriteriaList);
          List<PriceModel> filteredPrices = prices.Where(x => offerParameters.PriceDocumentIds.Contains(x.DocumentGuid)).ToList();
 
-         foreach (Cable cable in cables)
+         foreach (CableDetails cable in cables)
          {
             float price = FindPrice(cable, filteredPrices);
 
@@ -98,15 +98,15 @@ namespace CableManager.Services.Offer
          return offer;
       }
 
-      private float FindPrice(Cable cable, List<PriceModel> prices)
+      private float FindPrice(CableDetails cableDetails, List<PriceModel> prices)
       {
          foreach (PriceModel priceModel in prices)
          {
             foreach (string priceModelCableName in priceModel.CableNames)
             {
-               if (cable.SearchCriteria.Contains(priceModelCableName))
+               if (cableDetails.SearchCriteria.Contains(priceModelCableName))
                {
-                  string cableName = cable.Name.Split(' ').FirstOrDefault(x => x.Contains("mm2"))?.Replace(" ", string.Empty).Replace(",", ".").Replace("mm2", string.Empty);
+                  string cableName = cableDetails.Name.Split(' ').FirstOrDefault(x => x.Contains("mm2"))?.Replace(" ", string.Empty).Replace(",", ".").Replace("mm2", string.Empty);
 
                   if (cableName != null)
                   {
@@ -186,13 +186,13 @@ namespace CableManager.Services.Offer
          return new FileInfo(DirectoryHelper.GetApplicationStoragePath() + "/Offers/" + name).FullName;
       }
 
-      private List<OfferItem> CreateOfferItems(List<Cable> cables, CustomerModel customer)
+      private List<OfferItem> CreateOfferItems(List<CableDetails> cables, CustomerModel customer)
       {
          var offerItems = new List<OfferItem>();
          int serialNumber = 1;
          int valueAddedTax = 25;
 
-         foreach (Cable cable in cables)
+         foreach (CableDetails cable in cables)
          {
             float rebate = (float) Convert.ToDouble(customer.Rebate);
             float totalPrice = CalculationHelper.CalculatePrice(cable.Price, 0, cable.Quantity);

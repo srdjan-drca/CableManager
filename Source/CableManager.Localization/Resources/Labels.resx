@@ -516,4 +516,10 @@
   <data name="UI_SelectPriceListDocument" xml:space="preserve">
     <value>Select at least one price list document</value>
   </data>
+  <data name="UI_BankAccounts" xml:space="preserve">
+    <value>Bank accounts</value>
+  </data>
+  <data name="UI_MaxNumberOfBankAccountsIsFive" xml:space="preserve">
+    <value>It is possible to enter maximum five bank accounts</value>
+  </data>
 </root>

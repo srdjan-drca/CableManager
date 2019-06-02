@@ -31,8 +31,8 @@ namespace CableManager.Report.Generators.Pdf.Sections.Cable
          page.Add(companyDetailsGrid, 0, 0);
          page.Add(offerDetailsGrid, 0, 70);
          page.Add(cableOfferGrid, 0, 100);
-         page.Add(cableOfferTotalsGrid, 0, 100 + mainTableHeight);
-         AddBottomLine(page, 150 + mainTableHeight);
+         page.Add(cableOfferTotalsGrid, 0, 105 + mainTableHeight);
+         AddBottomLine(page, 155 + mainTableHeight);
          page.Add(ReportFooter);
 
          return pdfDocument.ToMemoryStream();

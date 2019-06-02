@@ -38,8 +38,12 @@ namespace CableManager.Report.Generators.Pdf.Sections.Cable
          page.Add(offerDetailsGrid, 300, 130);
          AddUserDetails(page);
          page.Add(cableOfferGrid, 0, 360);
-         //page.Add(cableOfferTotalsGrid, 0, 360 + mainTableHeight);
-         //AddBottomLine(page, 410 + mainTableHeight);
+
+         if (OfferReportModel.DisplayTotals)
+         {
+            page.Add(cableOfferTotalsGrid, 0, 360 + mainTableHeight);
+            AddBottomLine(page, 410 + mainTableHeight);
+         }
 
          page.Add(ReportFooter);
 

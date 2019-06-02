@@ -22,7 +22,7 @@ namespace CableManager.Common.Helpers
 
       public static string GetApplicationStoragePath()
       {
-         string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\CableManager";
+         string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Cable manager";
 
          return userProfilePath;
       }

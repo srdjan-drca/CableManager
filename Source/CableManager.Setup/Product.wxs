@@ -17,7 +17,7 @@
     <!--Directory structure-->
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
+        <Directory Id="APPLICATION_ROOT_FOLDER" Name="$(var.ProductName)">
           <Directory Id="dirHrHr" Name="hr-HR" />
         </Directory>
       </Directory>
@@ -25,10 +25,13 @@
         <Directory Id="ApplicationProgramsFolder" Name="$(var.ProductName)" />
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="ApplicationProgramDataFolder" Name="$(var.ProductName)" />
+      </Directory>
     </Directory>
 
     <!--Components-->
-    <DirectoryRef Id="INSTALLFOLDER">
+    <DirectoryRef Id="APPLICATION_ROOT_FOLDER">
       <!--CableManager-->
       <Component Id="cmpMainExecutable" Guid="64cc9d3c-3a83-4ccd-8a98-2725d8d79425" Permanent="no">
         <File Id="cmpMainExecutable" Source="$(var.CableManagerUIBin)\CableManager.UI.exe" KeyPath="yes" Checksum="yes" />
@@ -47,6 +50,12 @@
       </Component>
       <Component Id="cmpCableManagerServicesDll" Guid="5b3742ff-4ed2-40d1-acf7-da124a4e2f22" Permanent="no">
         <File Id="cmpCableManagerServicesDll" Source="$(var.CableManagerUIBin)\CableManager.Services.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpCableManagerModelConverterDll" Guid="29a1c1c2-4a7f-4df8-bf22-204c95cd507a" Permanent="no">
+        <File Id="cmpCableManagerModelConverterDll" Source="$(var.CableManagerUIBin)\CableManager.ModelConverter.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="cmpCableManagerPriceLoaderDll" Guid="81c7adef-bf70-4f04-a12e-27e96ac6a2ee" Permanent="no">
+        <File Id="cmpCableManagerPriceLoaderDll" Source="$(var.CableManagerUIBin)\CableManager.PriceLoader.dll" KeyPath="yes" Checksum="yes" />
       </Component>
       <!--CableManager license-->
       <Component Id="cmpCableManagerLicenseDll" Guid="e9c8e815-6e6c-40f7-b724-fec0981c6b2d" Permanent="no">
@@ -121,7 +130,7 @@
                   Description="Opens cable manager application"
                   Target="[#cmpMainExecutable]"
                   Icon="CableManager.ico"
-                  WorkingDirectory="INSTALLFOLDER" />
+                  WorkingDirectory="APPLICATION_ROOT_FOLDER" />
         <Shortcut Id="UninstallProduct"
                   Name="Uninstall cable manager"
                   Description="Uninstalls cable manager application"
@@ -140,7 +149,7 @@
                   Description="Opens cable manager application"
                   Target="[#cmpMainExecutable]"
                   Icon="CableManager.ico"
-                  WorkingDirectory="INSTALLFOLDER"/>
+                  WorkingDirectory="APPLICATION_ROOT_FOLDER"/>
 
         <RemoveFolder Id="CleanUpDesktopShortCut" Directory="DesktopFolder" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="Software\EnergyCentarPlus\CableManager" Name="installed" Type="integer" Value="1" KeyPath="yes" />
@@ -157,6 +166,8 @@
       <ComponentRef Id="cmpCableManagerReportDll" />
       <ComponentRef Id="cmpCableManagerRepositoryDll" />
       <ComponentRef Id="cmpCableManagerServicesDll" />
+      <ComponentRef Id="cmpCableManagerModelConverterDll" />
+      <ComponentRef Id="cmpCableManagerPriceLoaderDll" />
       <!--CableManager license-->
       <ComponentRef Id="cmpCableManagerLicenseDll" />
       <ComponentRef Id="cmpQLicenseDll" />
@@ -184,11 +195,13 @@
       <ComponentRef Id="cmpApplicationShortcut" />
       <ComponentRef Id="cmpDesktopShortcut" />
 
-      <ComponentRef Id="UninstallFolder" Primary="yes"/>
+      <!--Cleanup-->
+      <ComponentRef Id="cmpRemoveApplicationRootFolder" Primary="yes"/>
+      <ComponentRef Id="cmpRemoveApplicationCommonDataFolder" />
     </Feature>
 
     <!-- Set WixUI Dialogs -->
-    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="WIXUI_INSTALLDIR" Value="APPLICATION_ROOT_FOLDER" />
     <UIRef Id="WixUI_InstallDir" />
 
     <!-- Tell WiX to ask for .NET framework -->
@@ -204,19 +217,32 @@
     <MediaTemplate />
   </Product>
 
-  <Fragment Id="FolderUninstall">
+  <Fragment Id="ApplicationFolderRemoval">
     <?define RegDir="SYSTEM\ControlSet001\services\[Manufacturer]:[ProductName]"?>
-    <?define RegValueName="InstallDir"?>
-    <Property Id="INSTALLFOLDER">
-      <RegistrySearch Root="HKLM" Key="$(var.RegDir)" Type="raw" Id="APPLICATIONFOLDER_REGSEARCH" Name="$(var.RegValueName)" />
+    <?define RegValueApplicationRoot="ApplicationRoot"?>
+    <?define RegValueApplicationProgramData="ApplicationProgramData"?>
+    <Property Id="APPLICATION_ROOT_FOLDER">
+      <RegistrySearch Root="HKLM" Key="$(var.RegDir)" Type="raw" Id="APPLICATION_ROOT_REG_SEARCH" Name="$(var.RegValueApplicationRoot)" />
+    </Property>
+    <Property Id="APPLICATION_PROGRAM_DATA_FOLDER">
+      <RegistrySearch Root="HKLM" Key="$(var.RegDir)" Type="raw" Id="APPLICATION_PROGRAM_DATA_REG_SEARCH" Name="$(var.RegValueApplicationProgramData)" />
     </Property>
 
-    <DirectoryRef Id='INSTALLFOLDER'>
-      <Component Id="UninstallFolder" Guid="*">
-        <CreateFolder Directory="INSTALLFOLDER"/>
-        <util:RemoveFolderEx Property="INSTALLFOLDER" On="uninstall"/>
-        <RemoveFolder Id="INSTALLFOLDER" On="uninstall"/>
-        <RegistryValue Root="HKLM" Key="$(var.RegDir)" Name="$(var.RegValueName)" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes"/>
+    <DirectoryRef Id='APPLICATION_ROOT_FOLDER'>
+      <Component Id="cmpRemoveApplicationRootFolder" Guid="*">
+        <CreateFolder Directory="APPLICATION_ROOT_FOLDER"/>
+        <util:RemoveFolderEx Property="APPLICATION_ROOT_FOLDER" On="uninstall"/>
+        <RemoveFolder Id="APPLICATION_ROOT_FOLDER" On="uninstall"/>
+        <RegistryValue Root="HKLM" Key="$(var.RegDir)" Name="$(var.RegValueApplicationRoot)" Type="string" Value="[APPLICATION_ROOT_FOLDER]" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="ApplicationProgramDataFolder">
+      <Component Id="cmpRemoveApplicationCommonDataFolder" Guid="*">
+        <CreateFolder Directory="ApplicationProgramDataFolder"/>
+        <util:RemoveFolderEx Property="APPLICATION_PROGRAM_DATA_FOLDER" On="uninstall"/>
+        <RemoveFolder Id="APPLICATION_PROGRAM_DATA_FOLDER" On="uninstall"/>
+        <RegistryValue Root="HKLM" Key="$(var.RegDir)" Name="$(var.RegValueApplicationProgramData)" Type="string" Value="[ApplicationProgramDataFolder]" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
   </Fragment>

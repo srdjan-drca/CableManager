@@ -55,6 +55,7 @@ namespace CableManager.Report.Generators.Pdf.Documents
             offerReportModelClone.OfferItems.AddRange(offerItems);
             offerReportModelClone.PageNumber = 1;
             offerReportModelClone.PageTotal = totalPages;
+            offerReportModelClone.DisplayTotals = totalPages <= 1;
 
             section = new CableFirstPdfSection(offerReportModelClone);
          }

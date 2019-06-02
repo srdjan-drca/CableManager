@@ -11,5 +11,7 @@ namespace CableManager.Report.Models
       public int PageNumber { get; set; }
 
       public int PageTotal { get; set; }
+
+      public bool DisplayTotals { get; set; }
    }
 }

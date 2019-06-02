@@ -5,8 +5,8 @@ namespace CableManager.PriceLoader.Core
 {
    public interface IPriceLoader
    {
-      List<PriceModel> LoadPricesFromPdf(string path, string documentId);
+      List<CablePriceModel> LoadPricesFromPdf(string path, string documentId);
 
-      List<PriceModel> LoadPricesFromExcel(string path, string documentId);
+      List<CablePriceModel> LoadPricesFromExcel(string path, string documentId);
    }
 }

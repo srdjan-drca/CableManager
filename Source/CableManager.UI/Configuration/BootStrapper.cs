@@ -2,22 +2,24 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using CableManager.Localization;
+using CableManager.ModelConverter;
+using CableManager.Repository.CableName;
+using CableManager.Repository.CablePrice;
+using CableManager.Repository.CablePriceDocument;
 using CableManager.Repository.User;
-using CableManager.Repository.Cable;
 using CableManager.Repository.Company;
 using CableManager.Repository.Customer;
 using CableManager.Repository.OfferDocument;
-using CableManager.Repository.PriceDocument;
 using CableManager.Services.User;
 using CableManager.Services.Report;
 using CableManager.Services.License;
+using CableManager.Services.Offer;
+using CableManager.Services.Search;
 using CableManager.UI.Navigation;
 using CableManager.UI.ViewModels.Controls;
 using CableManager.UI.ViewModels.Pages;
 using CableManager.UI.ViewModels.Windows;
 using CableManager.Report;
-using CableManager.Services.Offer;
-using CableManager.Services.Search;
 using CableManager.PriceLoader.Core;
 
 namespace CableManager.UI.Configuration
@@ -63,12 +65,17 @@ namespace CableManager.UI.Configuration
          SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
 
          //Repositories
-         SimpleIoc.Default.Register<ICustomerRepository, CustomerRepository>();
-         SimpleIoc.Default.Register<IUserRepository, UserRepository>();
+         SimpleIoc.Default.Register<ICableNameRepository, CableNameRepository>();
+         SimpleIoc.Default.Register<ICablePriceRepository, CablePriceRepository>();
          SimpleIoc.Default.Register<ICablePriceDocumentRepository, CablePriceDocumentRepository>();
-         SimpleIoc.Default.Register<IOfferDocumentRepository, OfferDocumentRepository>();
          SimpleIoc.Default.Register<ICompanyRepository, CompanyRepository>();
-         SimpleIoc.Default.Register<ICableRepository, CableRepository>();
+         SimpleIoc.Default.Register<ICustomerRepository, CustomerRepository>();
+         SimpleIoc.Default.Register<IOfferDocumentRepository, OfferDocumentRepository>();
+         SimpleIoc.Default.Register<IUserRepository, UserRepository>();
+
+         //Model converters
+         SimpleIoc.Default.Register<ICablePriceModelConverter, CablePriceModelConverter>();
+         
       }
 
       private static IFrameNavigationService CreateNavigationService()

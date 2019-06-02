@@ -7,5 +7,9 @@ namespace CableManager.Report.Models
       public string TimeDate { get; set; }
 
       public ILabelProvider LabelProvider { get; set; }
+
+      public int PageNumber { get; set; }
+
+      public int PageTotal { get; set; }
    }
 }

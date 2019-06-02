@@ -73,6 +73,10 @@
       <Project>{3188c5b2-a45d-42ae-8e0c-3c7e5bb9ce94}</Project>
       <Name>CableManager.License</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CableManager.ModelConverter\CableManager.ModelConverter.csproj">
+      <Project>{563a6259-1bf1-4278-8325-d9d70debaa87}</Project>
+      <Name>CableManager.ModelConverter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CableManager.PriceLoader\CableManager.PriceLoader.csproj">
       <Project>{EC2B164D-275D-445E-A143-B6E200532842}</Project>
       <Name>CableManager.PriceLoader</Name>

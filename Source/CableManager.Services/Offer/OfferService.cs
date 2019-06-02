@@ -6,18 +6,18 @@ using System.Collections.Generic;
 using OfficeOpenXml;
 using CableManager.Common.Helpers;
 using CableManager.Localization;
+using CableManager.ModelConverter;
 using CableManager.Report.Models;
-using CableManager.Repository.Cable;
+using CableManager.Repository.CableName;
+using CableManager.Repository.CablePrice;
 using CableManager.Repository.Company;
 using CableManager.Repository.Customer;
 using CableManager.Repository.Models;
-using CableManager.Repository.PriceDocument;
 using CableManager.Services.Helpers;
 using CableManager.Services.Offer.Models;
 using CableManager.Services.Search;
 using CableManager.Services.Search.Model;
 using CableManager.Services.User;
-using CableManager.PriceLoader.Core;
 using CableManager.PriceLoader.Models;
 
 namespace CableManager.Services.Offer
@@ -26,11 +26,11 @@ namespace CableManager.Services.Offer
    {
       private readonly LabelProvider _labelProvider;
 
-      private readonly ICableRepository _cableRepository;
+      private readonly ICableNameRepository _cableNameRepository;
+
+      private readonly ICablePriceRepository _cablePriceRepository;
 
       private readonly ICompanyRepository _companyRepository;
-
-      private readonly ICablePriceDocumentRepository _cablePriceDocumentRepository;
 
       private readonly ICustomerRepository _customerRepository;
 
@@ -38,32 +38,33 @@ namespace CableManager.Services.Offer
 
       private readonly IUserService _userService;
 
-      private readonly IPriceLoader _priceLoader;
+      private readonly ICablePriceModelConverter _cablePriceModelConverter;
 
-      public OfferService(LabelProvider labelProvider, ICableRepository cableRepository, ICompanyRepository companyRepository,
-         ICablePriceDocumentRepository cablePriceDocumentRepository, ICustomerRepository customerRepository,
-         ICableSearchService cableSearchService, IUserService userService, IPriceLoader priceLoader)
+      public OfferService(LabelProvider labelProvider, ICableNameRepository cableNameRepository, ICablePriceRepository cablePriceRepository,
+         ICompanyRepository companyRepository, ICustomerRepository customerRepository, ICableSearchService cableSearchService,
+         IUserService userService, ICablePriceModelConverter cablePriceModelConverter)
       {
          _labelProvider = labelProvider;
-         _cableRepository = cableRepository;
+         _cableNameRepository = cableNameRepository;
+         _cablePriceRepository = cablePriceRepository;
          _companyRepository = companyRepository;
-         _cablePriceDocumentRepository = cablePriceDocumentRepository;
          _customerRepository = customerRepository;
          _cableSearchService = cableSearchService;
          _userService = userService;
-         _priceLoader = priceLoader;
+         _cablePriceModelConverter = cablePriceModelConverter;
       }
 
       public OfferModel CreateOffer(OfferParameters offerParameters)
       {
          var fileInfo = new FileInfo(offerParameters.CustomerRequestFilePath);
          Stream customerRequestFile = File.OpenRead(fileInfo.FullName);
-         List<CableModel> cableNames = _cableRepository.GetAll();
+         List<CableModel> cableNames = _cableNameRepository.GetAll();
          List<List<string>> searchCriteriaList = CreateSearchCriteria(cableNames);
          List<CableDetails> cables = _cableSearchService.GetCables(customerRequestFile, searchCriteriaList);
-         List<PriceDocumentModel> cablePriceDocuments = _cablePriceDocumentRepository.GetAll();
-         List<PriceModel> prices = LoadPrices(cablePriceDocuments, searchCriteriaList);
-         List<PriceModel> filteredPrices = prices.Where(x => offerParameters.PriceDocumentIds.Contains(x.DocumentGuid)).ToList();
+
+         List<CablePriceDbModel> cablePriceDbModels = _cablePriceRepository.GetAll();
+         List<CablePriceModel> prices = _cablePriceModelConverter.ToModels(cablePriceDbModels);
+         List<CablePriceModel> filteredPrices = prices.Where(x => offerParameters.PriceDocumentIds.Contains(x.DocumentGuid)).ToList();
 
          foreach (CableDetails cable in cables)
          {
@@ -98,36 +99,9 @@ namespace CableManager.Services.Offer
          return offer;
       }
 
-      private float FindPrice(CableDetails cableDetails, List<PriceModel> prices)
-      {
-         foreach (PriceModel priceModel in prices)
-         {
-            foreach (string priceModelCableName in priceModel.CableNames)
-            {
-               if (cableDetails.SearchCriteria.Contains(priceModelCableName))
-               {
-                  string cableName = cableDetails.Name.Split(' ').FirstOrDefault(x => x.Contains("mm2"))?.Replace(" ", string.Empty).Replace(",", ".").Replace("mm2", string.Empty);
-
-                  if (cableName != null)
-                  {
-                     foreach (PriceItem priceItem in priceModel.PriceItems)
-                     {
-                        if (priceItem.Name.Contains(cableName))
-                        {
-                           return priceItem.Price;
-                        }
-                     }
-                  }
-               }
-            }
-         }
-
-         return 0;
-      }
-
       public List<CableModel> LoadCableNames(string fileName)
       {
-         Dictionary<string, string> cableDefinitions = _cableRepository.GetAll().ToDictionary(x => x.Name, x => x.Synonyms);
+         Dictionary<string, string> cableDefinitions = _cableNameRepository.GetAll().ToDictionary(x => x.Name, x => x.Synonyms);
          var cables = new List<CableModel>();
          var fileInfo = new FileInfo(fileName);
 
@@ -157,6 +131,30 @@ namespace CableManager.Services.Offer
       }
 
       #region Private methods
+
+      private float FindPrice(CableDetails cableDetails, List<CablePriceModel> prices)
+      {
+         float price = 0;
+
+         foreach (CablePriceModel priceModel in prices)
+         {
+            string cableType = ExtractCableType(cableDetails.Name);
+            bool isFound = priceModel.GetPrice(cableDetails.SearchCriteria, cableType, out price);
+
+            if (isFound)
+            {
+               break;
+            }
+         }
+
+         return price;
+      }
+
+      private string ExtractCableType(string cableName)
+      {
+         return cableName.Split(' ').FirstOrDefault(x => x.Contains("mm"))?
+            .Replace(" ", string.Empty).Replace(",", ".").Replace("mm2", string.Empty).Replace("mm²", string.Empty).Replace("mm", string.Empty);
+      }
 
       private List<List<string>> CreateSearchCriteria(List<CableModel> cablesDb)
       {
@@ -202,7 +200,7 @@ namespace CableManager.Services.Offer
             var offerItem = new OfferItem
             {
                SerialNumber = serialNumber,
-               Name = cable.Name,
+               Name = string.Join("", cable.Name.Take(36)),
                Quantity = cable.Quantity,
                Unit = "m",
                PricePerItem = cable.Price,
@@ -236,64 +234,6 @@ namespace CableManager.Services.Offer
          };
 
          return offerTotals;
-      }
-
-      private List<PriceModel> LoadPrices(List<PriceDocumentModel> priceDocuments, List<List<string>> searchCriteriaList)
-      {
-         var prices = new List<PriceModel>();
-
-         foreach (PriceDocumentModel priceDocument in priceDocuments)
-         {
-            string extension = Path.GetExtension(priceDocument.Path);
-
-            switch (extension)
-            {
-               case ".pdf":
-                  List<PriceModel> priceModelsPdf = _priceLoader.LoadPricesFromPdf(priceDocument.Path, priceDocument.Id);
-
-                  foreach (PriceModel priceModel in priceModelsPdf)
-                  {
-                     foreach (List<string> searchCriteria in searchCriteriaList)
-                     {
-                        var intersect = priceModel.CableNames.Intersect(searchCriteria);
-
-                        if (intersect.Any())
-                        {
-                           priceModel.CableNames.AddRange(searchCriteria);
-                           priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
-                        }
-                     }
-                  }
-
-                  prices.AddRange(priceModelsPdf);
-                  break;
-
-               case ".xlsx":
-                  List<PriceModel> priceModelsExcel = _priceLoader.LoadPricesFromExcel(priceDocument.Path, priceDocument.Id);
-
-                  foreach (PriceModel priceModel in priceModelsExcel)
-                  {
-                     foreach (List<string> searchCriteria in searchCriteriaList)
-                     {
-                        var intersect = priceModel.CableNames.Intersect(searchCriteria);
-
-                        if (intersect.Any())
-                        {
-                           priceModel.CableNames.AddRange(searchCriteria);
-                           priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
-                        }
-                     }
-                  }
-
-                  prices.AddRange(priceModelsExcel);
-                  break;
-
-               default:
-                  throw new Exception("Document format not supported");
-            }
-         }
-
-         return prices;
       }
 
       #endregion

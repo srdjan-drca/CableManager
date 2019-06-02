@@ -2,7 +2,7 @@
 using CableManager.Common.Result;
 using CableManager.Repository.Models;
 
-namespace CableManager.Repository.PriceDocument
+namespace CableManager.Repository.CablePriceDocument
 {
    public interface ICablePriceDocumentRepository
    {

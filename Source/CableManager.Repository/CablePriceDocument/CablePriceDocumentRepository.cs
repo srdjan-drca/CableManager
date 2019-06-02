@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using System.Collections.Generic;
 using CableManager.Common.Extensions;
 using CableManager.Common.Helpers;
 using CableManager.Common.Result;
 using CableManager.Localization;
 using CableManager.Repository.Models;
 
-namespace CableManager.Repository.PriceDocument
+namespace CableManager.Repository.CablePriceDocument
 {
    public class CablePriceDocumentRepository : RepositoryBase, ICablePriceDocumentRepository
    {

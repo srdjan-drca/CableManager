@@ -47,7 +47,7 @@ namespace CableManager.Report.Generators.Pdf.Sections
       {
          float pageWidth = page.ActualSize.Width;
          float pageHeight = page.ActualSize.Height;
-         string pageNumber = $" {1} - {1}";
+         string pageNumber = $" {BaseReportModel.PageNumber} - {BaseReportModel.PageTotal}";
 
          page.AddText(pageNumber, _arial8BlackLeft, (pageWidth / 2) - 20, pageHeight - 50);
       }

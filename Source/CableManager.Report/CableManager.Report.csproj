@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CableManagerReport.cs" />
+    <Compile Include="Generators\Pdf\Sections\Cable\CableOtherPdfSection.cs" />
+    <Compile Include="Generators\Pdf\Sections\Cable\BaseCablePdfSection.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EpplusExtensions.cs" />
@@ -73,7 +75,7 @@
     <Compile Include="Models\OfferReportModel.cs" />
     <Compile Include="Models\CompanyModelPdf.cs" />
     <Compile Include="Generators\Pdf\Sections\BasePdfSection.cs" />
-    <Compile Include="Generators\Pdf\Sections\CablePdfSection.cs" />
+    <Compile Include="Generators\Pdf\Sections\Cable\CableFirstPdfSection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StyleManager\Cell\CellBackground.cs" />
     <Compile Include="StyleManager\Cell\CellStyle.cs" />

@@ -38,13 +38,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cable\CableRepository.cs" />
-    <Compile Include="Cable\ICableRepository.cs" />
+    <Compile Include="CablePrice\CablePriceRepository.cs" />
+    <Compile Include="CablePrice\ICablePriceRepository.cs" />
+    <Compile Include="CableName\CableNameRepository.cs" />
+    <Compile Include="CableName\ICableRepository.cs" />
     <Compile Include="Company\CompanyRepository.cs" />
     <Compile Include="Company\ICompanyRepository.cs" />
     <Compile Include="Customer\CustomerRepository.cs" />
     <Compile Include="Customer\ICustomerRepository.cs" />
     <Compile Include="Models\CableModel.cs" />
+    <Compile Include="Models\CableNamePriceDbModel.cs" />
+    <Compile Include="Models\CablePriceDbModel.cs" />
     <Compile Include="Models\CompanyModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\OfferDocumentModel.cs" />
@@ -52,8 +56,8 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="OfferDocument\IOfferDocumentRepository.cs" />
     <Compile Include="OfferDocument\OfferDocumentRepository.cs" />
-    <Compile Include="PriceDocument\ICablePriceDocumentRepository.cs" />
-    <Compile Include="PriceDocument\CablePriceDocumentRepository.cs" />
+    <Compile Include="CablePriceDocument\ICablePriceDocumentRepository.cs" />
+    <Compile Include="CablePriceDocument\CablePriceDocumentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="User\IUserRepository.cs" />

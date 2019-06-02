@@ -97,7 +97,7 @@ namespace CableManager.Report.Generators.Excel.Worksheets
          int pixelWidth = (numberOfRows+4) * DefaultRowHeightInPixels;
          int pixelHeight = numberOfRows * DefaultRowHeightInPixels;
 
-         if (_offerReportModel.CompanyModelPdf.LogoPath != null)
+         if (!string.IsNullOrEmpty(_offerReportModel.CompanyModelPdf.LogoPath))
          {
             string logoPath = new FileInfo(_offerReportModel.CompanyModelPdf.LogoPath).FullName;
             Image logoImage = Image.FromFile(logoPath);

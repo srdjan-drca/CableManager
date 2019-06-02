@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.License", "Cab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.PriceLoader", "CableManager.PriceLoader\CableManager.PriceLoader.csproj", "{EC2B164D-275D-445E-A143-B6E200532842}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableManager.ModelConverter", "CableManager.ModelConverter\CableManager.ModelConverter.csproj", "{563A6259-1BF1-4278-8325-D9D70DEBAA87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -63,6 +65,10 @@ Global
 		{EC2B164D-275D-445E-A143-B6E200532842}.Debug|x86.Build.0 = Debug|x86
 		{EC2B164D-275D-445E-A143-B6E200532842}.Release|x86.ActiveCfg = Release|x86
 		{EC2B164D-275D-445E-A143-B6E200532842}.Release|x86.Build.0 = Release|x86
+		{563A6259-1BF1-4278-8325-D9D70DEBAA87}.Debug|x86.ActiveCfg = Debug|x86
+		{563A6259-1BF1-4278-8325-D9D70DEBAA87}.Debug|x86.Build.0 = Debug|x86
+		{563A6259-1BF1-4278-8325-D9D70DEBAA87}.Release|x86.ActiveCfg = Release|x86
+		{563A6259-1BF1-4278-8325-D9D70DEBAA87}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

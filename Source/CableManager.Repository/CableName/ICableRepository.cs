@@ -2,9 +2,9 @@
 using CableManager.Common.Result;
 using CableManager.Repository.Models;
 
-namespace CableManager.Repository.Cable
+namespace CableManager.Repository.CableName
 {
-   public interface ICableRepository
+   public interface ICableNameRepository
    {
       ReturnResult Save(CableModel cable);
 

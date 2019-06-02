@@ -3,20 +3,20 @@ using System.Linq;
 using GalaSoft.MvvmLight.Command;
 using CableManager.Common.Result;
 using CableManager.Localization;
-using CableManager.Repository.Cable;
+using CableManager.Repository.CableName;
 using CableManager.Repository.Models;
 
 namespace CableManager.UI.ViewModels.Pages
 {
    public class CableNameOverviewPageViewModel : RootViewModel
    {
-      private readonly ICableRepository _cableRepository;
+      private readonly ICableNameRepository _cableNameRepository;
 
       private CableModel _selectedCable;
 
-      public CableNameOverviewPageViewModel(LabelProvider labelProvider, ICableRepository cableRepository) : base(labelProvider)
+      public CableNameOverviewPageViewModel(LabelProvider labelProvider, ICableNameRepository cableNameRepository) : base(labelProvider)
       {
-         _cableRepository = cableRepository;
+         _cableNameRepository = cableNameRepository;
 
          SaveSelectedItemCommand = new RelayCommand<object>(SaveSelectedItem);
          DeleteSelectedItemsCommand = new RelayCommand<object>(DeleteSelectedItems);
@@ -25,7 +25,7 @@ namespace CableManager.UI.ViewModels.Pages
       public List<CableModel> Cables
       {
          get {
-            List<CableModel> cables = _cableRepository.GetAll();
+            List<CableModel> cables = _cableNameRepository.GetAll();
 
             return cables;
          }
@@ -51,7 +51,7 @@ namespace CableManager.UI.ViewModels.Pages
 
       private void SaveSelectedItem(object parameter)
       {
-         ReturnResult result = _cableRepository.Save(SelectedCable);
+         ReturnResult result = _cableNameRepository.Save(SelectedCable);
 
          if (SelectedCable != null)
          {
@@ -59,7 +59,7 @@ namespace CableManager.UI.ViewModels.Pages
 
             RaisePropertyChanged(nameof(Cables));
 
-            SelectedCable = _cableRepository.Get(selectedCableId);
+            SelectedCable = _cableNameRepository.Get(selectedCableId);
          }
 
          StatusMessage = result.Message;
@@ -68,7 +68,7 @@ namespace CableManager.UI.ViewModels.Pages
       private void DeleteSelectedItems(object parameter)
       {
          List<string> selectedCableIds = ConvertToList(parameter)?.Select(x => x.Id).ToList();
-         ReturnResult result = _cableRepository.DeleteAll(selectedCableIds);
+         ReturnResult result = _cableNameRepository.DeleteAll(selectedCableIds);
 
          if (result.IsSuccess)
          {

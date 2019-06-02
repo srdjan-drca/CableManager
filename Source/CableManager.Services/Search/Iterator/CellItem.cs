@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CableManager.Services.Search.Iterator
+﻿namespace CableManager.Services.Search.Iterator
 {
    public class CellItem
    {
@@ -18,13 +16,6 @@ namespace CableManager.Services.Search.Iterator
          Row = row;
          Column = column;
          Text = text;
-      }
-
-      public bool IsEqual(CellItem cellItem)
-      {
-         bool isEqual = Worksheet == cellItem.Worksheet && Row == cellItem.Row;
-
-         return isEqual;
       }
    }
 }

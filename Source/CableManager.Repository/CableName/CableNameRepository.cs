@@ -1,23 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using System.Collections.Generic;
 using CableManager.Common.Extensions;
 using CableManager.Common.Helpers;
 using CableManager.Common.Result;
 using CableManager.Localization;
 using CableManager.Repository.Models;
 
-namespace CableManager.Repository.Cable
+namespace CableManager.Repository.CableName
 {
-   public class CableRepository : RepositoryBase, ICableRepository
+   public class CableNameRepository : RepositoryBase, ICableNameRepository
    {
       private readonly string _repositoryFileName;
 
       private readonly XDocument _cablesXDocument;
 
-      public CableRepository(LabelProvider labelProvider) : base(labelProvider)
+      public CableNameRepository(LabelProvider labelProvider) : base(labelProvider)
       {
          _repositoryFileName = new FileInfo(DirectoryHelper.GetApplicationStoragePath() + "/Repository/Cables.xml").FullName;
 

@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CableManager.PriceLoader")]
+[assembly: AssemblyTitle("CableManager.ModelConverter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("CableManager.PriceLoader")]
+[assembly: AssemblyProduct("CableManager.ModelConverter")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ec2b164d-275d-445e-a143-b6e200532842")]
+[assembly: Guid("563a6259-1bf1-4278-8325-d9d70debaa87")]
 
 // Version information for an assembly consists of the following four values:
 //

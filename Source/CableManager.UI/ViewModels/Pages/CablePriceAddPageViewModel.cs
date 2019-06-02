@@ -6,23 +6,42 @@ using System.Globalization;
 using System.Linq;
 using GalaSoft.MvvmLight.Command;
 using CableManager.Localization;
+using CableManager.PriceLoader.Core;
+using CableManager.PriceLoader.Models;
+using CableManager.Repository.CableName;
+using CableManager.Repository.CablePrice;
+using CableManager.Repository.CablePriceDocument;
 using CableManager.Repository.Models;
-using CableManager.Repository.PriceDocument;
+using CableManager.ModelConverter;
 
 namespace CableManager.UI.ViewModels.Pages
 {
    public class CablePriceAddPageViewModel : RootViewModel
    {
+      private readonly ICableNameRepository _cableNameRepository;
+
+      private readonly ICablePriceRepository _cablePriceRepository;
+
       private readonly ICablePriceDocumentRepository _cablePriceDocumentRepository;
+
+      private readonly IPriceLoader _priceLoader;
+
+      private readonly ICablePriceModelConverter _cablePriceModelConverter;
 
       private List<PriceDocumentModel> _priceDocuments;
 
       private PriceDocumentModel _selectedPriceDocument;
 
-      public CablePriceAddPageViewModel(LabelProvider labelProvider, ICablePriceDocumentRepository cablePriceDocumentRepository)
-         : base(labelProvider)
+      public CablePriceAddPageViewModel(LabelProvider labelProvider, ICableNameRepository cableNameRepository,
+         ICablePriceRepository cablePriceRepository, ICablePriceDocumentRepository cablePriceDocumentRepository,
+         IPriceLoader priceLoader, ICablePriceModelConverter cablePriceModelConverter) : base(labelProvider)
       {
+         _cableNameRepository = cableNameRepository;
+         _cablePriceRepository = cablePriceRepository;
          _cablePriceDocumentRepository = cablePriceDocumentRepository;
+         _priceLoader = priceLoader;
+         _cablePriceModelConverter = cablePriceModelConverter;
+
          PriceDocuments = _cablePriceDocumentRepository.GetAll();
 
          BrowsePriceDocumentCommand = new RelayCommand<object>(BrowsePriceDocument);
@@ -86,6 +105,14 @@ namespace CableManager.UI.ViewModels.Pages
             PriceDocuments?.Clear();
             PriceDocuments = _cablePriceDocumentRepository.GetAll();
 
+            List<CableModel> cableNames = _cableNameRepository.GetAll();
+            List<List<string>> searchCriteriaList = CreateSearchCriteria(cableNames);
+            List<CablePriceModel> cablePriceModels = LoadPrices(PriceDocuments, searchCriteriaList);
+            List<CablePriceDbModel> cablePriceDbModels = _cablePriceModelConverter.ToDbModels(cablePriceModels);
+
+            _cablePriceRepository.DeleteAll();
+            _cablePriceRepository.SaveAll(cablePriceDbModels);
+
             StatusMessage = LabelProvider["UI_PriceDocumentsLoaded"];
          }
       }
@@ -105,6 +132,79 @@ namespace CableManager.UI.ViewModels.Pages
                _cablePriceDocumentRepository.Save(priceDocument);
             }
          }
+      }
+
+      private List<List<string>> CreateSearchCriteria(List<CableModel> cablesDb)
+      {
+         var cableNames = new List<List<string>>();
+
+         foreach (CableModel cableModel in cablesDb)
+         {
+            List<string> synonyms = cableModel.Synonyms.Split(',').Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            synonyms.Add(cableModel.Name.Trim());
+
+            cableNames.Add(synonyms);
+         }
+
+         return cableNames;
+      }
+
+      private List<CablePriceModel> LoadPrices(List<PriceDocumentModel> priceDocuments, List<List<string>> searchCriteriaList)
+      {
+         var prices = new List<CablePriceModel>();
+
+         foreach (PriceDocumentModel priceDocument in priceDocuments)
+         {
+            string extension = Path.GetExtension(priceDocument.Path);
+
+            switch (extension)
+            {
+               case ".pdf":
+                  List<CablePriceModel> priceModelsPdf = _priceLoader.LoadPricesFromPdf(priceDocument.Path, priceDocument.Id);
+
+                  foreach (CablePriceModel priceModel in priceModelsPdf)
+                  {
+                     foreach (List<string> searchCriteria in searchCriteriaList)
+                     {
+                        var intersect = priceModel.CableNames.Intersect(searchCriteria);
+
+                        if (intersect.Any())
+                        {
+                           priceModel.CableNames.AddRange(searchCriteria);
+                           priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
+                        }
+                     }
+                  }
+
+                  prices.AddRange(priceModelsPdf);
+                  break;
+
+               case ".xlsx":
+                  List<CablePriceModel> priceModelsExcel = _priceLoader.LoadPricesFromExcel(priceDocument.Path, priceDocument.Id);
+
+                  foreach (CablePriceModel priceModel in priceModelsExcel)
+                  {
+                     foreach (List<string> searchCriteria in searchCriteriaList)
+                     {
+                        var intersect = priceModel.CableNames.Intersect(searchCriteria);
+
+                        if (intersect.Any())
+                        {
+                           priceModel.CableNames.AddRange(searchCriteria);
+                           priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
+                        }
+                     }
+                  }
+
+                  prices.AddRange(priceModelsExcel);
+                  break;
+
+               default:
+                  throw new Exception("Document format not supported");
+            }
+         }
+
+         return prices;
       }
 
       #endregion Private methods

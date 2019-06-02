@@ -3,7 +3,7 @@ using Microsoft.Win32;
 using GalaSoft.MvvmLight.Command;
 using CableManager.Common.Result;
 using CableManager.Localization;
-using CableManager.Repository.Cable;
+using CableManager.Repository.CableName;
 using CableManager.Repository.Models;
 using CableManager.Services.Offer;
 
@@ -11,14 +11,14 @@ namespace CableManager.UI.ViewModels.Pages
 {
    public class CableNameAddPageViewModel : RootViewModel
    {
-      private readonly ICableRepository _cableRepository;
+      private readonly ICableNameRepository _cableNameRepository;
 
       private readonly IOfferService _offerService;
 
-      public CableNameAddPageViewModel(LabelProvider labelProvider, ICableRepository cableRepository, IOfferService offerService)
+      public CableNameAddPageViewModel(LabelProvider labelProvider, ICableNameRepository cableNameRepository, IOfferService offerService)
          : base(labelProvider)
       {
-         _cableRepository = cableRepository;
+         _cableNameRepository = cableNameRepository;
          _offerService = offerService;
 
          SaveCableNameCommand = new RelayCommand<object>(SaveCableName);
@@ -34,7 +34,7 @@ namespace CableManager.UI.ViewModels.Pages
       private void SaveCableName(object parameter)
       {
          CableModel cable = ConvertToModel(parameter);
-         ReturnResult result = _cableRepository.Save(cable);
+         ReturnResult result = _cableNameRepository.Save(cable);
 
          StatusMessage = result.Message;
       }
@@ -52,7 +52,7 @@ namespace CableManager.UI.ViewModels.Pages
          if (isSuccess != null && isSuccess.Value)
          {
             List<CableModel> cableNames = _offerService.LoadCableNames(openFileDialog.FileName);
-            ReturnResult result = _cableRepository.SaveAll(cableNames);
+            ReturnResult result = _cableNameRepository.SaveAll(cableNames);
 
             StatusMessage = result.Message;
          }

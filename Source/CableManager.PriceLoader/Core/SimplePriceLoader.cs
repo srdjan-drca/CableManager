@@ -19,10 +19,10 @@ namespace CableManager.PriceLoader.Core
          }
       };
 
-      public List<PriceModel> LoadPricesFromPdf(string path, string documentId)
+      public List<CablePriceModel> LoadPricesFromPdf(string path, string documentId)
       {
          List<string> allPagesContent = PdfDocumentHelper.GetPagesWithPrices(path);
-         var priceModels = new List<PriceModel>();
+         var priceModels = new List<CablePriceModel>();
 
          List<PageLineItem> pageItems = GetPageItems(allPagesContent);
 
@@ -33,24 +33,24 @@ namespace CableManager.PriceLoader.Core
                if (pageItem.LineItems.FirstOrDefault() != "Singlemode")
                {
                   List<string> cableNames = pageItem.LineItems.Select(x => x.Trim()).ToList();
-                  priceModels.Add(new PriceModel(documentId, cableNames));
+                  priceModels.Add(new CablePriceModel(documentId, cableNames));
                }
             }
             else
             {
-               string name = GetName(pageItem.LineItems);
-               float price = GetPrice(pageItem.LineItems);
+               string cableType = GetCableType(pageItem.LineItems);
+               float cablePrice = GetCablePrice(pageItem.LineItems);
 
-               priceModels.Last().PriceItems.Add(new PriceItem(name, price));
+               priceModels.Last().PricesByType.Add(new TypePriceModel(cableType, cablePrice));
             }
          }
 
          return priceModels;
       }
 
-      public List<PriceModel> LoadPricesFromExcel(string path, string documentId)
+      public List<CablePriceModel> LoadPricesFromExcel(string path, string documentId)
       {
-         var priceModels = new List<PriceModel>();
+         var priceModels = new List<CablePriceModel>();
 
          List<PageLineItem> pageItems = GetPageItems(path);
 
@@ -59,14 +59,14 @@ namespace CableManager.PriceLoader.Core
             if (!pageItem.IsPrice)
             {
                List<string> cableNames = pageItem.LineItems.Select(x => x.Trim()).ToList();
-               priceModels.Add(new PriceModel(documentId, cableNames));
+               priceModels.Add(new CablePriceModel(documentId, cableNames));
             }
             else
             {
-               string name = GetName(pageItem.LineItems);
-               float price = GetPrice(pageItem.LineItems);
+               string name = GetCableType(pageItem.LineItems);
+               float price = GetCablePrice(pageItem.LineItems);
 
-               priceModels.Last().PriceItems.Add(new PriceItem(name, price));
+               priceModels.Last().PricesByType.Add(new TypePriceModel(name, price));
             }
          }
 
@@ -170,7 +170,7 @@ namespace CableManager.PriceLoader.Core
          return lineItems;
       }
 
-      private string GetName(List<string> lineItems)
+      private string GetCableType(List<string> lineItems)
       {
          string name = lineItems.FirstOrDefault();
 
@@ -186,10 +186,11 @@ namespace CableManager.PriceLoader.Core
             name = string.Join(" ", name, lineItem);
          }
 
-         return name?.Replace(",", ".").Replace(" ", string.Empty);
+         return name?.Replace(",", ".").Replace(" ", string.Empty).ToLower()
+            .Replace("re", string.Empty).Replace("rm", string.Empty).Replace("sm", string.Empty);
       }
 
-      private float GetPrice(List<string> lineItems)
+      private float GetCablePrice(List<string> lineItems)
       {
          float price = -1;
 

@@ -7,6 +7,7 @@ using CableManager.Common.Extensions;
 using CableManager.Common.Result;
 using GalaSoft.MvvmLight.Command;
 using CableManager.Localization;
+using CableManager.Repository.CableName;
 using CableManager.Repository.CablePriceDocument;
 using CableManager.Repository.OfferDocument;
 using CableManager.Repository.Customer;
@@ -27,6 +28,8 @@ namespace CableManager.UI.ViewModels.Pages
 
       private readonly ICablePriceDocumentRepository _cablePriceDocumentRepository;
 
+      private readonly ICableNameRepository _cableNameRepository;
+
       private readonly IUserService _userService;
 
       private readonly IOfferService _offerService;
@@ -44,11 +47,13 @@ namespace CableManager.UI.ViewModels.Pages
       private string _note;
 
       public OfferCreatePageViewModel(LabelProvider labelProvider, ICustomerRepository customerRepository, IOfferDocumentRepository offerDocumentRepository,
-         ICablePriceDocumentRepository cablePriceDocumentRepository, IUserService userService, IOfferService offerService, IReportService reportService) : base(labelProvider)
+         ICablePriceDocumentRepository cablePriceDocumentRepository, ICableNameRepository cableNameRepository, IUserService userService,
+         IOfferService offerService, IReportService reportService) : base(labelProvider)
       {
          _customerRepository = customerRepository;
          _offerDocumentRepository = offerDocumentRepository;
          _cablePriceDocumentRepository = cablePriceDocumentRepository;
+         _cableNameRepository = cableNameRepository;
          _userService = userService;
          _offerService = offerService;
          _reportService = reportService;
@@ -180,7 +185,9 @@ namespace CableManager.UI.ViewModels.Pages
             }
          }
 
-         StatusMessage = result.Message;
+         StatusMessage = _cableNameRepository.GetAll().Any()
+            ? result.Message
+            : LabelProvider["UI_CableNamesNotDefined"];
       }
 
       private void CreateOfferExcel(object parameter)
@@ -224,7 +231,9 @@ namespace CableManager.UI.ViewModels.Pages
             }
          }
 
-         StatusMessage = result.Message;
+         StatusMessage = _cableNameRepository.GetAll().Any()
+            ? result.Message
+            : LabelProvider["UI_CableNamesNotDefined"];
       }
 
       private void ClearOffer(object parameter)

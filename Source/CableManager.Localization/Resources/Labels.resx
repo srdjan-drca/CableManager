@@ -522,4 +522,10 @@
   <data name="UI_MaxNumberOfBankAccountsIsFive" xml:space="preserve">
     <value>It is possible to enter maximum five bank accounts</value>
   </data>
+  <data name="UI_CableNamesNotDefined" xml:space="preserve">
+    <value>Cable names and synonyms not defined, generated offer will be invalid</value>
+  </data>
+  <data name="UI_PriceDocumentsAreLoading" xml:space="preserve">
+    <value>Price documents are loading</value>
+  </data>
 </root>

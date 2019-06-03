@@ -430,6 +430,15 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cable names and synonyms not defined, generated offer will be invalid.
+        /// </summary>
+        internal static string UI_CableNamesNotDefined {
+            get {
+                return ResourceManager.GetString("UI_CableNamesNotDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cable not selected.
         /// </summary>
         internal static string UI_CableNotSelected {
@@ -1065,6 +1074,15 @@ namespace CableManager.Localization.Resources {
         internal static string UI_PostalCode {
             get {
                 return ResourceManager.GetString("UI_PostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price documents are loading.
+        /// </summary>
+        internal static string UI_PriceDocumentsAreLoading {
+            get {
+                return ResourceManager.GetString("UI_PriceDocumentsAreLoading", resourceCulture);
             }
         }
         

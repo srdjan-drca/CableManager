@@ -14,16 +14,19 @@ namespace CableManager.Services.Search.Iterator
 
          foreach (ExcelWorksheet excelWorksheet in excelPackage.Workbook.Worksheets)
          {
-            var start = excelWorksheet.Dimension.Start;
-            var end = excelWorksheet.Dimension.End;
+            ExcelCellAddress start = excelWorksheet.Dimension?.Start;
+            ExcelCellAddress end = excelWorksheet.Dimension?.End;
 
-            for (int row = start.Row; row <= end.Row; row++)
+            if (start != null && end != null)
             {
-               for (int column = start.Column; column <= end.Column; column++)
+               for (int row = start.Row; row <= end.Row; row++)
                {
-                  string cellValue = excelWorksheet.Cells[row, column].Text;
+                  for (int column = start.Column; column <= end.Column; column++)
+                  {
+                     string cellValue = excelWorksheet.Cells[row, column].Text;
 
-                  _cellItems.Add(new CellItem(excelWorksheet.Index, row, column, cellValue));
+                     _cellItems.Add(new CellItem(excelWorksheet.Index, row, column, cellValue));
+                  }
                }
             }
          }

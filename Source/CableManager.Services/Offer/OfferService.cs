@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using OfficeOpenXml;
 using CableManager.Common.Helpers;
 using CableManager.Localization;
@@ -135,10 +136,10 @@ namespace CableManager.Services.Offer
       private float FindPrice(CableDetails cableDetails, List<CablePriceModel> prices)
       {
          float price = 0;
+         string cableType = ExtractCableType(cableDetails.Name);
 
          foreach (CablePriceModel priceModel in prices)
          {
-            string cableType = ExtractCableType(cableDetails.Name);
             bool isFound = priceModel.GetPrice(cableDetails.SearchCriteria, cableType, out price);
 
             if (isFound)
@@ -152,8 +153,32 @@ namespace CableManager.Services.Offer
 
       private string ExtractCableType(string cableName)
       {
-         return cableName.Split(' ').FirstOrDefault(x => x.Contains("mm"))?
-            .Replace(" ", string.Empty).Replace(",", ".").Replace("mm2", string.Empty).Replace("mm²", string.Empty).Replace("mm", string.Empty);
+         cableName = cableName.Replace("²", "2");
+         cableName = cableName.Replace(",", ".");
+         cableName = cableName.Replace(" mm", "mm2");
+
+         if (!cableName.Contains("mm2"))
+         {
+            cableName = cableName.Replace("mm", "mm2");
+         }
+
+         if (!cableName.Contains("mm2"))
+         {
+            cableName = cableName.Replace("m2", "mm2");
+         }
+
+         Regex pattern = new Regex(@"(\w+[.]?\w+)mm2");
+         Match match = pattern.Match(cableName);
+         string whatYouAreLookingFor = match.Groups[1].Value;
+
+         if (string.IsNullOrEmpty(whatYouAreLookingFor))
+         {
+            pattern = new Regex(@"(\w+[.]?[\w+]?)mm2");
+            match = pattern.Match(cableName);
+            whatYouAreLookingFor = match.Groups[1].Value;
+         }
+
+         return whatYouAreLookingFor.Replace(" ", string.Empty);
       }
 
       private List<List<string>> CreateSearchCriteria(List<CableModel> cablesDb)
@@ -192,7 +217,7 @@ namespace CableManager.Services.Offer
 
          foreach (CableDetails cable in cables)
          {
-            float rebate = (float) Convert.ToDouble(customer.Rebate);
+            float rebate = string.IsNullOrEmpty(customer.Rebate) ? 0 : (float)Convert.ToDouble(customer.Rebate);
             float totalPrice = CalculationHelper.CalculatePrice(cable.Price, 0, cable.Quantity);
             float totalPriceWithRebate = CalculationHelper.CalculatePrice(cable.Price, rebate, cable.Quantity);
             float totalPriceWithVat = CalculationHelper.CalculatePriceWithVat(totalPriceWithRebate, valueAddedTax);

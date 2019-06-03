@@ -72,7 +72,7 @@ namespace CableManager.Report.Generators.Pdf.Sections.Cable
       {
          PdfImage logo = null;
 
-         if (!string.IsNullOrEmpty(OfferReportModel.CompanyModelPdf.LogoPath))
+         if (!string.IsNullOrEmpty(OfferReportModel.CompanyModelPdf?.LogoPath))
          {
             string logoPath = new FileInfo(OfferReportModel.CompanyModelPdf.LogoPath).FullName;
             Image image = Image.FromFile(logoPath);
@@ -120,8 +120,17 @@ namespace CableManager.Report.Generators.Pdf.Sections.Cable
          page.AddText(userEmail, Arial9BlackLeft, 0, 250);
          page.AddText(OfferReportModel.Note, Arial9BlackLeft, 0, 260);
          page.AddText(contactInfo, Arial9BlackLeft, 0, 290);
-         page.AddText(OfferReportModel.CompanyModelPdf?.BankAccounts[0] , Arial9BlackLeft, 0, 310);
-         page.AddText(OfferReportModel.CompanyModelPdf?.BankAccounts[1], Arial9BlackLeft, 0, 320);
+
+         if (OfferReportModel.CompanyModelPdf?.BankAccounts != null)
+         {
+            float yPositionStart = 310;
+
+            foreach (string bankAccount in OfferReportModel.CompanyModelPdf?.BankAccounts)
+            {
+               page.AddText(bankAccount, Arial9BlackLeft, 0, yPositionStart);
+               yPositionStart += 10;
+            }
+         }
       }
 
       private string CreateContactInfo()

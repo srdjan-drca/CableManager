@@ -81,11 +81,11 @@ namespace CableManager.Report.Generators.Pdf.Sections.Cable
             contentRow.AddCell(Arial8BlackLeft, 2, offerItem.Name);
             contentRow.AddCell(Arial8BlackLeft, 3, offerItem.Quantity);
             contentRow.AddCell(Arial8BlackLeft, 4, offerItem.Unit);
-            contentRow.AddCell(Arial8BlackLeft, 5, string.Format(CultureInfo, "{0:#,#.00}", offerItem.PricePerItem));
-            contentRow.AddCell(Arial8BlackLeft, 6, string.Format(CultureInfo, "{0:#,#.00}", offerItem.Rebate));
-            contentRow.AddCell(Arial8BlackLeft, 7, string.Format(CultureInfo, "{0:#,#.00}", offerItem.ValueAddedTax));
-            contentRow.AddCell(Arial8BlackLeft, 8, string.Format(CultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithRebate));
-            contentRow.AddCell(Arial8BlackLeftWhiteRightBorder, 9, string.Format(CultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithVat));
+            contentRow.AddCell(Arial8BlackLeft, 5, string.Format(CultureInfo, "{0:#,0.00}", offerItem.PricePerItem));
+            contentRow.AddCell(Arial8BlackLeft, 6, string.Format(CultureInfo, "{0:#,0.00}", offerItem.Rebate));
+            contentRow.AddCell(Arial8BlackLeft, 7, string.Format(CultureInfo, "{0:#,0.00}", offerItem.ValueAddedTax));
+            contentRow.AddCell(Arial8BlackLeft, 8, string.Format(CultureInfo, "{0:#,0.00}", offerItem.TotalPriceWithRebate));
+            contentRow.AddCell(Arial8BlackLeftWhiteRightBorder, 9, string.Format(CultureInfo, "{0:#,0.00}", offerItem.TotalPriceWithVat));
 
             offset += 10;
          }
@@ -106,10 +106,10 @@ namespace CableManager.Report.Generators.Pdf.Sections.Cable
          row2.RemoveAllBorders();
          row3.RemoveAllBorders();
 
-         string totalRebate = string.Format(CultureInfo, "{0:#,#.00}", OfferReportModel.OfferTotal.TotalRebate);
-         string totalPrice = string.Format(CultureInfo, "{0:#,#.00}", OfferReportModel.OfferTotal.TotalPrice);
-         string totalValueAddedTax = string.Format(CultureInfo, "{0:#,#.00}", OfferReportModel.OfferTotal.TotalValueAddedTax);
-         string grandTotal = string.Format(CultureInfo, "{0:#,#.00}", OfferReportModel.OfferTotal.GrandTotal);
+         string totalRebate = string.Format(CultureInfo, "{0:#,0.00}", OfferReportModel.OfferTotal.TotalRebate);
+         string totalPrice = string.Format(CultureInfo, "{0:#,0.00}", OfferReportModel.OfferTotal.TotalPrice);
+         string totalValueAddedTax = string.Format(CultureInfo, "{0:#,0.00}", OfferReportModel.OfferTotal.TotalValueAddedTax);
+         string grandTotal = string.Format(CultureInfo, "{0:#,0.00}", OfferReportModel.OfferTotal.GrandTotal);
 
          row1.AddCell(Arial9BlackLeft, 1, LabelProvider["DOC_RebateTotal"]);
          row1.AddCell(Arial9BlackLeft, 2, totalRebate);

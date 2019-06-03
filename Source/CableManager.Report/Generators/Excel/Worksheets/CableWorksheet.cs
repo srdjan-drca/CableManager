@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Drawing;
 using System.Globalization;
+using System.Threading;
 using OfficeOpenXml;
 using CableManager.Report.Models;
 using CableManager.Report.Extensions;
@@ -13,6 +14,8 @@ namespace CableManager.Report.Generators.Excel.Worksheets
    {
       private int _rowId = 1;
 
+      private int _rowIdGridEnd = 1;
+
       private int _columnId = 1;
 
       private const int DefaultRowHeightInPixels = 20;
@@ -21,15 +24,13 @@ namespace CableManager.Report.Generators.Excel.Worksheets
 
       private readonly string _sheetName;
 
-      private readonly CultureInfo _cultureInfo;
-
       public CableWorksheet(BaseReportModel baseReportModel) : base(baseReportModel)
       {
          _offerReportModel = (OfferReportModel)baseReportModel;
 
          _sheetName = "Offer";
 
-         _cultureInfo = new CultureInfo(_offerReportModel.LabelProvider.GetCulture());
+         Thread.CurrentThread.CurrentCulture = new CultureInfo(_offerReportModel.LabelProvider.GetCulture());
       }
 
       public override string Name
@@ -97,7 +98,7 @@ namespace CableManager.Report.Generators.Excel.Worksheets
          int pixelWidth = (numberOfRows+4) * DefaultRowHeightInPixels;
          int pixelHeight = numberOfRows * DefaultRowHeightInPixels;
 
-         if (!string.IsNullOrEmpty(_offerReportModel.CompanyModelPdf.LogoPath))
+         if (!string.IsNullOrEmpty(_offerReportModel.CompanyModelPdf?.LogoPath))
          {
             string logoPath = new FileInfo(_offerReportModel.CompanyModelPdf.LogoPath).FullName;
             Image logoImage = Image.FromFile(logoPath);
@@ -141,8 +142,17 @@ namespace CableManager.Report.Generators.Excel.Worksheets
          worksheet.Cells[13, 1].SetValue(userEmail);
          worksheet.Cells[14, 1].SetValue(_offerReportModel.Note);
          worksheet.Cells[15, 1].SetValue(contactInfo);
-         worksheet.Cells[16, 1].SetValue(_offerReportModel.CompanyModelPdf?.BankAccounts[0]);
-         worksheet.Cells[17, 1].SetValue(_offerReportModel.CompanyModelPdf?.BankAccounts[1]);
+
+         if (_offerReportModel.CompanyModelPdf?.BankAccounts != null)
+         {
+            int rowIdStart = 16;
+
+            foreach (string bankAccount in _offerReportModel.CompanyModelPdf?.BankAccounts)
+            {
+               worksheet.Cells[rowIdStart, 1].SetValue(bankAccount);
+               rowIdStart++;
+            }
+         }
       }
 
       private void InsertCableOfferGrid(ExcelWorksheet worksheet)
@@ -155,20 +165,40 @@ namespace CableManager.Report.Generators.Excel.Worksheets
          {
             _columnId = 1;
 
+            string quantityColumn = "C" + _rowId;
+            string priceColumn = "E" + _rowId;
+            string rebateColumn = "F" + _rowId;
+            string valueAddedTaxColumn = "G" + _rowId;
+
             worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.SerialNumber);
             worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.Name);
             worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.Quantity);
             worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.Unit);
-            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.PricePerItem));
-            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.Rebate));
-            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.ValueAddedTax));
-            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithRebate));
-            worksheet.Cells[_rowId, _columnId++].SetValue(string.Format(_cultureInfo, "{0:#,#.00}", offerItem.TotalPriceWithVat));
+
+            worksheet.Cells[_rowId, _columnId].Style.Numberformat.Format = "#,0.00";
+            worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.PricePerItem, true);
+
+            worksheet.Cells[_rowId, _columnId].Style.Numberformat.Format = "#,0.00";
+            worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.Rebate, true);
+
+            worksheet.Cells[_rowId, _columnId].Style.Numberformat.Format = "#,0.00";
+            worksheet.Cells[_rowId, _columnId++].SetValue(offerItem.ValueAddedTax, true);
+
+            worksheet.Cells[_rowId, _columnId].Style.Numberformat.Format = "#,0.00";
+            worksheet.Cells[_rowId, _columnId++].Formula = $"={priceColumn} * ((100 - {rebateColumn}) / 100) * {quantityColumn}";
+
+            worksheet.Cells[_rowId, _columnId].Style.Numberformat.Format = "#,0.00";
+            worksheet.Cells[_rowId, _columnId++].Formula = $"={priceColumn} * ((100 - {rebateColumn}) / 100) * {quantityColumn} * ((100 + {valueAddedTaxColumn}) / 100)";
+
+            worksheet.Cells[_rowId, _columnId].Style.Numberformat.Format = ";";
+            worksheet.Cells[_rowId, _columnId++].Formula = $"={quantityColumn} * {priceColumn}";
 
             worksheet.Cells[_rowId, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
             _rowId++;
          }
+
+         _rowIdGridEnd = _rowId;
 
          worksheet.Cells[_rowId, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
          worksheet.Cells[_rowId, 1, _rowId, 9].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
@@ -178,25 +208,32 @@ namespace CableManager.Report.Generators.Excel.Worksheets
       {
          _rowId += 2;
 
-         string totalRebate = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalRebate);
-         string totalPrice = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalPrice);
-         string totalValueAddedTax = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.TotalValueAddedTax);
-         string grandTotal = string.Format(_cultureInfo, "{0:#,#.00}", _offerReportModel.OfferTotal.GrandTotal);
-
+         //total rebate
          worksheet.Cells[_rowId, 2].SetValue(LabelProvider["DOC_RebateTotal"]);
-         worksheet.Cells[_rowId, 3].SetValue(totalRebate);
+         worksheet.Cells[_rowId, 3].Style.Numberformat.Format = "#,0.00";
+         worksheet.Cells[_rowId, 3].Formula = $"=SUM(J21:J{_rowIdGridEnd}) - SUM(H21:H{_rowIdGridEnd})";
 
-         worksheet.Cells[_rowId, 7].SetValue(LabelProvider["DOC_TotalWithoutVAT"]);
-         worksheet.Cells[_rowId++, 9].SetValue(totalPrice);
+         //total with rebate
+         int totalWithRebateRow = _rowId;
+         worksheet.Cells[totalWithRebateRow, 7].SetValue(LabelProvider["DOC_TotalWithoutVAT"]);
+         worksheet.Cells[totalWithRebateRow, 9].Style.Numberformat.Format = "#,0.00";
+         worksheet.Cells[totalWithRebateRow, 9].Formula = $"=SUM(H21:H{_rowIdGridEnd})";
+         _rowId++;
 
-         worksheet.Cells[_rowId, 7].SetValue(LabelProvider["DOC_TotalVAT"]);
-         worksheet.Cells[_rowId++, 9].SetValue(totalValueAddedTax);
+         //total VAT
+         int totalVatRow = _rowId;
+         worksheet.Cells[totalVatRow, 7].SetValue(LabelProvider["DOC_TotalVAT"]);
+         worksheet.Cells[totalVatRow, 9].Style.Numberformat.Format = "#,0.00";
+         worksheet.Cells[totalVatRow, 9].Formula = $"SUM(I21:I{_rowIdGridEnd}) - I{totalWithRebateRow}";
+         _rowId++;
 
+         //grand total
          worksheet.Cells[_rowId, 7].Style.Font.Bold = true;
-         worksheet.Cells[_rowId, 9].Style.Font.Bold = true;
-
          worksheet.Cells[_rowId, 7].SetValue(LabelProvider["DOC_Total"]);
-         worksheet.Cells[_rowId, 9].SetValue(grandTotal);
+
+         worksheet.Cells[_rowId, 9].Style.Font.Bold = true;
+         worksheet.Cells[_rowId, 9].Style.Numberformat.Format = "#,0.00";
+         worksheet.Cells[_rowId, 9].Formula = $"I{totalWithRebateRow} + I{totalVatRow}";
       }
 
       private void InsertBottomLine(ExcelWorksheet worksheet)

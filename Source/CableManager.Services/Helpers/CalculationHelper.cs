@@ -13,9 +13,9 @@ namespace CableManager.Services.Helpers
          return price * rebateQuota * quantity;
       }
 
-      public static float CalculatePriceWithVat(float price, int valueAddedTax)
+      public static float CalculatePriceWithVat(float price, float valueAddedTax)
       {
-         float vatQuota = ((float)(100 + valueAddedTax) / 100);
+         float vatQuota = ((100 + valueAddedTax) / 100);
 
          return price * vatQuota;
       }

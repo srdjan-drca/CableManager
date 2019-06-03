@@ -90,6 +90,8 @@ namespace CableManager.UI.ViewModels.Pages
 
          if (isSuccess != null && isSuccess.Value)
          {
+            StatusMessage = LabelProvider["UI_PriceDocumentsAreLoading"];
+
             _cablePriceDocumentRepository.DeleteAll();
 
             foreach (string fullFileName in openFileDialog.FileNames)

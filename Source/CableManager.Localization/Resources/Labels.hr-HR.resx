@@ -522,4 +522,10 @@
   <data name="UI_MaxNumberOfBankAccountsIsFive" xml:space="preserve">
     <value>Moguće je uneti maksimalno pet bankovnih računa</value>
   </data>
+  <data name="UI_CableNamesNotDefined" xml:space="preserve">
+    <value>Imena kablova i sinonimi nisu definisani, generisana ponuda će biti nevalidna</value>
+  </data>
+  <data name="UI_PriceDocumentsAreLoading" xml:space="preserve">
+    <value>Cjenik se učitava</value>
+  </data>
 </root>

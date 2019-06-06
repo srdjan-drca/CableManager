@@ -43,8 +43,11 @@ namespace CableManager.Services.Search
                         if (cableUnit != null)
                         {
                            float quantity = FindCableQuantity(worksheet, cellItem.Row, columnIdStart, columnIdEnd);
+                           string cableNameNormalized = cableName.Contains("FeZn") || cableName.Contains("Fe/Zn")
+                              ? cellItem.Text.Substring(cellItem.Text.IndexOf(cableName)).Trim()
+                              : cellItem.Text.Trim();
 
-                           cableDetails.Add(new CableDetails(cellItem.Text.Trim(), quantity, searchCriteria));
+                           cableDetails.Add(new CableDetails(cableNameNormalized, quantity, searchCriteria));
                            isFound = true;
                            break;
                         }

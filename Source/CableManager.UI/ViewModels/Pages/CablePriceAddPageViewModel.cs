@@ -164,19 +164,7 @@ namespace CableManager.UI.ViewModels.Pages
                case ".pdf":
                   List<CablePriceModel> priceModelsPdf = _priceLoader.LoadPricesFromPdf(priceDocument.Path, priceDocument.Id);
 
-                  foreach (CablePriceModel priceModel in priceModelsPdf)
-                  {
-                     foreach (List<string> searchCriteria in searchCriteriaList)
-                     {
-                        var intersect = priceModel.CableNames.Intersect(searchCriteria);
-
-                        if (intersect.Any())
-                        {
-                           priceModel.CableNames.AddRange(searchCriteria);
-                           priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
-                        }
-                     }
-                  }
+                  UpdatePriceModels(priceModelsPdf, searchCriteriaList);
 
                   prices.AddRange(priceModelsPdf);
                   break;
@@ -184,19 +172,7 @@ namespace CableManager.UI.ViewModels.Pages
                case ".xlsx":
                   List<CablePriceModel> priceModelsExcel = _priceLoader.LoadPricesFromExcel(priceDocument.Path, priceDocument.Id);
 
-                  foreach (CablePriceModel priceModel in priceModelsExcel)
-                  {
-                     foreach (List<string> searchCriteria in searchCriteriaList)
-                     {
-                        var intersect = priceModel.CableNames.Intersect(searchCriteria);
-
-                        if (intersect.Any())
-                        {
-                           priceModel.CableNames.AddRange(searchCriteria);
-                           priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
-                        }
-                     }
-                  }
+                  UpdatePriceModels(priceModelsExcel, searchCriteriaList);
 
                   prices.AddRange(priceModelsExcel);
                   break;
@@ -207,6 +183,23 @@ namespace CableManager.UI.ViewModels.Pages
          }
 
          return prices;
+      }
+
+      private void UpdatePriceModels(List<CablePriceModel> priceModelsPdf, List<List<string>> searchCriteriaList)
+      {
+         foreach (CablePriceModel priceModel in priceModelsPdf)
+         {
+            foreach (List<string> searchCriteria in searchCriteriaList)
+            {
+               var intersect = priceModel.CableNames.Intersect(searchCriteria);
+
+               if (intersect.Any())
+               {
+                  priceModel.CableNames.AddRange(searchCriteria);
+                  priceModel.CableNames = priceModel.CableNames.Distinct().ToList();
+               }
+            }
+         }
       }
 
       #endregion Private methods

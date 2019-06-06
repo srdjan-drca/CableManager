@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using CableManager.Common.Extensions;
 using CableManager.Common.Helpers;
 using CableManager.Common.Result;
 using CableManager.Localization;
@@ -40,6 +41,15 @@ namespace CableManager.Repository.CablePrice
                XElement cablePriceElement = ConvertToDatabaseModel(cablePrice);
 
                _cablePricesXDocument?.Root?.Add(cablePriceElement);
+            }
+            else
+            {
+               XElement cablePriceFound = _cablePricesXDocument?.Find(cablePrice.Id);
+
+               if (cablePriceFound != null)
+               {
+                  UpdateDatabaseModel(cablePriceFound, cablePrice);
+               }
             }
 
             _cablePricesXDocument?.Save(_repositoryFileName);
@@ -111,6 +121,19 @@ namespace CableManager.Repository.CablePrice
             new XElement("PriceItems", priceItems));
 
          return cableElement;
+      }
+
+      private void UpdateDatabaseModel(XElement cablePriceElement, CablePriceDbModel cablePrice)
+      {
+         XElement cableNamesElement = cablePriceElement.Element("CableNames");
+
+         if (cableNamesElement != null)
+         {
+            List<XElement> cableNames = CreateCableNames(cablePrice.CableNames);
+
+            cableNamesElement.RemoveAll();
+            cableNamesElement.Add(cableNames);
+         }
       }
 
       private CablePriceDbModel ConvertFromDatabaseModel(XElement cablePriceElement)

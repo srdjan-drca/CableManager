@@ -19,7 +19,7 @@ namespace CableManager.Repository.CablePriceDocument
 
       public CablePriceDocumentRepository(LabelProvider labelProvider) : base(labelProvider)
       {
-         _repositoryFileName = new FileInfo(DirectoryHelper.GetApplicationStoragePath() + "/Repository/PriceDocuments.xml").FullName;
+         _repositoryFileName = new FileInfo(DirectoryHelper.GetApplicationStoragePath() + "/Repository/CablePriceDocuments.xml").FullName;
 
          _priceDocumentsXDocument = GetXDocument(_repositoryFileName);
       }

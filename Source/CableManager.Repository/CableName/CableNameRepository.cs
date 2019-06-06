@@ -19,7 +19,7 @@ namespace CableManager.Repository.CableName
 
       public CableNameRepository(LabelProvider labelProvider) : base(labelProvider)
       {
-         _repositoryFileName = new FileInfo(DirectoryHelper.GetApplicationStoragePath() + "/Repository/Cables.xml").FullName;
+         _repositoryFileName = new FileInfo(DirectoryHelper.GetApplicationStoragePath() + "/Repository/CableNames.xml").FullName;
 
          _cablesXDocument = GetXDocument(_repositoryFileName);
       }

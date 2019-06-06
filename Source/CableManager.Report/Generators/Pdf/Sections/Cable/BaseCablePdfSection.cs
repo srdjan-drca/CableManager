@@ -65,7 +65,7 @@ namespace CableManager.Report.Generators.Pdf.Sections.Cable
 
       protected PdfGrid CreateCableOfferGrid(out int offset)
       {
-         PdfGrid grid = CreateGrid(10, 20, 160, 40, 40, 40, 40, 40, 60, 60);
+         PdfGrid grid = CreateGrid(10, 20, 160, 40, 30, 50, 40, 40, 70, 70);
 
          AddHeaderRow(grid);
          AddEmptyRow(grid, true);

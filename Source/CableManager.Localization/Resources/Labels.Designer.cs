@@ -79,7 +79,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The offer serves only as invitation for payment.
+        ///   Looks up a localized string similar to The offer serves only as invitation for payment..
         /// </summary>
         internal static string DOC_Bottom1 {
             get {
@@ -88,7 +88,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value added tax declared (VAT 25%) can not be recognized as a pre-tax based on this offer.
+        ///   Looks up a localized string similar to Value added tax (VAT 25%) declared can not be recognized as a pre-tax based on this offer..
         /// </summary>
         internal static string DOC_Bottom2 {
             get {
@@ -304,7 +304,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Worth until.
+        ///   Looks up a localized string similar to Valid until.
         /// </summary>
         internal static string DOC_WorthUntil {
             get {
@@ -349,7 +349,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application for automatic offer creation based on customer request.
+        ///   Looks up a localized string similar to Application for automatic offer creation based on customers requests..
         /// </summary>
         internal static string UI_ApplicationAbout {
             get {
@@ -394,7 +394,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Synonym names must be divided by comma [,].
+        ///   Looks up a localized string similar to Synonym names must be divided by comma [,]..
         /// </summary>
         internal static string UI_CableNameAddInstruction {
             get {
@@ -403,7 +403,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cable name already saved.
+        ///   Looks up a localized string similar to Cable name already saved..
         /// </summary>
         internal static string UI_CableNameAlreadySaved {
             get {
@@ -412,7 +412,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cable name must be entered.
+        ///   Looks up a localized string similar to Cable name must be entered..
         /// </summary>
         internal static string UI_CableNameMustBeEntered {
             get {
@@ -421,7 +421,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cable name saved.
+        ///   Looks up a localized string similar to Cable name saved..
         /// </summary>
         internal static string UI_CableNameSaved {
             get {
@@ -439,7 +439,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cable not selected.
+        ///   Looks up a localized string similar to Cable not selected..
         /// </summary>
         internal static string UI_CableNotSelected {
             get {
@@ -448,7 +448,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cables not selected.
+        ///   Looks up a localized string similar to Cables not selected..
         /// </summary>
         internal static string UI_CablesNotSelected {
             get {
@@ -601,7 +601,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current password is empty.
+        ///   Looks up a localized string similar to Current password field is empty..
         /// </summary>
         internal static string UI_CurrentPasswordIsEmpty {
             get {
@@ -619,7 +619,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer must be selected.
+        ///   Looks up a localized string similar to Customer must be selected..
         /// </summary>
         internal static string UI_CustomerMustBeSelected {
             get {
@@ -628,7 +628,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer name already saved.
+        ///   Looks up a localized string similar to Customer name already saved..
         /// </summary>
         internal static string UI_CustomerNameAlreadySaved {
             get {
@@ -637,7 +637,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer name must be entered.
+        ///   Looks up a localized string similar to Customer name must be entered..
         /// </summary>
         internal static string UI_CustomerNameMustBeEntered {
             get {
@@ -655,7 +655,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer request document is successfully added.
+        ///   Looks up a localized string similar to Customer request document is successfully added..
         /// </summary>
         internal static string UI_CustomerRequestAdded {
             get {
@@ -664,7 +664,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer request must be selected.
+        ///   Looks up a localized string similar to Customer request must be selected..
         /// </summary>
         internal static string UI_CustomerRequestMustBeSelected {
             get {
@@ -673,7 +673,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer request must be in xlsx format.
+        ///   Looks up a localized string similar to Customer request must be in .xlsx format..
         /// </summary>
         internal static string UI_CustomerRequestMustBeXlsx {
             get {
@@ -682,7 +682,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer saved successfully.
+        ///   Looks up a localized string similar to Customer saved successfully..
         /// </summary>
         internal static string UI_CustomerSaved {
             get {
@@ -691,7 +691,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer tax number must be entered.
+        ///   Looks up a localized string similar to Customer tax number must be entered..
         /// </summary>
         internal static string UI_CustomerTaxNumberMustBeEntered {
             get {
@@ -700,7 +700,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer tax number is already registered.
+        ///   Looks up a localized string similar to Customer tax number is already registered..
         /// </summary>
         internal static string UI_CustomerTaxNumberMustBeUnique {
             get {
@@ -763,7 +763,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter license.
+        ///   Looks up a localized string similar to Enter license..
         /// </summary>
         internal static string UI_EnterLicense {
             get {
@@ -772,7 +772,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter license key.
+        ///   Looks up a localized string similar to Enter license key..
         /// </summary>
         internal static string UI_EnterLicenseKey {
             get {
@@ -826,7 +826,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to License is invalid.
+        ///   Looks up a localized string similar to License is invalid..
         /// </summary>
         internal static string UI_LicenseIsInvalid {
             get {
@@ -835,7 +835,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to License is valid, product is activated.
+        ///   Looks up a localized string similar to License is valid, product is activated..
         /// </summary>
         internal static string UI_LicenseIsValid {
             get {
@@ -889,7 +889,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to It is possible to enter maximum five bank accounts.
+        ///   Looks up a localized string similar to It is possible to enter maximum five bank accounts..
         /// </summary>
         internal static string UI_MaxNumberOfBankAccountsIsFive {
             get {
@@ -925,7 +925,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New password is empty.
+        ///   Looks up a localized string similar to New password is empty..
         /// </summary>
         internal static string UI_NewPasswordIsEmpty {
             get {
@@ -988,7 +988,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Offer document is not selected.
+        ///   Looks up a localized string similar to Offer document is not selected..
         /// </summary>
         internal static string UI_OfferDocumentNotSelected {
             get {
@@ -997,7 +997,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Offer successfully saved.
+        ///   Looks up a localized string similar to Offer successfully saved..
         /// </summary>
         internal static string UI_OfferDocumentSaved {
             get {
@@ -1078,7 +1078,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Price documents are loading.
+        ///   Looks up a localized string similar to Price documents are loading..
         /// </summary>
         internal static string UI_PriceDocumentsAreLoading {
             get {
@@ -1087,7 +1087,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Price list documents successfully loaded.
+        ///   Looks up a localized string similar to Price list documents successfully loaded..
         /// </summary>
         internal static string UI_PriceDocumentsLoaded {
             get {
@@ -1132,7 +1132,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select at least one price list document.
+        ///   Looks up a localized string similar to Select at least one price list document..
         /// </summary>
         internal static string UI_SelectPriceListDocument {
             get {
@@ -1222,7 +1222,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User database is not created.
+        ///   Looks up a localized string similar to User database is not created..
         /// </summary>
         internal static string UI_UserDatabaseIsNotCreated {
             get {
@@ -1240,7 +1240,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User name is already taken.
+        ///   Looks up a localized string similar to User name is already taken..
         /// </summary>
         internal static string UI_UserNameAlreadySigned {
             get {
@@ -1249,7 +1249,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User name is empty.
+        ///   Looks up a localized string similar to User name is empty..
         /// </summary>
         internal static string UI_UserNameIsEmpty {
             get {
@@ -1267,7 +1267,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User or password are incorrect.
+        ///   Looks up a localized string similar to User or password are incorrect..
         /// </summary>
         internal static string UI_UserOrPasswordNotCorrect {
             get {
@@ -1276,7 +1276,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User successfully saved.
+        ///   Looks up a localized string similar to User successfully saved..
         /// </summary>
         internal static string UI_UserSuccessfullySaved {
             get {
@@ -1285,7 +1285,7 @@ namespace CableManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User successfully signed up.
+        ///   Looks up a localized string similar to User successfully signed up..
         /// </summary>
         internal static string UI_UserSuccessfullySignedUp {
             get {

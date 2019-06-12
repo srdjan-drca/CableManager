@@ -40,7 +40,7 @@
             Width="100" Height="100" />
 
          <TextBlock
-            Text="Cable manager, V1.0"
+            Text="Cable manager, V1.1"
             VerticalAlignment="Center"
             FontWeight="Bold"
             Grid.Row="1" />

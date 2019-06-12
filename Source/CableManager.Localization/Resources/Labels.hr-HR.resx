@@ -148,7 +148,7 @@
     <value>Zahtjev klijenta</value>
   </data>
   <data name="UI_CustomerSaved" xml:space="preserve">
-    <value>Klijent spremljen</value>
+    <value>Klijent spremljen.</value>
   </data>
   <data name="UI_Date" xml:space="preserve">
     <value>Datum</value>
@@ -208,16 +208,16 @@
     <value>Korisničko ime</value>
   </data>
   <data name="UI_UserNameAlreadySigned" xml:space="preserve">
-    <value>Korisničko ime zauzeto</value>
+    <value>Korisničko ime zauzeto.</value>
   </data>
   <data name="UI_UserNameIsEmpty" xml:space="preserve">
-    <value>Unesite korisničko ime</value>
+    <value>Unesite korisničko ime.</value>
   </data>
   <data name="UI_UserOrPasswordNotCorrect" xml:space="preserve">
-    <value>Korisnik ili lozinka neispravni</value>
+    <value>Korisnik ili lozinka neispravni.</value>
   </data>
   <data name="UI_UserSuccessfullySignedUp" xml:space="preserve">
-    <value>Korisnik prijavljen</value>
+    <value>Korisnik prijavljen.</value>
   </data>
   <data name="UI_Edit" xml:space="preserve">
     <value>Uredi</value>
@@ -232,7 +232,7 @@
     <value>Naslovi na...</value>
   </data>
   <data name="UI_ApplicationAbout" xml:space="preserve">
-    <value>Aplikacija za automatsko stvaranje ponuda temeljenih na zahtjevima kupaca</value>
+    <value>Aplikacija za automatsko stvaranje ponuda temeljenih na zahtjevima kupaca.</value>
   </data>
   <data name="UI_City" xml:space="preserve">
     <value>Grad</value>
@@ -265,31 +265,31 @@
     <value>OIB</value>
   </data>
   <data name="UI_CustomerRequestAdded" xml:space="preserve">
-    <value>Zahtjev klijenta dodan</value>
+    <value>Zahtjev klijenta dodan.</value>
   </data>
   <data name="UI_NumberOfOffersDeleted" xml:space="preserve">
     <value>Broj izbrisanih ponuda:</value>
   </data>
   <data name="UI_OfferDocumentNotSelected" xml:space="preserve">
-    <value>Ponda nije odabrana</value>
+    <value>Ponda nije odabrana.</value>
   </data>
   <data name="UI_PriceDocumentsLoaded" xml:space="preserve">
-    <value>Cjenik učitan</value>
+    <value>Cjenik učitan.</value>
   </data>
   <data name="UI_NumberOfCustomersDeleted" xml:space="preserve">
     <value>Broj izbrisanih klijenata:</value>
   </data>
   <data name="UI_CustomerNameMustBeEntered" xml:space="preserve">
-    <value>Unesite ime klijenta</value>
+    <value>Unesite ime klijenta.</value>
   </data>
   <data name="UI_CustomerNameAlreadySaved" xml:space="preserve">
-    <value>Ime klijenta već spremljeno</value>
+    <value>Ime klijenta već spremljeno.</value>
   </data>
   <data name="UI_CustomerTaxNumberMustBeUnique" xml:space="preserve">
-    <value>OIB klijenta već postoji</value>
+    <value>OIB klijenta već postoji.</value>
   </data>
   <data name="UI_OfferDocumentSaved" xml:space="preserve">
-    <value>Ponuda spremljena</value>
+    <value>Ponuda spremljena.</value>
   </data>
   <data name="UI_Open" xml:space="preserve">
     <value>Otvori</value>
@@ -331,7 +331,7 @@
     <value>Trenutna lozinka</value>
   </data>
   <data name="UI_CompanyContactSaved" xml:space="preserve">
-    <value>Kontakt tvrtke spremljen</value>
+    <value>Kontakt tvrtke spremljen.</value>
   </data>
   <data name="UI_NewPassword" xml:space="preserve">
     <value>Nova lozinka</value>
@@ -340,10 +340,10 @@
     <value>Potvrdi novu lozinku</value>
   </data>
   <data name="UI_UserSuccessfullySaved" xml:space="preserve">
-    <value>Korisnik spremljen</value>
+    <value>Korisnik spremljen.</value>
   </data>
   <data name="UI_CurrentPasswordIsEmpty" xml:space="preserve">
-    <value>Unesite trenutnu lozinku</value>
+    <value>Unesite trenutnu lozinku.</value>
   </data>
   <data name="UI_NewPasswordIsEmpty" xml:space="preserve">
     <value>Unesite novu lozinku</value>
@@ -352,10 +352,10 @@
     <value>Lozinka promijenjena</value>
   </data>
   <data name="UI_CustomerMustBeSelected" xml:space="preserve">
-    <value>Odaberite klijenta</value>
+    <value>Odaberite klijenta.</value>
   </data>
   <data name="UI_CustomerRequestMustBeSelected" xml:space="preserve">
-    <value>Odaberite zahtjev klijenta</value>
+    <value>Odaberite zahtjev klijenta.</value>
   </data>
   <data name="UI_Note" xml:space="preserve">
     <value>Napomena</value>
@@ -367,7 +367,7 @@
     <value>Sinonimi</value>
   </data>
   <data name="UI_CableNameSaved" xml:space="preserve">
-    <value>Naziv kabla spremljen</value>
+    <value>Naziv kabla spremljen.</value>
   </data>
   <data name="UI_Load" xml:space="preserve">
     <value>Učitaj</value>
@@ -379,40 +379,40 @@
     <value>Uključi u pretragu</value>
   </data>
   <data name="UI_CableNameMustBeEntered" xml:space="preserve">
-    <value>Unesite naziv kabla</value>
+    <value>Unesite naziv kabla.</value>
   </data>
   <data name="UI_CableNotSelected" xml:space="preserve">
-    <value>Kabel nije označen</value>
+    <value>Kabel nije označen.</value>
   </data>
   <data name="UI_CableNameAlreadySaved" xml:space="preserve">
-    <value>Naziv kabla već postoji</value>
+    <value>Naziv kabla već postoji.</value>
   </data>
   <data name="UI_NumberOfCablesLoaded" xml:space="preserve">
     <value>Broj učitanih kablova:</value>
   </data>
   <data name="UI_CablesNotSelected" xml:space="preserve">
-    <value>Kablovi nisu označeni</value>
+    <value>Kablovi nisu označeni.</value>
   </data>
   <data name="UI_EnterLicense" xml:space="preserve">
-    <value>Unesi licencu</value>
+    <value>Unesite licencu.</value>
   </data>
   <data name="UI_CustomerTaxNumberMustBeEntered" xml:space="preserve">
-    <value>Unesite OIB klijenta</value>
+    <value>Unesite OIB klijenta.</value>
   </data>
   <data name="UI_LicenseIsInvalid" xml:space="preserve">
-    <value>Licenca je nevalidna</value>
+    <value>Licenca nije važeća.</value>
   </data>
   <data name="UI_LicenseIsValid" xml:space="preserve">
-    <value>Licenca je validna, proizvod je aktiviran</value>
+    <value>Licenca je važeća, proizvod je aktiviran.</value>
   </data>
   <data name="UI_NumberOfCablesDeleted" xml:space="preserve">
     <value>Broj izbrisanih kablova:</value>
   </data>
   <data name="UI_EnterLicenseKey" xml:space="preserve">
-    <value>Unesi licencu</value>
+    <value>Unesite licencu.</value>
   </data>
   <data name="UI_CableNameAddInstruction" xml:space="preserve">
-    <value>Sinonimi moraju biti razdvojeni sa zarezom [,]</value>
+    <value>Sinonimi moraju biti razdvojeni sa zarezom [,].</value>
   </data>
   <data name="UI_LicenseKey" xml:space="preserve">
     <value>Licenca:</value>
@@ -427,10 +427,10 @@
     <value>Odobrio:</value>
   </data>
   <data name="DOC_Bottom1" xml:space="preserve">
-    <value>Ponuda služi samo kao poziv na plaćanje</value>
+    <value>Ponuda služi samo kao poziv na plaćanje.</value>
   </data>
   <data name="DOC_Bottom2" xml:space="preserve">
-    <value>Iskazani porez na dodanu vrijednost (PDV 25%) ne može se priznati kao predporez temeljem ove ponude.</value>
+    <value>Iskazani porez na dodanu vrijednost (PDV 25%) ne može se priznati kao pretporez temeljem ove ponude.</value>
   </data>
   <data name="DOC_ControlledBy" xml:space="preserve">
     <value>Kontrolirao:</value>
@@ -508,24 +508,24 @@
     <value>Očisti</value>
   </data>
   <data name="UI_CustomerRequestMustBeXlsx" xml:space="preserve">
-    <value>Zahtjev klijenta mora bitu u xlsx formatu</value>
+    <value>Zahtjev klijenta mora bitu u xlsx formatu.</value>
   </data>
   <data name="UI_Logo" xml:space="preserve">
     <value>Logo</value>
   </data>
   <data name="UI_SelectPriceListDocument" xml:space="preserve">
-    <value>Izaberi bar jedan cijenik</value>
+    <value>Izaberite bar jedan cijenik.</value>
   </data>
   <data name="UI_BankAccounts" xml:space="preserve">
     <value>Bankovni računi</value>
   </data>
   <data name="UI_MaxNumberOfBankAccountsIsFive" xml:space="preserve">
-    <value>Moguće je uneti maksimalno pet bankovnih računa</value>
+    <value>Moguće je unijeti maksimalno pet bankovnih računa</value>
   </data>
   <data name="UI_CableNamesNotDefined" xml:space="preserve">
-    <value>Imena kablova i sinonimi nisu definisani, generisana ponuda će biti nevalidna</value>
+    <value>Imena kablova i sinonimi nisu definirani, generirana ponuda neće biti validna.</value>
   </data>
   <data name="UI_PriceDocumentsAreLoading" xml:space="preserve">
-    <value>Cjenik se učitava</value>
+    <value>Cjenik se učitava.</value>
   </data>
 </root>

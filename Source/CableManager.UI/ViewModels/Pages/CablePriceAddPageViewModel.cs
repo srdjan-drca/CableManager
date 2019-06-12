@@ -92,12 +92,13 @@ namespace CableManager.UI.ViewModels.Pages
          {
             StatusMessage = LabelProvider["UI_PriceDocumentsAreLoading"];
 
-            _cablePriceDocumentRepository.DeleteAll();
-
             foreach (string fullFileName in openFileDialog.FileNames)
             {
                string fileName = Path.GetFileName(fullFileName);
                string date = DateTime.Now.ToString(CultureInfo.CurrentCulture);
+               PriceDocumentModel priceDocumentModel = PriceDocuments.FirstOrDefault(x => x.Name == fileName);
+
+               _cablePriceDocumentRepository.Delete(priceDocumentModel?.Id);
 
                var priceDocument = new PriceDocumentModel(fileName, fullFileName, date);
 

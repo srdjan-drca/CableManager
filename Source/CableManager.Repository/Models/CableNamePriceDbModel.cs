@@ -1,4 +1,6 @@
-﻿namespace CableManager.Repository.Models
+﻿using System.Globalization;
+
+namespace CableManager.Repository.Models
 {
    public struct CableNamePriceDbModel
    {
@@ -14,10 +16,17 @@
 
       public CableNamePriceDbModel(string name, string price)
       {
+         var dotCulture = new CultureInfo("en")
+         {
+            NumberFormat =
+            {
+               NumberDecimalSeparator = "."
+            }
+         };
          float priceAsNumber;
 
          Name = name;
-         Price = float.TryParse(price, out priceAsNumber) ? priceAsNumber : 0;
+         Price = float.TryParse(price, NumberStyles.Any, dotCulture, out priceAsNumber) ? priceAsNumber : 0;
       }
    }
 }

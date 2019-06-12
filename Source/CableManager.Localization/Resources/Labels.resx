@@ -148,7 +148,7 @@
     <value>Customer request</value>
   </data>
   <data name="UI_CustomerSaved" xml:space="preserve">
-    <value>Customer saved successfully</value>
+    <value>Customer saved successfully.</value>
   </data>
   <data name="UI_Date" xml:space="preserve">
     <value>Date</value>
@@ -199,22 +199,22 @@
     <value>SUBMIT</value>
   </data>
   <data name="UI_UserDatabaseIsNotCreated" xml:space="preserve">
-    <value>User database is not created</value>
+    <value>User database is not created.</value>
   </data>
   <data name="UI_UserName" xml:space="preserve">
     <value>User name</value>
   </data>
   <data name="UI_UserNameAlreadySigned" xml:space="preserve">
-    <value>User name is already taken</value>
+    <value>User name is already taken.</value>
   </data>
   <data name="UI_UserNameIsEmpty" xml:space="preserve">
-    <value>User name is empty</value>
+    <value>User name is empty.</value>
   </data>
   <data name="UI_UserOrPasswordNotCorrect" xml:space="preserve">
-    <value>User or password are incorrect</value>
+    <value>User or password are incorrect.</value>
   </data>
   <data name="UI_UserSuccessfullySignedUp" xml:space="preserve">
-    <value>User successfully signed up</value>
+    <value>User successfully signed up.</value>
   </data>
   <data name="UI_Overview" xml:space="preserve">
     <value>Overview</value>
@@ -226,7 +226,7 @@
     <value>Status</value>
   </data>
   <data name="UI_CustomerMustBeSelected" xml:space="preserve">
-    <value>Customer must be selected</value>
+    <value>Customer must be selected.</value>
   </data>
   <data name="UI_Actions" xml:space="preserve">
     <value>Actions</value>
@@ -235,7 +235,7 @@
     <value>Address to...</value>
   </data>
   <data name="UI_ApplicationAbout" xml:space="preserve">
-    <value>Application for automatic offer creation based on customer request</value>
+    <value>Application for automatic offer creation based on customers requests.</value>
   </data>
   <data name="UI_City" xml:space="preserve">
     <value>City</value>
@@ -268,31 +268,31 @@
     <value>Tax number</value>
   </data>
   <data name="UI_CustomerRequestAdded" xml:space="preserve">
-    <value>Customer request document is successfully added</value>
+    <value>Customer request document is successfully added.</value>
   </data>
   <data name="UI_NumberOfOffersDeleted" xml:space="preserve">
     <value>Number of offers deleted:</value>
   </data>
   <data name="UI_OfferDocumentNotSelected" xml:space="preserve">
-    <value>Offer document is not selected</value>
+    <value>Offer document is not selected.</value>
   </data>
   <data name="UI_NumberOfCustomersDeleted" xml:space="preserve">
     <value>Number of customers deleted:</value>
   </data>
   <data name="UI_PriceDocumentsLoaded" xml:space="preserve">
-    <value>Price list documents successfully loaded</value>
+    <value>Price list documents successfully loaded.</value>
   </data>
   <data name="UI_CustomerNameMustBeEntered" xml:space="preserve">
-    <value>Customer name must be entered</value>
+    <value>Customer name must be entered.</value>
   </data>
   <data name="UI_CustomerNameAlreadySaved" xml:space="preserve">
-    <value>Customer name already saved</value>
+    <value>Customer name already saved.</value>
   </data>
   <data name="UI_CustomerTaxNumberMustBeUnique" xml:space="preserve">
-    <value>Customer tax number is already registered</value>
+    <value>Customer tax number is already registered.</value>
   </data>
   <data name="UI_OfferDocumentSaved" xml:space="preserve">
-    <value>Offer successfully saved</value>
+    <value>Offer successfully saved.</value>
   </data>
   <data name="UI_Open" xml:space="preserve">
     <value>Open</value>
@@ -343,19 +343,19 @@
     <value>Confirm new password</value>
   </data>
   <data name="UI_UserSuccessfullySaved" xml:space="preserve">
-    <value>User successfully saved</value>
+    <value>User successfully saved.</value>
   </data>
   <data name="UI_CurrentPasswordIsEmpty" xml:space="preserve">
-    <value>Current password is empty</value>
+    <value>Current password field is empty.</value>
   </data>
   <data name="UI_NewPasswordIsEmpty" xml:space="preserve">
-    <value>New password is empty</value>
+    <value>New password is empty.</value>
   </data>
   <data name="UI_PasswordSuccessfullyChanged" xml:space="preserve">
     <value>Password successfully changed</value>
   </data>
   <data name="UI_CustomerRequestMustBeSelected" xml:space="preserve">
-    <value>Customer request must be selected</value>
+    <value>Customer request must be selected.</value>
   </data>
   <data name="UI_Note" xml:space="preserve">
     <value>Note</value>
@@ -370,7 +370,7 @@
     <value>Number of cables deleted:</value>
   </data>
   <data name="UI_CableNameSaved" xml:space="preserve">
-    <value>Cable name saved</value>
+    <value>Cable name saved.</value>
   </data>
   <data name="UI_Load" xml:space="preserve">
     <value>Load</value>
@@ -382,37 +382,37 @@
     <value>Include in search</value>
   </data>
   <data name="UI_CableNameMustBeEntered" xml:space="preserve">
-    <value>Cable name must be entered</value>
+    <value>Cable name must be entered.</value>
   </data>
   <data name="UI_CableNotSelected" xml:space="preserve">
-    <value>Cable not selected</value>
+    <value>Cable not selected.</value>
   </data>
   <data name="UI_CableNameAlreadySaved" xml:space="preserve">
-    <value>Cable name already saved</value>
+    <value>Cable name already saved.</value>
   </data>
   <data name="UI_NumberOfCablesLoaded" xml:space="preserve">
     <value>Number of cables loaded:</value>
   </data>
   <data name="UI_CablesNotSelected" xml:space="preserve">
-    <value>Cables not selected</value>
+    <value>Cables not selected.</value>
   </data>
   <data name="UI_EnterLicense" xml:space="preserve">
-    <value>Enter license</value>
+    <value>Enter license.</value>
   </data>
   <data name="UI_CustomerTaxNumberMustBeEntered" xml:space="preserve">
-    <value>Customer tax number must be entered</value>
+    <value>Customer tax number must be entered.</value>
   </data>
   <data name="UI_LicenseIsInvalid" xml:space="preserve">
-    <value>License is invalid</value>
+    <value>License is invalid.</value>
   </data>
   <data name="UI_LicenseIsValid" xml:space="preserve">
-    <value>License is valid, product is activated</value>
+    <value>License is valid, product is activated.</value>
   </data>
   <data name="UI_EnterLicenseKey" xml:space="preserve">
-    <value>Enter license key</value>
+    <value>Enter license key.</value>
   </data>
   <data name="UI_CableNameAddInstruction" xml:space="preserve">
-    <value>Synonym names must be divided by comma [,]</value>
+    <value>Synonym names must be divided by comma [,].</value>
   </data>
   <data name="UI_LicenseKey" xml:space="preserve">
     <value>License key:</value>
@@ -427,10 +427,10 @@
     <value>Approved by:</value>
   </data>
   <data name="DOC_Bottom1" xml:space="preserve">
-    <value>The offer serves only as invitation for payment</value>
+    <value>The offer serves only as invitation for payment.</value>
   </data>
   <data name="DOC_Bottom2" xml:space="preserve">
-    <value>Value added tax declared (VAT 25%) can not be recognized as a pre-tax based on this offer</value>
+    <value>Value added tax (VAT 25%) declared can not be recognized as a pre-tax based on this offer.</value>
   </data>
   <data name="DOC_ControlledBy" xml:space="preserve">
     <value>Controlled by:</value>
@@ -502,30 +502,30 @@
     <value>VAT %</value>
   </data>
   <data name="DOC_WorthUntil" xml:space="preserve">
-    <value>Worth until</value>
+    <value>Valid until</value>
   </data>
   <data name="UI_Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
   <data name="UI_CustomerRequestMustBeXlsx" xml:space="preserve">
-    <value>Customer request must be in xlsx format</value>
+    <value>Customer request must be in .xlsx format.</value>
   </data>
   <data name="UI_Logo" xml:space="preserve">
     <value>Logo</value>
   </data>
   <data name="UI_SelectPriceListDocument" xml:space="preserve">
-    <value>Select at least one price list document</value>
+    <value>Select at least one price list document.</value>
   </data>
   <data name="UI_BankAccounts" xml:space="preserve">
     <value>Bank accounts</value>
   </data>
   <data name="UI_MaxNumberOfBankAccountsIsFive" xml:space="preserve">
-    <value>It is possible to enter maximum five bank accounts</value>
+    <value>It is possible to enter maximum five bank accounts.</value>
   </data>
   <data name="UI_CableNamesNotDefined" xml:space="preserve">
     <value>Cable names and synonyms not defined, generated offer will be invalid</value>
   </data>
   <data name="UI_PriceDocumentsAreLoading" xml:space="preserve">
-    <value>Price documents are loading</value>
+    <value>Price documents are loading.</value>
   </data>
 </root>

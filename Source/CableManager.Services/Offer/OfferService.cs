@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using OfficeOpenXml;
 using CableManager.Common.Helpers;
 using CableManager.Localization;
@@ -136,11 +135,10 @@ namespace CableManager.Services.Offer
       private float FindPrice(CableDetails cableDetails, List<CablePriceModel> prices)
       {
          float price = 0;
-         string cableType = ExtractCableType(cableDetails.Name);
 
          foreach (CablePriceModel priceModel in prices)
          {
-            bool isFound = priceModel.GetPrice(cableDetails.SearchCriteria, cableType, out price);
+            bool isFound = priceModel.GetPrice(cableDetails.SearchCriteria, cableDetails.CableType, out price);
 
             if (isFound)
             {
@@ -149,36 +147,6 @@ namespace CableManager.Services.Offer
          }
 
          return price;
-      }
-
-      private string ExtractCableType(string cableName)
-      {
-         cableName = cableName.Replace("²", "2");
-         cableName = cableName.Replace(",", ".");
-         cableName = cableName.Replace(" mm", "mm2");
-
-         if (!cableName.Contains("mm2"))
-         {
-            cableName = cableName.Replace("mm", "mm2");
-         }
-
-         if (!cableName.Contains("mm2"))
-         {
-            cableName = cableName.Replace("m2", "mm2");
-         }
-
-         Regex pattern = new Regex(@"(\w+[.]?\w+)mm2");
-         Match match = pattern.Match(cableName);
-         string whatYouAreLookingFor = match.Groups[1].Value;
-
-         if (string.IsNullOrEmpty(whatYouAreLookingFor))
-         {
-            pattern = new Regex(@"(\w+[.]?[\w+]?)mm2");
-            match = pattern.Match(cableName);
-            whatYouAreLookingFor = match.Groups[1].Value;
-         }
-
-         return whatYouAreLookingFor.Replace(" ", string.Empty);
       }
 
       private List<List<string>> CreateSearchCriteria(List<CableModel> cablesDb)

@@ -10,6 +10,8 @@ namespace CableManager.Repository.CablePriceDocument
 
       ReturnResult DeleteAll();
 
+      ReturnResult Delete(string id);
+
       List<PriceDocumentModel> GetAll();
    }
 }

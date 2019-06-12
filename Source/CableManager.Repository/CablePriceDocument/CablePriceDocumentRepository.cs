@@ -70,6 +70,20 @@ namespace CableManager.Repository.CablePriceDocument
          return new SuccessResult();
       }
 
+      public ReturnResult Delete(string id)
+      {
+         if (string.IsNullOrEmpty(id))
+         {
+            return new FailResult("Record not found");
+         }
+
+         XElement foundElement = _priceDocumentsXDocument.Find(id);
+
+         foundElement?.Remove();
+
+         return new SuccessResult();
+      }
+
       public List<PriceDocumentModel> GetAll()
       {
          List<XElement> priceDocumentElements = _priceDocumentsXDocument.Descendants("PriceDocument").ToList();
